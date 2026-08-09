@@ -71,6 +71,7 @@ const CONFIG = {
 
   SERVER_NAME: 'Ghost RP',
   COLOR: 0x1687FF,
+  WELCOME_BANNER_URL: 'https://cdn.discordapp.com/attachments/1535772685337100431/1536106506506862743/ChatGPT_Image_Aug_9_2026_06_54_02_PM.png',
 
   // ---------- Application ----------
   APPLICATION_QUESTIONS: [
@@ -366,10 +367,17 @@ async function ensureApplicationPanel() {
       embed(
         `${CONFIG.SERVER_NAME} | نظام التقديم`,
         [
-          'اضغط على زر **التقديم** وسيبدأ البوت بسؤالك في الخاص.',
+          '👻 أهلاً بك في نظام تقديم **Ghost RP**',
           '',
-          'سيتم إرسال سؤال واحد بعد إجابتك على السؤال السابق.',
-          'لإلغاء التقديم في أي وقت اكتب بالخاص: **cancel**'
+          '━━━━━━━━━━━━━━━━━━━━',
+          '',
+          '📝 اضغط على زر **التقديم** بالأسفل لبدء طلبك.',
+          '',
+          '📩 سيتم إرسال الأسئلة لك في الخاص سؤالاً بعد سؤال.',
+          '',
+          '❌ يمكنك إلغاء التقديم في أي وقت بكتابة: `cancel`',
+          '',
+          '━━━━━━━━━━━━━━━━━━━━'
         ].join('\n')
       )
     ],
@@ -418,7 +426,20 @@ async function startApplication(interaction) {
       embeds: [
         embed(
           `${CONFIG.SERVER_NAME} | بدء التقديم`,
-          `أهلاً بك. سيتم إرسال الأسئلة واحداً واحداً.\nللإلغاء اكتب **cancel**.`
+          [
+            '👋 أهلاً وسهلاً بك في **Ghost RP**',
+            '',
+            '━━━━━━━━━━━━━━━━━━━━',
+            '',
+            '📝 سيتم إرسال أسئلة التقديم لك سؤالاً بعد سؤال.',
+            '',
+            '📌 جاوب على كل سؤال بوضوح حتى ينتقل البوت للسؤال التالي.',
+            '',
+            '❌ لو حابب تلغي التقديم اكتب:',
+            '`cancel`',
+            '',
+            '━━━━━━━━━━━━━━━━━━━━'
+          ].join('\n')
         )
       ]
     });
@@ -458,7 +479,19 @@ async function askNextQuestion(userId) {
     embeds: [
       embed(
         `${CONFIG.SERVER_NAME} | التقديم`,
-        `**السؤال ${state.index + 1}/${CONFIG.APPLICATION_QUESTIONS.length}:**\n${question}\n\nللإلغاء اكتب **cancel**.`
+        [
+          '━━━━━━━━━━━━━━━━━━━━',
+          '',
+          `📌 **السؤال ${state.index + 1} من ${CONFIG.APPLICATION_QUESTIONS.length}**`,
+          '',
+          `❓ ${question}`,
+          '',
+          `📊 التقدم: **${state.index + 1}/${CONFIG.APPLICATION_QUESTIONS.length}**`,
+          '',
+          '❌ للإلغاء اكتب: `cancel`',
+          '',
+          '━━━━━━━━━━━━━━━━━━━━'
+        ].join('\n')
       )
     ]
   });
@@ -483,7 +516,13 @@ async function handleApplicationDM(message) {
       embeds: [
         embed(
           'تم إلغاء التقديم',
-          'تم إلغاء تقديمك بنجاح. يمكنك التقديم مرة أخرى لاحقاً.'
+          [
+            '❌ تم إلغاء تقديمك بنجاح.',
+            '',
+            'يمكنك بدء تقديم جديد في أي وقت من روم التقديم.',
+            '',
+            '👻 **Ghost RP**'
+          ].join('\n')
         )
       ]
     });
@@ -533,7 +572,13 @@ async function handleApplicationDM(message) {
       embeds: [
         embed(
           'تعذر إرسال التقديم ❌',
-          'حصل خطأ في إرسال التقديم للإدارة. تواصل مع الإدارة وحاول مرة أخرى.'
+          [
+            '❌ حصل خطأ أثناء إرسال التقديم للإدارة.',
+            '',
+            'يرجى التواصل مع الإدارة أو المحاولة مرة أخرى بعد قليل.',
+            '',
+            '👻 **Ghost RP**'
+          ].join('\n')
         )
       ]
     });
@@ -551,7 +596,15 @@ async function handleApplicationDM(message) {
     embeds: [
       embed(
         'تم إرسال التقديم ✅',
-        `تم إرسال تقديمك إلى إدارة **${CONFIG.SERVER_NAME}** للمراجعة.\nسيتم إرسال النتيجة لك في الخاص.`,
+        [
+          `✅ تم إرسال تقديمك إلى إدارة **${CONFIG.SERVER_NAME}** بنجاح.`,
+          '',
+          '📋 التقديم الآن تحت المراجعة.',
+          '',
+          '📩 سيتم إرسال نتيجة القبول أو الرفض لك في الخاص.',
+          '',
+          'شكراً لتقديمك معنا 👻'
+        ].join('\n'),
         0x2ECC71
       )
     ]
@@ -738,7 +791,17 @@ async function acceptApplication(interaction) {
     embeds: [
       embed(
         'تم قبولك ✅',
-        `مبروك! تم قبول تقديمك في **${CONFIG.SERVER_NAME}**.\nتمت إضافة رتبة القبول لك.`,
+        [
+          '🎉 **مبروك! تم قبولك بنجاح**',
+          '',
+          `✅ تم قبول تقديمك في **${CONFIG.SERVER_NAME}**.`,
+          '',
+          '🎖️ تمت إضافة رتبة القبول الخاصة بك.',
+          '',
+          '📌 تأكد من قراءة القوانين قبل بدء اللعب.',
+          '',
+          'نتمنى لك تجربة ممتعة معنا 👻'
+        ].join('\n'),
         0x2ECC71
       )
     ]
@@ -867,7 +930,16 @@ async function rejectApplication(interaction) {
     embeds: [
       embed(
         'تم رفض تقديمك ❌',
-        `تم رفض تقديمك في **${CONFIG.SERVER_NAME}**.\n\n**السبب:** ${reason}${blockText}`,
+        [
+          '❌ **تم رفض تقديمك**',
+          '',
+          `تم رفض تقديمك في **${CONFIG.SERVER_NAME}**.`,
+          '',
+          `📌 **سبب الرفض:** ${reason}`,
+          blockText ? blockText : '',
+          '',
+          'يمكنك مراجعة السبب والمحاولة مرة أخرى عندما يكون التقديم متاحاً.'
+        ].filter(Boolean).join('\n'),
         0xE74C3C
       )
     ]
@@ -958,7 +1030,15 @@ async function handleVideoSubmission(message) {
     embeds: [
       embed(
         `${CONFIG.SERVER_NAME} | مراجعة الفيديو`,
-        `**صاحب الفيديو:** <@${message.author.id}>\n**الحالة:** في انتظار قرار الإدارة.`
+        [
+          `👤 **صاحب الفيديو:** <@${message.author.id}>`,
+          '',
+          '🎥 تم استلام الفيديو بنجاح.',
+          '',
+          '⏳ **الحالة:** في انتظار مراجعة الإدارة.',
+          '',
+          'سيظهر قرار القبول أو الرفض هنا.'
+        ].join('\n')
       )
     ],
     components: [row]
@@ -1003,7 +1083,15 @@ async function acceptVideo(interaction) {
     embeds: [
       embed(
         'تم قبول الفيديو ✅',
-        `تم قبول الفيديو الخاص بك في **${CONFIG.SERVER_NAME}** وتمت إضافة الرتبة لك.`,
+        [
+          '✅ **تم قبول الفيديو الخاص بك**',
+          '',
+          `تم قبول الفيديو في **${CONFIG.SERVER_NAME}** بنجاح.`,
+          '',
+          '🎖️ تمت إضافة الرتبة الخاصة بك.',
+          '',
+          'شكراً لمشاركتك معنا 👻'
+        ].join('\n'),
         0x2ECC71
       )
     ]
@@ -1058,7 +1146,15 @@ async function rejectVideo(interaction) {
     embeds: [
       embed(
         'تم رفض الفيديو ❌',
-        `تم رفض الفيديو الخاص بك في **${CONFIG.SERVER_NAME}**.\n\n**السبب:** ${reason}`,
+        [
+          '❌ **تم رفض الفيديو الخاص بك**',
+          '',
+          `تم رفض الفيديو في **${CONFIG.SERVER_NAME}**.`,
+          '',
+          `📌 **سبب الرفض:** ${reason}`,
+          '',
+          'يمكنك تعديل المطلوب والمحاولة مرة أخرى.'
+        ].join('\n'),
         0xE74C3C
       )
     ]
@@ -1119,25 +1215,49 @@ client.on(Events.GuildMemberAdd, async member => {
         .setStyle(ButtonStyle.Primary)
     );
 
+    const welcomeEmbed = new EmbedBuilder()
+      .setColor(CONFIG.COLOR)
+      .setTitle(`👻 مرحباً بك في ${CONFIG.SERVER_NAME}`)
+      .setDescription(
+        [
+          '━━━━━━━━━━━━━━━━━━━━━━━━',
+          '',
+          `🎉 أهلاً وسهلاً بك يا <@${member.id}>`,
+          '',
+          `أنت الآن عضو جديد في **${CONFIG.SERVER_NAME}**.`,
+          '',
+          '📜 اقرأ القوانين جيداً قبل البدء.',
+          '',
+          '📝 لو حابب تقدم، اضغط على زر **التقديم** بالأسفل.',
+          '',
+          '⭐ تقدر كمان تبعت تقييمك للسيرفر من زر **التقييم**.',
+          '',
+          '💙 نتمنى لك وقت ممتع وتجربة Roleplay قوية معنا.',
+          '',
+          '━━━━━━━━━━━━━━━━━━━━━━━━'
+        ].join('\n')
+      )
+      .setImage(CONFIG.WELCOME_BANNER_URL)
+      .setThumbnail(member.user.displayAvatarURL({ dynamic: true, size: 256 }))
+      .setFooter({ text: `${CONFIG.SERVER_NAME} • Welcome` })
+      .setTimestamp();
+
     await ch.send({
       content: `<@${member.id}>`,
-      embeds: [
-        embed(
-          `أهلاً بك في ${CONFIG.SERVER_NAME} 👻`,
-          [
-            `نورت السيرفر يا <@${member.id}>!`,
-            '',
-            'استخدم الأزرار بالأسفل للوصول إلى القوانين والتقديم أو إرسال تقييمك.'
-          ].join('\n')
-        )
-      ],
+      embeds: [welcomeEmbed],
       components: [row]
     }).catch(() => {});
   }
 
   await sendLog(
     'عضو جديد',
-    `<@${member.id}> دخل السيرفر وتم إعطاؤه الرتبة الافتراضية.`,
+    [
+      `👤 **العضو:** <@${member.id}>`,
+      '',
+      '✅ دخل السيرفر وتم إعطاؤه الرتبة الافتراضية.',
+      '',
+      `🆔 **ID:** \`${member.id}\``
+    ].join('\n'),
     0x2ECC71
   );
 });
@@ -1145,7 +1265,7 @@ client.on(Events.GuildMemberAdd, async member => {
 client.on(Events.GuildMemberRemove, async member => {
   await sendLog(
     'خروج عضو',
-    `<@${member.id}> خرج من السيرفر.`,
+    `👤 **العضو:** <@${member.id}>\n\n🚪 خرج من السيرفر.\n\n🆔 **ID:** \`${member.id}\``,
     0xE67E22
   );
 });
@@ -1218,9 +1338,13 @@ async function submitRating(interaction) {
         embed(
           `${CONFIG.SERVER_NAME} | تقييم جديد`,
           [
-            `**العضو:** <@${interaction.user.id}>`,
-            `**التقييم:** ${'⭐'.repeat(stars)} (${stars}/5)`,
-            `**السبب:** ${reason}`
+            `👤 **العضو:** <@${interaction.user.id}>`,
+            '',
+            `⭐ **التقييم:** ${'⭐'.repeat(stars)} (${stars}/5)`,
+            '',
+            `📝 **سبب التقييم:** ${reason}`,
+            '',
+            '━━━━━━━━━━━━━━━━━━━━'
           ].join('\n')
         )
       ]
@@ -1360,7 +1484,7 @@ client.on(Events.VoiceStateUpdate, async (oldState, newState) => {
 
   await sendLog(
     'دخول الدعم الفني',
-    `<@${newState.id}> دخل روم الدعم الفني.`
+    `🎧 **العضو:** <@${newState.id}>\n\n✅ دخل روم الدعم الفني.\n\n⏳ يرجى انتظار أحد أفراد الدعم.`
   );
 });
 
@@ -1662,3 +1786,4 @@ if (!CONFIG.TOKEN) {
 }
 
 client.login(CONFIG.TOKEN);
+
