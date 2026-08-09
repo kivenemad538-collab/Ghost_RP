@@ -1,0 +1,20 @@
+{
+  "name": "ghost-rp-discord-bot",
+  "version": "2.0.0",
+  "description": "Ghost RP Discord application, video review, welcome, ratings, support voice, protection and logs bot",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "check": "node --check index.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@discordjs/voice": "^0.18.0",
+    "discord.js": "^14.19.3",
+    "ffmpeg-static": "^5.2.0",
+    "google-tts-api": "^2.0.2",
+    "opusscript": "^0.1.1"
+  }
+}
