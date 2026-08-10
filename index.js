@@ -14,6 +14,7 @@ const {
   ActionRowBuilder,
   ButtonBuilder,
   ButtonStyle,
+  AttachmentBuilder,
   ModalBuilder,
   TextInputBuilder,
   TextInputStyle,
@@ -54,7 +55,7 @@ const CONFIG = {
   DEFAULT_MEMBER_ROLE_ID: '1535763946596728902',
   ACCEPTED_APPLICATION_ROLE_ID: '1535767262580047923',
   ACCEPTED_VIDEO_ROLE_ID: '1535764584152043601',
-  SECOND_REJECTION_ROLE_ID: '1535766643412705333',
+  SECOND_REJECTION_ROLE_ID: '1535767499000512632',
 
   // ONLY these 2 roles can accept/reject applications and videos
   REVIEWER_ROLE_IDS: [
@@ -72,6 +73,113 @@ const CONFIG = {
   SERVER_NAME: 'Ghost RP',
   COLOR: 0x1687FF,
   WELCOME_BANNER_URL: 'https://cdn.discordapp.com/attachments/1535772685337100431/1536106506506862743/ChatGPT_Image_Aug_9_2026_06_54_02_PM.png',
+
+
+  // ---------- Rejection Roles ----------
+  FIRST_REJECTION_ROLE_ID: '1535767418574602300',
+
+  // ---------- Ticket System ----------
+  TICKET_PANEL_CHANNEL_ID: '1536034090082369628',
+  TICKET_LOG_CHANNEL_ID: '1536345331736776764',
+  TICKET_RATING_CHANNEL_ID: '1536345751947313202',
+
+  TICKET_ADMIN_ROLE_IDS: [
+    '1535755234989572226',
+    '1535755153838313542'
+  ],
+
+  TICKET_TYPES: {
+    support: {
+      label: 'الدعم الفني', emoji: '🎧',
+      categoryId: '1536126952618983535',
+      teamRoleIds: ['PUT_SUPPORT_TEAM_ROLE_ID'],
+      normalChannelId: 'PUT_SUPPORT_NORMAL_CHANNEL_ID',
+      importantChannelId: 'PUT_SUPPORT_IMPORTANT_CHANNEL_ID',
+      urgentChannelId: 'PUT_SUPPORT_URGENT_CHANNEL_ID'
+    },
+    monitoring: {
+      label: 'الرقابة', emoji: '👁️',
+      categoryId: '1536348218659438663',
+      teamRoleIds: ['PUT_MONITORING_TEAM_ROLE_ID'],
+      normalChannelId: 'PUT_MONITORING_NORMAL_CHANNEL_ID',
+      importantChannelId: 'PUT_MONITORING_IMPORTANT_CHANNEL_ID',
+      urgentChannelId: 'PUT_MONITORING_URGENT_CHANNEL_ID'
+    },
+    player_complaint: {
+      label: 'شكوى ضد لاعب', emoji: '⚠️',
+      categoryId: '1536348415494070352',
+      teamRoleIds: ['PUT_COMPLAINT_TEAM_ROLE_ID'],
+      normalChannelId: 'PUT_PLAYER_COMPLAINT_NORMAL_CHANNEL_ID',
+      importantChannelId: 'PUT_PLAYER_COMPLAINT_IMPORTANT_CHANNEL_ID',
+      urgentChannelId: 'PUT_PLAYER_COMPLAINT_URGENT_CHANNEL_ID'
+    },
+    appeal: {
+      label: 'استئناف', emoji: '🔄',
+      categoryId: '1536142385795563662',
+      teamRoleIds: ['PUT_APPEAL_TEAM_ROLE_ID'],
+      normalChannelId: 'PUT_APPEAL_NORMAL_CHANNEL_ID',
+      importantChannelId: 'PUT_APPEAL_IMPORTANT_CHANNEL_ID',
+      urgentChannelId: 'PUT_APPEAL_URGENT_CHANNEL_ID'
+    },
+    staff_complaint: {
+      label: 'شكوى ضد إداري', emoji: '🚔',
+      categoryId: '1536348677268971560',
+      teamRoleIds: ['PUT_STAFF_COMPLAINT_TEAM_ROLE_ID'],
+      normalChannelId: 'PUT_STAFF_COMPLAINT_NORMAL_CHANNEL_ID',
+      importantChannelId: 'PUT_STAFF_COMPLAINT_IMPORTANT_CHANNEL_ID',
+      urgentChannelId: 'PUT_STAFF_COMPLAINT_URGENT_CHANNEL_ID'
+    },
+    store: {
+      label: 'المتجر', emoji: '🛒',
+      categoryId: '1536144785986027521',
+      teamRoleIds: ['PUT_STORE_TEAM_ROLE_ID'],
+      normalChannelId: 'PUT_STORE_NORMAL_CHANNEL_ID',
+      importantChannelId: 'PUT_STORE_IMPORTANT_CHANNEL_ID',
+      urgentChannelId: 'PUT_STORE_URGENT_CHANNEL_ID'
+    },
+    compensation: {
+      label: 'التعويضات', emoji: '💰',
+      categoryId: '1536348299588800592',
+      teamRoleIds: ['PUT_COMPENSATION_TEAM_ROLE_ID'],
+      normalChannelId: 'PUT_COMPENSATION_NORMAL_CHANNEL_ID',
+      importantChannelId: 'PUT_COMPENSATION_IMPORTANT_CHANNEL_ID',
+      urgentChannelId: 'PUT_COMPENSATION_URGENT_CHANNEL_ID'
+    },
+    bug: {
+      label: 'الإبلاغ عن الأخطاء', emoji: '🐞',
+      categoryId: '1536342904631595139',
+      teamRoleIds: ['PUT_BUG_TEAM_ROLE_ID'],
+      normalChannelId: 'PUT_BUG_NORMAL_CHANNEL_ID',
+      importantChannelId: 'PUT_BUG_IMPORTANT_CHANNEL_ID',
+      urgentChannelId: 'PUT_BUG_URGENT_CHANNEL_ID'
+    }
+  },
+
+  // ---------- Control / Send panels ----------
+  CONTROL_PANEL_CHANNEL_ID: '1536347609164161034',
+  BOT_SEND_PANEL_CHANNEL_ID: '1536347609164161034',
+  CONTROL_ROLE_IDS: [
+    '1535754877882474557',
+    '1535755333572763798'
+  ],
+
+  // ---------- Activation decisions ----------
+  ACTIVATION_PANEL_CHANNEL_ID: 'PUT_ACTIVATION_PANEL_CHANNEL_ID',
+  ACTIVATION_RESULTS_CHANNEL_ID: 'PUT_ACTIVATION_RESULTS_CHANNEL_ID',
+  ACTIVATION_ACCEPTED_ROLE_ID: 'PUT_ACTIVATION_ACCEPTED_ROLE_ID',
+  ACTIVATION_REVIEWER_ROLE_IDS: [
+    'PUT_ACTIVATION_REVIEWER_ROLE_ID'
+  ],
+
+  // ---------- Staff / Creator applications ----------
+  STAFF_APPLICATION_PANEL_CHANNEL_ID: 'PUT_STAFF_APPLICATION_PANEL_CHANNEL_ID',
+  STAFF_APPLICATION_REVIEW_CHANNEL_ID: 'PUT_STAFF_APPLICATION_REVIEW_CHANNEL_ID',
+  STAFF_PREACCEPTED_ROLE_ID: 'PUT_STAFF_PREACCEPTED_ROLE_ID',
+  STAFF_INTERVIEW_SCHEDULE_CHANNEL_ID: 'PUT_STAFF_INTERVIEW_SCHEDULE_CHANNEL_ID',
+
+  CREATOR_APPLICATION_PANEL_CHANNEL_ID: 'PUT_CREATOR_APPLICATION_PANEL_CHANNEL_ID',
+  CREATOR_APPLICATION_REVIEW_CHANNEL_ID: 'PUT_CREATOR_APPLICATION_REVIEW_CHANNEL_ID',
+  CREATOR_ACCEPTED_ROLE_ID: 'PUT_CREATOR_ACCEPTED_ROLE_ID',
 
   // ---------- Application ----------
   APPLICATION_QUESTIONS: [
@@ -125,6 +233,20 @@ function emptyDB() {
     pendingApplications: {},
     videos: {},
     ratings: [],
+    tickets: {},
+    ticketCounter: 0,
+    ticketRatings: [],
+    systems: {
+      tickets: true,
+      applications: true,
+      welcome: true,
+      protection: true,
+      ratings: true,
+      videos: true,
+      voice: true
+    },
+    staffApplications: {},
+    creatorApplications: {},
     panelMessageId: null
   };
 }
@@ -141,7 +263,22 @@ function loadDB() {
       applications: parsed.applications || {},
       pendingApplications: parsed.pendingApplications || {},
       videos: parsed.videos || {},
-      ratings: parsed.ratings || []
+      ratings: parsed.ratings || [],
+      tickets: parsed.tickets || {},
+      ticketCounter: parsed.ticketCounter || 0,
+      ticketRatings: parsed.ticketRatings || [],
+      systems: {
+        tickets: true,
+        applications: true,
+        welcome: true,
+        protection: true,
+        ratings: true,
+        videos: true,
+        voice: true,
+        ...(parsed.systems || {})
+      },
+      staffApplications: parsed.staffApplications || {},
+      creatorApplications: parsed.creatorApplications || {}
     };
   } catch (err) {
     console.error('Database load error:', err.message);
@@ -320,6 +457,7 @@ async function releaseExpiredSecondRejections() {
     if (guild) {
       const member = await guild.members.fetch(userId).catch(() => null);
       if (member) await safeRemoveRole(member, CONFIG.SECOND_REJECTION_ROLE_ID);
+    await safeRemoveRole(member, CONFIG.FIRST_REJECTION_ROLE_ID);
     }
 
     await safeDM(userId, {
@@ -394,9 +532,21 @@ async function ensureApplicationPanel() {
 // APPLICATION FLOW
 // ==========================================================
 async function startApplication(interaction) {
+  if (db.systems?.applications === false) return interaction.reply({content:'⛔ التقديمات متوقفة حالياً.', ephemeral:true});
   const userId = interaction.user.id;
   const rec = getUserRecord(userId);
   const now = Date.now();
+
+  // لو الإدارة شالت رول الرفض الثاني يدويًا، يقدر يقدم فورًا.
+  if (rec.blockedUntil > now && interaction.guild && hasRealId(CONFIG.SECOND_REJECTION_ROLE_ID)) {
+    const member = await interaction.guild.members.fetch(userId).catch(() => null);
+    if (member && !member.roles.cache.has(CONFIG.SECOND_REJECTION_ROLE_ID)) {
+      rec.blockedUntil = 0;
+      rec.rejectionCount = 0;
+      await safeRemoveRole(member, CONFIG.FIRST_REJECTION_ROLE_ID);
+      saveDB();
+    }
+  }
 
   if (rec.blockedUntil > now) {
     const unix = Math.floor(rec.blockedUntil / 1000);
@@ -907,6 +1057,16 @@ async function rejectApplication(interaction) {
   let blockText = '';
   let blockedUntil = 0;
 
+  const rejectedMember = await interaction.guild.members.fetch(app.userId).catch(() => null);
+
+  if (rec.rejectionCount === 1) {
+    if (rejectedMember) {
+      await safeAddRole(rejectedMember, CONFIG.FIRST_REJECTION_ROLE_ID);
+      await safeRemoveRole(rejectedMember, CONFIG.SECOND_REJECTION_ROLE_ID);
+    }
+    blockText = '\n⚠️ الرفض الأول.';
+  }
+
   if (rec.rejectionCount >= 2) {
     blockedUntil =
       Date.now() +
@@ -914,13 +1074,13 @@ async function rejectApplication(interaction) {
 
     rec.blockedUntil = blockedUntil;
 
-    const member = await interaction.guild.members.fetch(app.userId).catch(() => null);
-    if (member) await safeAddRole(member, CONFIG.SECOND_REJECTION_ROLE_ID);
+    if (rejectedMember) {
+      await safeRemoveRole(rejectedMember, CONFIG.FIRST_REJECTION_ROLE_ID);
+      await safeAddRole(rejectedMember, CONFIG.SECOND_REJECTION_ROLE_ID);
+    }
 
     blockText =
-      `\n\n⛔ بسبب رفضك مرتين، لن تستطيع التقديم لمدة ` +
-      `**${CONFIG.SECOND_REJECTION_BLOCK_DAYS} أيام**.\n` +
-      `يمكنك التقديم مرة أخرى <t:${Math.floor(blockedUntil / 1000)}:R>.`;
+      `\n⛔ الرفض الثاني. يمكنك التقديم مرة أخرى <t:${Math.floor(blockedUntil / 1000)}:R>.`;
   }
 
   app.status = 'rejected';
@@ -930,16 +1090,7 @@ async function rejectApplication(interaction) {
     embeds: [
       embed(
         'تم رفض تقديمك ❌',
-        [
-          '❌ **تم رفض تقديمك**',
-          '',
-          `تم رفض تقديمك في **${CONFIG.SERVER_NAME}**.`,
-          '',
-          `📌 **سبب الرفض:** ${reason}`,
-          blockText ? blockText : '',
-          '',
-          'يمكنك مراجعة السبب والمحاولة مرة أخرى عندما يكون التقديم متاحاً.'
-        ].filter(Boolean).join('\n'),
+        [`📌 السبب: ${reason}`, blockText].filter(Boolean).join('\n'),
         0xE74C3C
       )
     ]
@@ -994,6 +1145,7 @@ function isVideoAttachment(attachment) {
 }
 
 async function handleVideoSubmission(message) {
+  if (db.systems?.videos === false) return;
   const hasVideo = message.attachments.some(isVideoAttachment);
   if (!hasVideo) return;
 
@@ -1190,6 +1342,7 @@ async function rejectVideo(interaction) {
 // WELCOME + AUTO ROLE
 // ==========================================================
 client.on(Events.GuildMemberAdd, async member => {
+  if (db.systems?.welcome === false) return;
   await safeAddRole(member, CONFIG.DEFAULT_MEMBER_ROLE_ID);
 
   const ch = await safeFetchChannel(CONFIG.WELCOME_CHANNEL_ID);
@@ -1274,6 +1427,7 @@ client.on(Events.GuildMemberRemove, async member => {
 // RATINGS
 // ==========================================================
 async function openRatingModal(interaction) {
+  if (db.systems?.ratings === false) return interaction.reply({content:'⛔ التقييمات متوقفة حالياً.', ephemeral:true});
   const modal = new ModalBuilder()
     .setCustomId('rating_modal')
     .setTitle(`${CONFIG.SERVER_NAME} | التقييم`);
@@ -1424,6 +1578,7 @@ async function connectSupportVoice() {
 }
 
 async function speakSupportGreeting() {
+  if (db.systems?.voice === false) return;
   supportQueue = supportQueue.then(async () => {
     try {
       if (!supportConnection || !supportPlayer) {
@@ -1492,6 +1647,7 @@ client.on(Events.VoiceStateUpdate, async (oldState, newState) => {
 // PROTECTION
 // ==========================================================
 async function runProtection(message) {
+  if (db.systems?.protection === false) return false;
   if (!CONFIG.PROTECTION.ENABLED) return false;
 
   const member = message.member;
@@ -1769,6 +1925,434 @@ client.on(Events.GuildMemberUpdate, async (oldMember, newMember) => {
   }
 });
 
+
+// ==========================================================
+//        ADVANCED TICKETS / PANELS / CONTROL - GHOST RP
+// ==========================================================
+function hasAnyRole(member, ids = []) {
+  if (!member) return false;
+  if (member.id === member.guild.ownerId) return true;
+  if (member.permissions.has(PermissionFlagsBits.Administrator)) return true;
+  return ids.filter(hasRealId).some(id => member.roles.cache.has(id));
+}
+
+function isControl(member) {
+  return hasAnyRole(member, CONFIG.CONTROL_ROLE_IDS);
+}
+
+function ticketFromChannel(id) {
+  return Object.values(db.tickets || {}).find(t => t.channelId === id);
+}
+
+function ticketStaff(member, ticket) {
+  const cfg = CONFIG.TICKET_TYPES[ticket?.type];
+  return hasAnyRole(member, [...(cfg?.teamRoleIds || []), ...CONFIG.TICKET_ADMIN_ROLE_IDS, ...CONFIG.CONTROL_ROLE_IDS]);
+}
+
+function priorityData(priority) {
+  return {
+    normal: { label:'عادي', emoji:'🟢', color:0x2ECC71 },
+    important: { label:'هام', emoji:'🟡', color:0xF1C40F },
+    urgent: { label:'ضروري', emoji:'🔴', color:0xE74C3C }
+  }[priority];
+}
+
+function extractId(v='') {
+  const m = String(v).match(/\d{15,22}/);
+  return m ? m[0] : null;
+}
+
+async function ticketLog(title, body, color=CONFIG.COLOR) {
+  const ch = await safeFetchChannel(CONFIG.TICKET_LOG_CHANNEL_ID);
+  if (ch?.isTextBased()) await ch.send({embeds:[embed(title, body, color)]}).catch(()=>{});
+}
+
+async function panelExists(ch, customId) {
+  const msgs = await ch.messages.fetch({limit:50}).catch(()=>null);
+  return !!msgs?.some(m => m.author.id === client.user.id &&
+    m.components.some(r => r.components.some(c => c.customId === customId)));
+}
+
+async function postAdvancedPanels() {
+  const ticketCh = await safeFetchChannel(CONFIG.TICKET_PANEL_CHANNEL_ID);
+  if (ticketCh?.isTextBased() && !(await panelExists(ticketCh,'ticket_type:support'))) {
+    const r1 = new ActionRowBuilder().addComponents(
+      new ButtonBuilder().setCustomId('ticket_type:support').setLabel('الدعم الفني').setEmoji('🎧').setStyle(ButtonStyle.Primary),
+      new ButtonBuilder().setCustomId('ticket_type:monitoring').setLabel('الرقابة').setEmoji('👁️').setStyle(ButtonStyle.Primary),
+      new ButtonBuilder().setCustomId('ticket_type:player_complaint').setLabel('شكوى ضد لاعب').setEmoji('⚠️').setStyle(ButtonStyle.Primary),
+      new ButtonBuilder().setCustomId('ticket_type:appeal').setLabel('استئناف').setEmoji('🔄').setStyle(ButtonStyle.Primary)
+    );
+    const r2 = new ActionRowBuilder().addComponents(
+      new ButtonBuilder().setCustomId('ticket_type:staff_complaint').setLabel('شكوى ضد إداري').setEmoji('🚔').setStyle(ButtonStyle.Primary),
+      new ButtonBuilder().setCustomId('ticket_type:store').setLabel('المتجر').setEmoji('🛒').setStyle(ButtonStyle.Primary),
+      new ButtonBuilder().setCustomId('ticket_type:compensation').setLabel('التعويضات').setEmoji('💰').setStyle(ButtonStyle.Primary),
+      new ButtonBuilder().setCustomId('ticket_type:bug').setLabel('الإبلاغ عن الأخطاء').setEmoji('🐞').setStyle(ButtonStyle.Primary)
+    );
+    await ticketCh.send({embeds:[embed('🎫 نظام التذاكر','اختر نوع التذكرة، وبعدها اختار **عادي / هام / ضروري**.')],components:[r1,r2]});
+  }
+
+  const control = await safeFetchChannel(CONFIG.CONTROL_PANEL_CHANNEL_ID);
+  if (control?.isTextBased() && !(await panelExists(control,'sys:tickets'))) {
+    const r1 = new ActionRowBuilder().addComponents(
+      new ButtonBuilder().setCustomId('sys:tickets').setLabel('التذاكر').setStyle(ButtonStyle.Primary),
+      new ButtonBuilder().setCustomId('sys:applications').setLabel('التقديمات').setStyle(ButtonStyle.Primary),
+      new ButtonBuilder().setCustomId('sys:welcome').setLabel('الترحيب').setStyle(ButtonStyle.Primary),
+      new ButtonBuilder().setCustomId('sys:protection').setLabel('الحماية').setStyle(ButtonStyle.Primary),
+      new ButtonBuilder().setCustomId('sys:ratings').setLabel('التقييم').setStyle(ButtonStyle.Primary)
+    );
+    const r2 = new ActionRowBuilder().addComponents(
+      new ButtonBuilder().setCustomId('sys:videos').setLabel('الفيديوهات').setStyle(ButtonStyle.Primary),
+      new ButtonBuilder().setCustomId('sys:voice').setLabel('فويس الدعم').setStyle(ButtonStyle.Primary),
+      new ButtonBuilder().setCustomId('sys_status').setLabel('الحالة').setEmoji('📊').setStyle(ButtonStyle.Secondary)
+    );
+    await control.send({embeds:[embed('⚙️ لوحة التحكم','تشغيل وإيقاف أنظمة البوت.')],components:[r1,r2]});
+  }
+
+  const sendCh = await safeFetchChannel(CONFIG.BOT_SEND_PANEL_CHANNEL_ID);
+  if (sendCh?.isTextBased() && !(await panelExists(sendCh,'bot_send'))) {
+    await sendCh.send({embeds:[embed('📨 إرسال عن طريق البوت','حدد الاتشانل والرسالة.')],components:[
+      new ActionRowBuilder().addComponents(new ButtonBuilder().setCustomId('bot_send').setLabel('إرسال رسالة').setEmoji('📨').setStyle(ButtonStyle.Primary))
+    ]});
+  }
+
+  const activation = await safeFetchChannel(CONFIG.ACTIVATION_PANEL_CHANNEL_ID);
+  if (activation?.isTextBased() && !(await panelExists(activation,'activation_accept'))) {
+    await activation.send({embeds:[embed('✅❌ تقديمات التفعيل','حدد الشخص بالمنشن أو الـID.')],components:[
+      new ActionRowBuilder().addComponents(
+        new ButtonBuilder().setCustomId('activation_accept').setLabel('قبول').setStyle(ButtonStyle.Success),
+        new ButtonBuilder().setCustomId('activation_reject').setLabel('رفض').setStyle(ButtonStyle.Danger)
+      )
+    ]});
+  }
+
+  const staff = await safeFetchChannel(CONFIG.STAFF_APPLICATION_PANEL_CHANNEL_ID);
+  if (staff?.isTextBased() && !(await panelExists(staff,'staff_apply'))) {
+    await staff.send({embeds:[embed('🛡️ تقديم الإدارة','اضغط لفتح نموذج تقديم الإدارة.')],components:[
+      new ActionRowBuilder().addComponents(new ButtonBuilder().setCustomId('staff_apply').setLabel('تقديم إدارة').setStyle(ButtonStyle.Primary))
+    ]});
+  }
+
+  const creator = await safeFetchChannel(CONFIG.CREATOR_APPLICATION_PANEL_CHANNEL_ID);
+  if (creator?.isTextBased() && !(await panelExists(creator,'creator_apply'))) {
+    await creator.send({embeds:[embed('🎥 تقديم صانع محتوى','اضغط لفتح نموذج التقديم.')],components:[
+      new ActionRowBuilder().addComponents(new ButtonBuilder().setCustomId('creator_apply').setLabel('تقديم صانع محتوى').setStyle(ButtonStyle.Primary))
+    ]});
+  }
+}
+
+client.once(Events.ClientReady, async ()=>{
+  await postAdvancedPanels();
+  setInterval(checkTicketWarnings, 60*1000);
+});
+
+async function choosePriority(interaction, typeKey) {
+  if (db.systems?.tickets === false) return interaction.reply({content:'⛔ التذاكر متوقفة.',ephemeral:true});
+  const cfg = CONFIG.TICKET_TYPES[typeKey];
+  if (!cfg) return;
+  const row = new ActionRowBuilder().addComponents(
+    new ButtonBuilder().setCustomId(`ticket_priority:${typeKey}:normal`).setLabel('عادي').setEmoji('🟢').setStyle(ButtonStyle.Success),
+    new ButtonBuilder().setCustomId(`ticket_priority:${typeKey}:important`).setLabel('هام').setEmoji('🟡').setStyle(ButtonStyle.Primary),
+    new ButtonBuilder().setCustomId(`ticket_priority:${typeKey}:urgent`).setLabel('ضروري').setEmoji('🔴').setStyle(ButtonStyle.Danger)
+  );
+  await interaction.reply({embeds:[embed(`${cfg.emoji} ${cfg.label}`,'اختر الأولوية:')],components:[row],ephemeral:true});
+}
+
+async function ticketProblemModal(interaction,typeKey,priority) {
+  const cfg = CONFIG.TICKET_TYPES[typeKey];
+  const modal = new ModalBuilder().setCustomId(`ticket_create:${typeKey}:${priority}`).setTitle(`${cfg.label} - ${priorityData(priority).label}`);
+  const problem = new TextInputBuilder().setCustomId('problem').setLabel('اكتب المشكلة').setStyle(TextInputStyle.Paragraph).setRequired(true).setMinLength(5).setMaxLength(1500);
+  modal.addComponents(new ActionRowBuilder().addComponents(problem));
+  await interaction.showModal(modal);
+}
+
+function ticketRows(num) {
+  return [
+    new ActionRowBuilder().addComponents(
+      new ButtonBuilder().setCustomId(`ticket_claim:${num}`).setLabel('استلام').setStyle(ButtonStyle.Success),
+      new ButtonBuilder().setCustomId(`ticket_add_user:${num}`).setLabel('إضافة شخص').setStyle(ButtonStyle.Secondary),
+      new ButtonBuilder().setCustomId(`ticket_add_staff:${num}`).setLabel('إضافة إداري').setStyle(ButtonStyle.Secondary),
+      new ButtonBuilder().setCustomId(`ticket_warn:${num}`).setLabel('تنبيه 24 ساعة').setStyle(ButtonStyle.Primary),
+      new ButtonBuilder().setCustomId(`ticket_close:${num}`).setLabel('إغلاق').setStyle(ButtonStyle.Danger)
+    ),
+    new ActionRowBuilder().addComponents(
+      new ButtonBuilder().setCustomId(`ticket_reopen:${num}`).setLabel('إعادة فتح').setStyle(ButtonStyle.Success),
+      new ButtonBuilder().setCustomId(`ticket_copy:${num}`).setLabel('نسخ').setStyle(ButtonStyle.Secondary),
+      new ButtonBuilder().setCustomId(`ticket_delete:${num}`).setLabel('مسح').setStyle(ButtonStyle.Danger)
+    )
+  ];
+}
+
+async function createTicket(interaction,typeKey,priority) {
+  const cfg = CONFIG.TICKET_TYPES[typeKey];
+  const p = priorityData(priority);
+  const problem = interaction.fields.getTextInputValue('problem').trim();
+
+  const open = Object.values(db.tickets).find(t=>t.ownerId===interaction.user.id && t.type===typeKey && t.status!=='deleted');
+  if (open) return interaction.reply({content:`⚠️ عندك تذكرة من النوع ده: <#${open.channelId}>`,ephemeral:true});
+
+  db.ticketCounter++;
+  const num = String(db.ticketCounter).padStart(4,'0');
+  const overwrites = [
+    {id:interaction.guild.roles.everyone.id,deny:[PermissionFlagsBits.ViewChannel]},
+    {id:interaction.user.id,allow:[PermissionFlagsBits.ViewChannel,PermissionFlagsBits.SendMessages,PermissionFlagsBits.ReadMessageHistory,PermissionFlagsBits.AttachFiles]}
+  ];
+  for (const id of [...cfg.teamRoleIds,...CONFIG.TICKET_ADMIN_ROLE_IDS,...CONFIG.CONTROL_ROLE_IDS]) {
+    if (hasRealId(id)) overwrites.push({id,allow:[PermissionFlagsBits.ViewChannel,PermissionFlagsBits.SendMessages,PermissionFlagsBits.ReadMessageHistory,PermissionFlagsBits.AttachFiles,PermissionFlagsBits.ManageMessages]});
+  }
+
+  const ch = await interaction.guild.channels.create({
+    name:`ticket-${num}`,
+    type:ChannelType.GuildText,
+    parent:hasRealId(cfg.categoryId)?cfg.categoryId:null,
+    permissionOverwrites:overwrites
+  });
+
+  db.tickets[num]={number:num,channelId:ch.id,ownerId:interaction.user.id,type:typeKey,priority,problem,status:'open',claimedBy:[],addedUsers:[],createdAt:Date.now(),warningDeadline:0};
+  saveDB();
+
+  await ch.send({
+    content:`<@${interaction.user.id}> ${cfg.teamRoleIds.filter(hasRealId).map(id=>`<@&${id}>`).join(' ')}`,
+    embeds:[embed(`${cfg.emoji} تذكرة #${num}`,`**النوع:** ${cfg.label}\n**الأولوية:** ${p.emoji} ${p.label}\n**صاحب التذكرة:** <@${interaction.user.id}>\n\n**المشكلة:**\n${problem}`,p.color)],
+    components:ticketRows(num)
+  });
+
+  await interaction.reply({content:`✅ تم فتح التذكرة: ${ch}`,ephemeral:true});
+
+  const notifyId = priority==='normal'?cfg.normalChannelId:(priority==='important'?cfg.importantChannelId:cfg.urgentChannelId);
+  const notify = await safeFetchChannel(notifyId);
+  if (notify?.isTextBased()) {
+    await notify.send({
+      content:cfg.teamRoleIds.filter(hasRealId).map(id=>`<@&${id}>`).join(' '),
+      embeds:[embed(`${p.emoji} ${p.label} | ${cfg.label}`,`تذكرة #${num}\nصاحبها: <@${interaction.user.id}>`,p.color)],
+      components:[new ActionRowBuilder().addComponents(new ButtonBuilder().setLabel('دخول التذكرة').setStyle(ButtonStyle.Link).setURL(ch.url))]
+    });
+  }
+  await ticketLog('فتح تذكرة',`#${num} | ${cfg.label} | ${p.label}\n<@${interaction.user.id}>`);
+}
+
+async function ticketMemberModal(interaction,ticket,staffOnly=false) {
+  if (!ticketStaff(interaction.member,ticket)) return interaction.reply({content:'❌ للإدارة فقط.',ephemeral:true});
+  const modal = new ModalBuilder().setCustomId(`${staffOnly?'ticket_staff_submit':'ticket_user_submit'}:${ticket.number}`).setTitle(staffOnly?'إضافة إداري':'إضافة شخص');
+  const user = new TextInputBuilder().setCustomId('user').setLabel('منشن الشخص أو Discord ID').setStyle(TextInputStyle.Short).setRequired(true);
+  modal.addComponents(new ActionRowBuilder().addComponents(user));
+  await interaction.showModal(modal);
+}
+
+async function addTicketMember(interaction,ticket,staffOnly=false) {
+  if (!ticketStaff(interaction.member,ticket)) return interaction.reply({content:'❌ للإدارة فقط.',ephemeral:true});
+  const id=extractId(interaction.fields.getTextInputValue('user'));
+  const member=id?await interaction.guild.members.fetch(id).catch(()=>null):null;
+  if (!member) return interaction.reply({content:'❌ الشخص لازم يكون موجود في السيرفر.',ephemeral:true});
+  if (staffOnly && !ticketStaff(member,ticket)) return interaction.reply({content:'❌ الشخص مش من فريق التذكرة.',ephemeral:true});
+  await interaction.channel.permissionOverwrites.edit(member.id,{ViewChannel:true,SendMessages:true,ReadMessageHistory:true,AttachFiles:true});
+  if (!ticket.addedUsers.includes(member.id)) ticket.addedUsers.push(member.id);
+  if (staffOnly && !ticket.claimedBy.includes(member.id)) ticket.claimedBy.push(member.id);
+  saveDB();
+  await interaction.reply({content:`✅ تمت إضافة <@${member.id}>.`});
+}
+
+async function closeTicketNow(interaction,ticket,reason='تم الإغلاق بواسطة الإدارة') {
+  if (!ticketStaff(interaction.member,ticket)) return interaction.reply({content:'❌ للإدارة فقط.',ephemeral:true});
+  ticket.status='closed'; ticket.warningDeadline=0; ticket.closeReason=reason; saveDB();
+  await interaction.channel.permissionOverwrites.edit(ticket.ownerId,{ViewChannel:false,SendMessages:false}).catch(()=>{});
+  await interaction.reply({content:`🔒 تم إغلاق التذكرة.\nالسبب: ${reason}`});
+  await safeDM(ticket.ownerId,{
+    embeds:[embed('🔒 تم إغلاق التذكرة',`#${ticket.number} | ${CONFIG.TICKET_TYPES[ticket.type].label}\nالسبب: ${reason}`)],
+    components:[new ActionRowBuilder().addComponents(
+      ...[1,2,3,4,5].map(n=>new ButtonBuilder().setCustomId(`ticket_rate:${ticket.number}:${n}`).setLabel(`${n} ⭐`).setStyle(ButtonStyle.Secondary))
+    )]
+  });
+  await ticketLog('إغلاق تذكرة',`#${ticket.number}\nبواسطة <@${interaction.user.id}>\nالسبب: ${reason}`,0xE74C3C);
+}
+
+async function reopenTicketNow(interaction,ticket) {
+  if (!ticketStaff(interaction.member,ticket)) return interaction.reply({content:'❌ للإدارة فقط.',ephemeral:true});
+  ticket.status='open'; ticket.warningDeadline=0; saveDB();
+  await interaction.channel.permissionOverwrites.edit(ticket.ownerId,{ViewChannel:true,SendMessages:true,ReadMessageHistory:true});
+  await interaction.reply({content:'♻️ تم إعادة فتح التذكرة.'});
+  await safeDM(ticket.ownerId,{embeds:[embed('♻️ إعادة فتح التذكرة',`تم إعادة فتح تذكرتك #${ticket.number}.`)]});
+}
+
+async function ticketTranscript(interaction,ticket) {
+  if (!ticketStaff(interaction.member,ticket)) return interaction.reply({content:'❌ للإدارة فقط.',ephemeral:true});
+  let arr=[],before;
+  for(let i=0;i<10;i++){
+    const batch=await interaction.channel.messages.fetch({limit:100,before}).catch(()=>null);
+    if(!batch?.size) break;
+    arr.push(...batch.values()); before=batch.last().id;
+    if(batch.size<100) break;
+  }
+  arr.sort((a,b)=>a.createdTimestamp-b.createdTimestamp);
+  const txt=arr.map(m=>`[${new Date(m.createdTimestamp).toISOString()}] ${m.author?.tag||'Unknown'}: ${m.content||'[Embed/Attachment]'}`).join('\n');
+  const file=new AttachmentBuilder(Buffer.from(txt,'utf8'),{name:`ticket-${ticket.number}.txt`});
+  await interaction.reply({content:'📋 نسخة التذكرة:',files:[file],ephemeral:true});
+}
+
+async function warnTicket24(interaction,ticket) {
+  if (!ticketStaff(interaction.member,ticket)) return interaction.reply({content:'❌ للإدارة فقط.',ephemeral:true});
+  ticket.warningDeadline=Date.now()+24*60*60*1000; saveDB();
+  await interaction.reply({content:`<@${ticket.ownerId}> ⚠️ لو مفيش رد خلال 24 ساعة التذكرة هتتقفل تلقائي.`});
+  await safeDM(ticket.ownerId,{embeds:[embed('⚠️ تنبيه تذكرة',`تذكرتك #${ticket.number} تحتاج رد خلال 24 ساعة.`)]});
+}
+
+async function checkTicketWarnings() {
+  const guild=client.guilds.cache.get(CONFIG.GUILD_ID);
+  if(!guild) return;
+  for(const t of Object.values(db.tickets||{})){
+    if(t.status!=='open'||!t.warningDeadline||t.warningDeadline>Date.now()) continue;
+    const ch=await guild.channels.fetch(t.channelId).catch(()=>null);
+    if(!ch) continue;
+    t.status='closed'; t.warningDeadline=0; t.closeReason='عدم التفاعل خلال 24 ساعة'; saveDB();
+    await ch.permissionOverwrites.edit(t.ownerId,{ViewChannel:false,SendMessages:false}).catch(()=>{});
+    await ch.send({content:'🔒 تم الإغلاق تلقائياً بسبب عدم التفاعل خلال 24 ساعة.'}).catch(()=>{});
+    await safeDM(t.ownerId,{embeds:[embed('🔒 تم إغلاق التذكرة',`#${t.number}\nالسبب: عدم التفاعل خلال 24 ساعة.`)]});
+    await ticketLog('إغلاق تلقائي',`#${t.number} - عدم التفاعل 24 ساعة`,0xE74C3C);
+  }
+}
+
+// أمر !say داخل التذكرة: الأمر يختفي والبوت يبعت النص
+client.on(Events.MessageCreate, async message=>{
+  if(!message.guild||message.author.bot) return;
+  const t=ticketFromChannel(message.channel.id);
+  if(!t) return;
+  if(message.author.id===t.ownerId && t.warningDeadline){ t.warningDeadline=0; saveDB(); }
+  if(!message.content.startsWith('!say ')) return;
+  if(!ticketStaff(message.member,t)) return;
+  const body=message.content.slice(5).trim();
+  await message.delete().catch(()=>{});
+  if(body) await message.channel.send({content:body});
+});
+
+async function activationModal(interaction,accept) {
+  if(!hasAnyRole(interaction.member,[...CONFIG.ACTIVATION_REVIEWER_ROLE_IDS,...CONFIG.CONTROL_ROLE_IDS])) return interaction.reply({content:'❌ ليس لديك صلاحية.',ephemeral:true});
+  const modal=new ModalBuilder().setCustomId(accept?'activation_accept_submit':'activation_reject_submit').setTitle(accept?'قبول تفعيل':'رفض تفعيل');
+  modal.addComponents(new ActionRowBuilder().addComponents(new TextInputBuilder().setCustomId('user').setLabel('منشن الشخص أو ID').setStyle(TextInputStyle.Short).setRequired(true)));
+  if(!accept) modal.addComponents(new ActionRowBuilder().addComponents(new TextInputBuilder().setCustomId('reason').setLabel('سبب الرفض').setStyle(TextInputStyle.Paragraph).setRequired(true).setMaxLength(800)));
+  await interaction.showModal(modal);
+}
+
+async function activationSubmit(interaction,accept) {
+  const id=extractId(interaction.fields.getTextInputValue('user'));
+  const member=id?await interaction.guild.members.fetch(id).catch(()=>null):null;
+  if(!member) return interaction.reply({content:'❌ الشخص غير موجود.',ephemeral:true});
+  const reason=accept?'':interaction.fields.getTextInputValue('reason').trim();
+  if(accept) await safeAddRole(member,CONFIG.ACTIVATION_ACCEPTED_ROLE_ID);
+  await safeDM(id,{embeds:[embed(accept?'✅ تم قبول التفعيل':'❌ تم رفض التفعيل',accept?'تم قبولك في التفعيل.':`السبب: ${reason}`,accept?0x2ECC71:0xE74C3C)]});
+  const results=await safeFetchChannel(CONFIG.ACTIVATION_RESULTS_CHANNEL_ID);
+  if(results?.isTextBased()) await results.send({embeds:[embed(accept?'✅ قبول تفعيل':'❌ رفض تفعيل',`الشخص: <@${id}>\nبواسطة: <@${interaction.user.id}>${reason?`\nالسبب: ${reason}`:''}`,accept?0x2ECC71:0xE74C3C)]});
+  await interaction.reply({content:'✅ تم إرسال القرار.',ephemeral:true});
+}
+
+async function simpleApplyModal(interaction,kind) {
+  const modal=new ModalBuilder().setCustomId(`${kind}_apply_submit`).setTitle(kind==='staff'?'تقديم إدارة':'تقديم صانع محتوى');
+  modal.addComponents(
+    new ActionRowBuilder().addComponents(new TextInputBuilder().setCustomId('age').setLabel('العمر').setStyle(TextInputStyle.Short).setRequired(true)),
+    new ActionRowBuilder().addComponents(new TextInputBuilder().setCustomId('experience').setLabel('الخبرة').setStyle(TextInputStyle.Paragraph).setRequired(true).setMaxLength(1000)),
+    new ActionRowBuilder().addComponents(new TextInputBuilder().setCustomId('reason').setLabel('سبب التقديم').setStyle(TextInputStyle.Paragraph).setRequired(true).setMaxLength(1000))
+  );
+  await interaction.showModal(modal);
+}
+
+async function simpleApplySubmit(interaction,kind) {
+  const data={id:`${kind}-${interaction.user.id}-${Date.now()}`,userId:interaction.user.id,age:interaction.fields.getTextInputValue('age'),experience:interaction.fields.getTextInputValue('experience'),reason:interaction.fields.getTextInputValue('reason'),status:'pending'};
+  const store=kind==='staff'?db.staffApplications:db.creatorApplications;
+  store[data.id]=data; saveDB();
+  const reviewId=kind==='staff'?CONFIG.STAFF_APPLICATION_REVIEW_CHANNEL_ID:CONFIG.CREATOR_APPLICATION_REVIEW_CHANNEL_ID;
+  const ch=await safeFetchChannel(reviewId);
+  if(!ch?.isTextBased()) return interaction.reply({content:'❌ روم المراجعة غير مضبوط.',ephemeral:true});
+  await ch.send({embeds:[embed(kind==='staff'?'🛡️ تقديم إدارة':'🎥 تقديم صانع محتوى',`المتقدم: <@${data.userId}>\nالعمر: ${data.age}\n\nالخبرة: ${data.experience}\n\nالسبب: ${data.reason}`)],components:[
+    new ActionRowBuilder().addComponents(
+      new ButtonBuilder().setCustomId(`${kind}_accept:${data.id}`).setLabel('قبول').setStyle(ButtonStyle.Success),
+      new ButtonBuilder().setCustomId(`${kind}_reject:${data.id}`).setLabel('رفض').setStyle(ButtonStyle.Danger)
+    )
+  ]});
+  await interaction.reply({content:'✅ تم إرسال التقديم.',ephemeral:true});
+}
+
+async function decideSimple(interaction,kind,accept) {
+  if(!isReviewer(interaction.member)&&!isControl(interaction.member)) return interaction.reply({content:'❌ ليس لديك صلاحية.',ephemeral:true});
+  const id=interaction.customId.split(':').slice(1).join(':');
+  const store=kind==='staff'?db.staffApplications:db.creatorApplications;
+  const data=store[id];
+  if(!data||data.status!=='pending') return interaction.reply({content:'⚠️ تم اتخاذ قرار بالفعل.',ephemeral:true});
+  data.status=accept?'accepted':'rejected'; data.reviewedBy=interaction.user.id; saveDB();
+  if(accept){
+    const m=await interaction.guild.members.fetch(data.userId).catch(()=>null);
+    if(m) await safeAddRole(m,kind==='staff'?CONFIG.STAFF_PREACCEPTED_ROLE_ID:CONFIG.CREATOR_ACCEPTED_ROLE_ID);
+  }
+  const msg=kind==='staff'&&accept?`تم قبولك مبدئياً. مواعيد المقابلة: ${channelUrl(CONFIG.STAFF_INTERVIEW_SCHEDULE_CHANNEL_ID)}`:(accept?'تم قبولك وتمت إضافة الرتبة.':'تم رفض التقديم.');
+  await safeDM(data.userId,{embeds:[embed(accept?'✅ تم القبول':'❌ تم الرفض',msg,accept?0x2ECC71:0xE74C3C)]});
+  const e=EmbedBuilder.from(interaction.message.embeds[0]).setColor(accept?0x2ECC71:0xE74C3C).addFields({name:'القرار',value:`${accept?'✅ قبول':'❌ رفض'} بواسطة <@${interaction.user.id}>`});
+  await interaction.update({embeds:[e],components:[]});
+}
+
+async function botSendModal(interaction) {
+  if(!isControl(interaction.member)) return interaction.reply({content:'❌ الإدارة العليا فقط.',ephemeral:true});
+  const modal=new ModalBuilder().setCustomId('bot_send_submit').setTitle('إرسال عن طريق البوت');
+  modal.addComponents(
+    new ActionRowBuilder().addComponents(new TextInputBuilder().setCustomId('channel').setLabel('منشن الاتشانل أو Channel ID').setStyle(TextInputStyle.Short).setRequired(true)),
+    new ActionRowBuilder().addComponents(new TextInputBuilder().setCustomId('message').setLabel('الرسالة').setStyle(TextInputStyle.Paragraph).setRequired(true).setMaxLength(2000))
+  );
+  await interaction.showModal(modal);
+}
+
+async function botSendSubmit(interaction) {
+  const id=extractId(interaction.fields.getTextInputValue('channel'));
+  const ch=await safeFetchChannel(id);
+  if(!ch?.isTextBased()) return interaction.reply({content:'❌ الاتشانل غير صحيح.',ephemeral:true});
+  await ch.send({content:interaction.fields.getTextInputValue('message')});
+  await interaction.reply({content:'✅ تم الإرسال.',ephemeral:true});
+}
+
+async function toggleSystem(interaction,name) {
+  if(!isControl(interaction.member)) return interaction.reply({content:'❌ الإدارة العليا فقط.',ephemeral:true});
+  db.systems[name]=!db.systems[name]; saveDB();
+  await interaction.reply({content:`${db.systems[name]?'✅ تم تشغيل':'⛔ تم إيقاف'} **${name}**.`,ephemeral:true});
+}
+
+client.on(Events.InteractionCreate,async interaction=>{
+  try{
+    if(interaction.isButton()){
+      const id=interaction.customId;
+      if(id.startsWith('ticket_type:')) return choosePriority(interaction,id.split(':')[1]);
+      if(id.startsWith('ticket_priority:')){const [,t,p]=id.split(':');return ticketProblemModal(interaction,t,p);}
+      if(id.startsWith('ticket_claim:')){const t=db.tickets[id.split(':')[1]];if(!ticketStaff(interaction.member,t))return interaction.reply({content:'❌ للإدارة فقط.',ephemeral:true});if(!t.claimedBy.includes(interaction.user.id))t.claimedBy.push(interaction.user.id);saveDB();return interaction.reply({content:`✅ استلم التذكرة <@${interaction.user.id}>.`});}
+      if(id.startsWith('ticket_add_user:')) return ticketMemberModal(interaction,db.tickets[id.split(':')[1]],false);
+      if(id.startsWith('ticket_add_staff:')) return ticketMemberModal(interaction,db.tickets[id.split(':')[1]],true);
+      if(id.startsWith('ticket_warn:')) return warnTicket24(interaction,db.tickets[id.split(':')[1]]);
+      if(id.startsWith('ticket_close:')) return closeTicketNow(interaction,db.tickets[id.split(':')[1]]);
+      if(id.startsWith('ticket_reopen:')) return reopenTicketNow(interaction,db.tickets[id.split(':')[1]]);
+      if(id.startsWith('ticket_copy:')) return ticketTranscript(interaction,db.tickets[id.split(':')[1]]);
+      if(id.startsWith('ticket_delete:')){const t=db.tickets[id.split(':')[1]];if(!ticketStaff(interaction.member,t))return interaction.reply({content:'❌ للإدارة فقط.',ephemeral:true});await interaction.reply({content:'🗑️ سيتم المسح خلال 5 ثواني.'});t.status='deleted';saveDB();return setTimeout(()=>interaction.channel.delete().catch(()=>{}),5000);}
+      if(id.startsWith('ticket_rate:')){const [,num,stars]=id.split(':');const modal=new ModalBuilder().setCustomId(`ticket_rating_submit:${num}:${stars}`).setTitle(`تقييم ${stars}/5`);modal.addComponents(new ActionRowBuilder().addComponents(new TextInputBuilder().setCustomId('reason').setLabel('سبب التقييم').setStyle(TextInputStyle.Paragraph).setRequired(true)));return interaction.showModal(modal);}
+      if(id.startsWith('sys:')) return toggleSystem(interaction,id.split(':')[1]);
+      if(id==='sys_status'){if(!isControl(interaction.member))return interaction.reply({content:'❌ الإدارة العليا فقط.',ephemeral:true});return interaction.reply({embeds:[embed('📊 حالة الأنظمة',Object.entries(db.systems).map(([k,v])=>`${v?'✅':'⛔'} ${k}`).join('\n'))],ephemeral:true});}
+      if(id==='bot_send') return botSendModal(interaction);
+      if(id==='activation_accept') return activationModal(interaction,true);
+      if(id==='activation_reject') return activationModal(interaction,false);
+      if(id==='staff_apply') return simpleApplyModal(interaction,'staff');
+      if(id==='creator_apply') return simpleApplyModal(interaction,'creator');
+      if(id.startsWith('staff_accept:')) return decideSimple(interaction,'staff',true);
+      if(id.startsWith('staff_reject:')) return decideSimple(interaction,'staff',false);
+      if(id.startsWith('creator_accept:')) return decideSimple(interaction,'creator',true);
+      if(id.startsWith('creator_reject:')) return decideSimple(interaction,'creator',false);
+    }
+    if(interaction.isModalSubmit()){
+      const id=interaction.customId;
+      if(id.startsWith('ticket_create:')){const [,t,p]=id.split(':');return createTicket(interaction,t,p);}
+      if(id.startsWith('ticket_user_submit:')) return addTicketMember(interaction,db.tickets[id.split(':')[1]],false);
+      if(id.startsWith('ticket_staff_submit:')) return addTicketMember(interaction,db.tickets[id.split(':')[1]],true);
+      if(id.startsWith('ticket_rating_submit:')){const [,num,stars]=id.split(':');const t=db.tickets[num];if(!t||t.ownerId!==interaction.user.id)return interaction.reply({content:'❌ غير مسموح.',ephemeral:true});const reason=interaction.fields.getTextInputValue('reason');db.ticketRatings.push({num,userId:interaction.user.id,type:t.type,stars:Number(stars),reason,at:Date.now()});saveDB();const ch=await safeFetchChannel(CONFIG.TICKET_RATING_CHANNEL_ID);if(ch?.isTextBased())await ch.send({embeds:[embed('⭐ تقييم تذكرة',`#${num} | ${CONFIG.TICKET_TYPES[t.type].label}\n<@${interaction.user.id}>\n${'⭐'.repeat(Number(stars))}\nالسبب: ${reason}`)]});return interaction.reply({content:'✅ شكراً على التقييم.',ephemeral:true});}
+      if(id==='activation_accept_submit') return activationSubmit(interaction,true);
+      if(id==='activation_reject_submit') return activationSubmit(interaction,false);
+      if(id==='staff_apply_submit') return simpleApplySubmit(interaction,'staff');
+      if(id==='creator_apply_submit') return simpleApplySubmit(interaction,'creator');
+      if(id==='bot_send_submit') return botSendSubmit(interaction);
+    }
+  }catch(err){console.error('Advanced system error:',err);if(interaction.isRepliable()&&!interaction.replied&&!interaction.deferred)await interaction.reply({content:'❌ حصل خطأ.',ephemeral:true}).catch(()=>{});}
+});
+
+
 // ==========================================================
 // ERROR HANDLING
 // ==========================================================
@@ -1786,4 +2370,3 @@ if (!CONFIG.TOKEN) {
 }
 
 client.login(CONFIG.TOKEN);
-
