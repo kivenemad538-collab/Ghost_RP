@@ -83,9 +83,14 @@ const CONFIG = {
   TICKET_LOG_CHANNEL_ID: '1536345331736776764',
   TICKET_RATING_CHANNEL_ID: '1536345751947313202',
 
+  // فقط الرولين دول يقدروا يستخدموا أوامر إدارة التذكرة الحساسة
+  TICKET_TEAM_ROLE_ID: '1535755153838313542',
+  TICKET_MANAGER_ROLE_ID: '1535755234989572226',
+
+  // مستخدمة لعرض/دخول التذاكر كصلاحيات عامة
   TICKET_ADMIN_ROLE_IDS: [
-    '1535755234989572226',
-    '1535755153838313542'
+    '1535755153838313542',
+    '1535755234989572226'
   ],
 
   TICKET_TYPES: {
@@ -507,7 +512,7 @@ async function ensureApplicationPanel() {
         [
           '👻 أهلاً بك في نظام تقديم **Ghost RP**',
           '',
-          '━━━━━━━━━━━━━━━━━━━━',
+          '━━━━━━━━━━━━━━━━━━━━━━━━━━━━',
           '',
           '📝 اضغط على زر **التقديم** بالأسفل لبدء طلبك.',
           '',
@@ -579,7 +584,7 @@ async function startApplication(interaction) {
           [
             '👋 أهلاً وسهلاً بك في **Ghost RP**',
             '',
-            '━━━━━━━━━━━━━━━━━━━━',
+            '━━━━━━━━━━━━━━━━━━━━━━━━━━━━',
             '',
             '📝 سيتم إرسال أسئلة التقديم لك سؤالاً بعد سؤال.',
             '',
@@ -942,6 +947,7 @@ async function acceptApplication(interaction) {
       embed(
         'تم قبولك ✅',
         [
+          '━━━━━━━━━━━━━━━━━━━━━━━━━━━━',
           '🎉 **مبروك! تم قبولك بنجاح**',
           '',
           `✅ تم قبول تقديمك في **${CONFIG.SERVER_NAME}**.`,
@@ -950,7 +956,8 @@ async function acceptApplication(interaction) {
           '',
           '📌 تأكد من قراءة القوانين قبل بدء اللعب.',
           '',
-          'نتمنى لك تجربة ممتعة معنا 👻'
+          'نتمنى لك تجربة ممتعة معنا 👻',
+          '━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
         ].join('\n'),
         0x2ECC71
       )
@@ -1090,7 +1097,7 @@ async function rejectApplication(interaction) {
     embeds: [
       embed(
         'تم رفض تقديمك ❌',
-        [`📌 السبب: ${reason}`, blockText].filter(Boolean).join('\n'),
+        ['━━━━━━━━━━━━━━━━━━━━━━━━━━━━', `📌 السبب: ${reason}`, blockText, '━━━━━━━━━━━━━━━━━━━━━━━━━━━━'].filter(Boolean).join('\n'),
         0xE74C3C
       )
     ]
@@ -1949,6 +1956,14 @@ function ticketStaff(member, ticket) {
   return hasAnyRole(member, [...(cfg?.teamRoleIds || []), ...CONFIG.TICKET_ADMIN_ROLE_IDS, ...CONFIG.CONTROL_ROLE_IDS]);
 }
 
+// الأزرار الحساسة: فريق التذاكر + مسؤول التذاكر فقط.
+function ticketManagementStaff(member) {
+  if (!member) return false;
+  return [CONFIG.TICKET_TEAM_ROLE_ID, CONFIG.TICKET_MANAGER_ROLE_ID]
+    .filter(hasRealId)
+    .some(id => member.roles.cache.has(id));
+}
+
 function priorityData(priority) {
   return {
     normal: { label:'عادي', emoji:'🟢', color:0x2ECC71 },
@@ -2131,7 +2146,8 @@ async function createTicket(interaction,typeKey,priority) {
 }
 
 async function ticketMemberModal(interaction,ticket,staffOnly=false) {
-  if (!ticketStaff(interaction.member,ticket)) return interaction.reply({content:'❌ للإدارة فقط.',ephemeral:true});
+  const allowed = staffOnly ? ticketManagementStaff(interaction.member) : ticketStaff(interaction.member,ticket);
+  if (!allowed) return interaction.reply({content:'❌ ليس لديك صلاحية لهذا الإجراء.',ephemeral:true});
   const modal = new ModalBuilder().setCustomId(`${staffOnly?'ticket_staff_submit':'ticket_user_submit'}:${ticket.number}`).setTitle(staffOnly?'إضافة إداري':'إضافة شخص');
   const user = new TextInputBuilder().setCustomId('user').setLabel('منشن الشخص أو Discord ID').setStyle(TextInputStyle.Short).setRequired(true);
   modal.addComponents(new ActionRowBuilder().addComponents(user));
@@ -2139,7 +2155,8 @@ async function ticketMemberModal(interaction,ticket,staffOnly=false) {
 }
 
 async function addTicketMember(interaction,ticket,staffOnly=false) {
-  if (!ticketStaff(interaction.member,ticket)) return interaction.reply({content:'❌ للإدارة فقط.',ephemeral:true});
+  const allowed = staffOnly ? ticketManagementStaff(interaction.member) : ticketStaff(interaction.member,ticket);
+  if (!allowed) return interaction.reply({content:'❌ ليس لديك صلاحية لهذا الإجراء.',ephemeral:true});
   const id=extractId(interaction.fields.getTextInputValue('user'));
   const member=id?await interaction.guild.members.fetch(id).catch(()=>null):null;
   if (!member) return interaction.reply({content:'❌ الشخص لازم يكون موجود في السيرفر.',ephemeral:true});
@@ -2152,7 +2169,7 @@ async function addTicketMember(interaction,ticket,staffOnly=false) {
 }
 
 async function closeTicketNow(interaction,ticket,reason='تم الإغلاق بواسطة الإدارة') {
-  if (!ticketStaff(interaction.member,ticket)) return interaction.reply({content:'❌ للإدارة فقط.',ephemeral:true});
+  if (!ticketManagementStaff(interaction.member)) return interaction.reply({content:'❌ فريق التذاكر أو مسؤول التذاكر فقط.',ephemeral:true});
   ticket.status='closed'; ticket.warningDeadline=0; ticket.closeReason=reason; saveDB();
   await interaction.channel.permissionOverwrites.edit(ticket.ownerId,{ViewChannel:false,SendMessages:false}).catch(()=>{});
   await interaction.reply({content:`🔒 تم إغلاق التذكرة.\nالسبب: ${reason}`});
@@ -2166,7 +2183,7 @@ async function closeTicketNow(interaction,ticket,reason='تم الإغلاق ب�
 }
 
 async function reopenTicketNow(interaction,ticket) {
-  if (!ticketStaff(interaction.member,ticket)) return interaction.reply({content:'❌ للإدارة فقط.',ephemeral:true});
+  if (!ticketManagementStaff(interaction.member)) return interaction.reply({content:'❌ فريق التذاكر أو مسؤول التذاكر فقط.',ephemeral:true});
   ticket.status='open'; ticket.warningDeadline=0; saveDB();
   await interaction.channel.permissionOverwrites.edit(ticket.ownerId,{ViewChannel:true,SendMessages:true,ReadMessageHistory:true});
   await interaction.reply({content:'♻️ تم إعادة فتح التذكرة.'});
@@ -2174,7 +2191,7 @@ async function reopenTicketNow(interaction,ticket) {
 }
 
 async function ticketTranscript(interaction,ticket) {
-  if (!ticketStaff(interaction.member,ticket)) return interaction.reply({content:'❌ للإدارة فقط.',ephemeral:true});
+  if (!ticketManagementStaff(interaction.member)) return interaction.reply({content:'❌ فريق التذاكر أو مسؤول التذاكر فقط.',ephemeral:true});
   let arr=[],before;
   for(let i=0;i<10;i++){
     const batch=await interaction.channel.messages.fetch({limit:100,before}).catch(()=>null);
@@ -2189,7 +2206,7 @@ async function ticketTranscript(interaction,ticket) {
 }
 
 async function warnTicket24(interaction,ticket) {
-  if (!ticketStaff(interaction.member,ticket)) return interaction.reply({content:'❌ للإدارة فقط.',ephemeral:true});
+  if (!ticketManagementStaff(interaction.member)) return interaction.reply({content:'❌ فريق التذاكر أو مسؤول التذاكر فقط.',ephemeral:true});
   ticket.warningDeadline=Date.now()+24*60*60*1000; saveDB();
   await interaction.reply({content:`<@${ticket.ownerId}> ⚠️ لو مفيش رد خلال 24 ساعة التذكرة هتتقفل تلقائي.`});
   await safeDM(ticket.ownerId,{embeds:[embed('⚠️ تنبيه تذكرة',`تذكرتك #${ticket.number} تحتاج رد خلال 24 ساعة.`)]});
@@ -2323,7 +2340,7 @@ client.on(Events.InteractionCreate,async interaction=>{
       if(id.startsWith('ticket_close:')) return closeTicketNow(interaction,db.tickets[id.split(':')[1]]);
       if(id.startsWith('ticket_reopen:')) return reopenTicketNow(interaction,db.tickets[id.split(':')[1]]);
       if(id.startsWith('ticket_copy:')) return ticketTranscript(interaction,db.tickets[id.split(':')[1]]);
-      if(id.startsWith('ticket_delete:')){const t=db.tickets[id.split(':')[1]];if(!ticketStaff(interaction.member,t))return interaction.reply({content:'❌ للإدارة فقط.',ephemeral:true});await interaction.reply({content:'🗑️ سيتم المسح خلال 5 ثواني.'});t.status='deleted';saveDB();return setTimeout(()=>interaction.channel.delete().catch(()=>{}),5000);}
+      if(id.startsWith('ticket_delete:')){const t=db.tickets[id.split(':')[1]];if(!ticketManagementStaff(interaction.member))return interaction.reply({content:'❌ فريق التذاكر أو مسؤول التذاكر فقط.',ephemeral:true});await interaction.reply({content:'🗑️ سيتم المسح خلال 5 ثواني.'});t.status='deleted';saveDB();return setTimeout(()=>interaction.channel.delete().catch(()=>{}),5000);}
       if(id.startsWith('ticket_rate:')){const [,num,stars]=id.split(':');const modal=new ModalBuilder().setCustomId(`ticket_rating_submit:${num}:${stars}`).setTitle(`تقييم ${stars}/5`);modal.addComponents(new ActionRowBuilder().addComponents(new TextInputBuilder().setCustomId('reason').setLabel('سبب التقييم').setStyle(TextInputStyle.Paragraph).setRequired(true)));return interaction.showModal(modal);}
       if(id.startsWith('sys:')) return toggleSystem(interaction,id.split(':')[1]);
       if(id==='sys_status'){if(!isControl(interaction.member))return interaction.reply({content:'❌ الإدارة العليا فقط.',ephemeral:true});return interaction.reply({embeds:[embed('📊 حالة الأنظمة',Object.entries(db.systems).map(([k,v])=>`${v?'✅':'⛔'} ${k}`).join('\n'))],ephemeral:true});}
