@@ -512,7 +512,7 @@ async function ensureApplicationPanel() {
         [
           '👻 أهلاً بك في نظام تقديم **Ghost RP**',
           '',
-          '━━━━━━━━━━━━━━━━━━━━━━━━━━━━',
+          '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━',
           '',
           '📝 اضغط على زر **التقديم** بالأسفل لبدء طلبك.',
           '',
@@ -520,7 +520,7 @@ async function ensureApplicationPanel() {
           '',
           '❌ يمكنك إلغاء التقديم في أي وقت بكتابة: `cancel`',
           '',
-          '━━━━━━━━━━━━━━━━━━━━'
+          '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
         ].join('\n')
       )
     ],
@@ -584,7 +584,7 @@ async function startApplication(interaction) {
           [
             '👋 أهلاً وسهلاً بك في **Ghost RP**',
             '',
-            '━━━━━━━━━━━━━━━━━━━━━━━━━━━━',
+            '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━',
             '',
             '📝 سيتم إرسال أسئلة التقديم لك سؤالاً بعد سؤال.',
             '',
@@ -593,7 +593,7 @@ async function startApplication(interaction) {
             '❌ لو حابب تلغي التقديم اكتب:',
             '`cancel`',
             '',
-            '━━━━━━━━━━━━━━━━━━━━'
+            '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
           ].join('\n')
         )
       ]
@@ -635,7 +635,7 @@ async function askNextQuestion(userId) {
       embed(
         `${CONFIG.SERVER_NAME} | التقديم`,
         [
-          '━━━━━━━━━━━━━━━━━━━━',
+          '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━',
           '',
           `📌 **السؤال ${state.index + 1} من ${CONFIG.APPLICATION_QUESTIONS.length}**`,
           '',
@@ -645,7 +645,7 @@ async function askNextQuestion(userId) {
           '',
           '❌ للإلغاء اكتب: `cancel`',
           '',
-          '━━━━━━━━━━━━━━━━━━━━'
+          '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
         ].join('\n')
       )
     ]
@@ -947,7 +947,7 @@ async function acceptApplication(interaction) {
       embed(
         'تم قبولك ✅',
         [
-          '━━━━━━━━━━━━━━━━━━━━━━━━━━━━',
+          '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━',
           '🎉 **مبروك! تم قبولك بنجاح**',
           '',
           `✅ تم قبول تقديمك في **${CONFIG.SERVER_NAME}**.`,
@@ -957,7 +957,7 @@ async function acceptApplication(interaction) {
           '📌 تأكد من قراءة القوانين قبل بدء اللعب.',
           '',
           'نتمنى لك تجربة ممتعة معنا 👻',
-          '━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
+          '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
         ].join('\n'),
         0x2ECC71
       )
@@ -1097,7 +1097,7 @@ async function rejectApplication(interaction) {
     embeds: [
       embed(
         'تم رفض تقديمك ❌',
-        ['━━━━━━━━━━━━━━━━━━━━━━━━━━━━', `📌 السبب: ${reason}`, blockText, '━━━━━━━━━━━━━━━━━━━━━━━━━━━━'].filter(Boolean).join('\n'),
+        ['━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', `📌 السبب: ${reason}`, blockText, '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'].filter(Boolean).join('\n'),
         0xE74C3C
       )
     ]
@@ -1380,7 +1380,7 @@ client.on(Events.GuildMemberAdd, async member => {
       .setTitle(`👻 مرحباً بك في ${CONFIG.SERVER_NAME}`)
       .setDescription(
         [
-          '━━━━━━━━━━━━━━━━━━━━━━━━',
+          '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━',
           '',
           `🎉 أهلاً وسهلاً بك يا <@${member.id}>`,
           '',
@@ -1394,7 +1394,7 @@ client.on(Events.GuildMemberAdd, async member => {
           '',
           '💙 نتمنى لك وقت ممتع وتجربة Roleplay قوية معنا.',
           '',
-          '━━━━━━━━━━━━━━━━━━━━━━━━'
+          '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
         ].join('\n')
       )
       .setImage(CONFIG.WELCOME_BANNER_URL)
@@ -1505,7 +1505,7 @@ async function submitRating(interaction) {
             '',
             `📝 **سبب التقييم:** ${reason}`,
             '',
-            '━━━━━━━━━━━━━━━━━━━━'
+            '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
           ].join('\n')
         )
       ]
@@ -2333,7 +2333,7 @@ client.on(Events.InteractionCreate,async interaction=>{
       const id=interaction.customId;
       if(id.startsWith('ticket_type:')) return choosePriority(interaction,id.split(':')[1]);
       if(id.startsWith('ticket_priority:')){const [,t,p]=id.split(':');return ticketProblemModal(interaction,t,p);}
-      if(id.startsWith('ticket_claim:')){const t=db.tickets[id.split(':')[1]];if(!ticketStaff(interaction.member,t))return interaction.reply({content:'❌ للإدارة فقط.',ephemeral:true});if(!t.claimedBy.includes(interaction.user.id))t.claimedBy.push(interaction.user.id);saveDB();return interaction.reply({content:`✅ استلم التذكرة <@${interaction.user.id}>.`});}
+      if(id.startsWith('ticket_claim:')){const t=db.tickets[id.split(':')[1]];if(!ticketManagementStaff(interaction.member,t))return interaction.reply({content:'❌ للإدارة فقط.',ephemeral:true});if(!t.claimedBy.includes(interaction.user.id))t.claimedBy.push(interaction.user.id);saveDB();return interaction.reply({content:`✅ استلم التذكرة <@${interaction.user.id}>.`});}
       if(id.startsWith('ticket_add_user:')) return ticketMemberModal(interaction,db.tickets[id.split(':')[1]],false);
       if(id.startsWith('ticket_add_staff:')) return ticketMemberModal(interaction,db.tickets[id.split(':')[1]],true);
       if(id.startsWith('ticket_warn:')) return warnTicket24(interaction,db.tickets[id.split(':')[1]]);
