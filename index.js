@@ -98,65 +98,65 @@ const CONFIG = {
       label: 'الدعم الفني', emoji: '🎧',
       categoryId: '1536126952618983535',
       teamRoleIds: ['PUT_SUPPORT_TEAM_ROLE_ID'],
-      normalChannelId: 'PUT_SUPPORT_NORMAL_CHANNEL_ID',
-      importantChannelId: 'PUT_SUPPORT_IMPORTANT_CHANNEL_ID',
-      urgentChannelId: 'PUT_SUPPORT_URGENT_CHANNEL_ID'
+      normalChannelId: '1536824749471301662',
+      importantChannelId: '1536824777979985940',
+      urgentChannelId: '1536824248553705472'
     },
     monitoring: {
       label: 'الرقابة', emoji: '👁️',
       categoryId: '1536348218659438663',
       teamRoleIds: ['PUT_MONITORING_TEAM_ROLE_ID'],
-      normalChannelId: 'PUT_MONITORING_NORMAL_CHANNEL_ID',
-      importantChannelId: 'PUT_MONITORING_IMPORTANT_CHANNEL_ID',
-      urgentChannelId: 'PUT_MONITORING_URGENT_CHANNEL_ID'
+      normalChannelId: '1536845236225974363',
+      importantChannelId: '1536845265971978390',
+      urgentChannelId: '1536845288738652191'
     },
     player_complaint: {
       label: 'شكوى ضد لاعب', emoji: '⚠️',
       categoryId: '1536348415494070352',
       teamRoleIds: ['PUT_COMPLAINT_TEAM_ROLE_ID'],
-      normalChannelId: 'PUT_PLAYER_COMPLAINT_NORMAL_CHANNEL_ID',
-      importantChannelId: 'PUT_PLAYER_COMPLAINT_IMPORTANT_CHANNEL_ID',
-      urgentChannelId: 'PUT_PLAYER_COMPLAINT_URGENT_CHANNEL_ID'
+      normalChannelId: '1536845484126371861',
+      importantChannelId: '1536845508981555313',
+      urgentChannelId: '1536845528946450472'
     },
     appeal: {
       label: 'استئناف', emoji: '🔄',
       categoryId: '1536142385795563662',
       teamRoleIds: ['PUT_APPEAL_TEAM_ROLE_ID'],
-      normalChannelId: 'PUT_APPEAL_NORMAL_CHANNEL_ID',
-      importantChannelId: 'PUT_APPEAL_IMPORTANT_CHANNEL_ID',
-      urgentChannelId: 'PUT_APPEAL_URGENT_CHANNEL_ID'
+      normalChannelId: '1536845709104390225',
+      importantChannelId: '1536845727773499444',
+      urgentChannelId: '1536845754390413484'
     },
     staff_complaint: {
       label: 'شكوى ضد إداري', emoji: '🚔',
       categoryId: '1536348677268971560',
       teamRoleIds: ['PUT_STAFF_COMPLAINT_TEAM_ROLE_ID'],
-      normalChannelId: 'PUT_STAFF_COMPLAINT_NORMAL_CHANNEL_ID',
-      importantChannelId: 'PUT_STAFF_COMPLAINT_IMPORTANT_CHANNEL_ID',
-      urgentChannelId: 'PUT_STAFF_COMPLAINT_URGENT_CHANNEL_ID'
+      normalChannelId: '1536845900767563888',
+      importantChannelId: '1536845924582686860',
+      urgentChannelId: '1536845947903025222'
     },
     store: {
       label: 'المتجر', emoji: '🛒',
       categoryId: '1536144785986027521',
       teamRoleIds: ['PUT_STORE_TEAM_ROLE_ID'],
-      normalChannelId: 'PUT_STORE_NORMAL_CHANNEL_ID',
-      importantChannelId: 'PUT_STORE_IMPORTANT_CHANNEL_ID',
-      urgentChannelId: 'PUT_STORE_URGENT_CHANNEL_ID'
+      normalChannelId: '1536846114223816705',
+      importantChannelId: '1536846128010502154',
+      urgentChannelId: '1536846147983908956'
     },
     compensation: {
       label: 'التعويضات', emoji: '💰',
       categoryId: '1536348299588800592',
       teamRoleIds: ['PUT_COMPENSATION_TEAM_ROLE_ID'],
-      normalChannelId: 'PUT_COMPENSATION_NORMAL_CHANNEL_ID',
-      importantChannelId: 'PUT_COMPENSATION_IMPORTANT_CHANNEL_ID',
-      urgentChannelId: 'PUT_COMPENSATION_URGENT_CHANNEL_ID'
+      normalChannelId: '1536846371829579787',
+      importantChannelId: '1536846387860480040',
+      urgentChannelId: '1536846411390525520'
     },
     bug: {
       label: 'الإبلاغ عن الأخطاء', emoji: '🐞',
       categoryId: '1536342904631595139',
       teamRoleIds: ['PUT_BUG_TEAM_ROLE_ID'],
-      normalChannelId: 'PUT_BUG_NORMAL_CHANNEL_ID',
-      importantChannelId: 'PUT_BUG_IMPORTANT_CHANNEL_ID',
-      urgentChannelId: 'PUT_BUG_URGENT_CHANNEL_ID'
+      normalChannelId: '1536844960194764880',
+      importantChannelId: '1536844787812933652',
+      urgentChannelId: '1536844814048563270'
     }
   },
 
