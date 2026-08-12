@@ -72,6 +72,13 @@ const CONFIG = {
   ],
 
   SERVER_NAME: 'Ghost RP',
+
+  // ---------- Auto Roles ----------
+  // البوت يعطي الرولين دول تلقائياً لأي شخص يدخل السيرفر.
+  AUTO_JOIN_ROLE_IDS: [
+    'PUT_FIRST_AUTO_ROLE_ID',
+    'PUT_SECOND_AUTO_ROLE_ID'
+  ],
   COLOR: 0x1687FF,
   WELCOME_BANNER_URL: 'https://cdn.discordapp.com/attachments/1535772685337100431/1536106506506862743/ChatGPT_Image_Aug_9_2026_06_54_02_PM.png',
 
@@ -374,6 +381,8 @@ const client = new Client({
 const spamTracker = new Map();
 const greetedUsers = new Map();
 const specialDmApplications = new Map();
+// MULTI_APPLICATION_NOTE: كل مستخدم له حالة تقديم مستقلة، لذلك عدة أشخاص يقدروا يقدموا في نفس الوقت.
+
 
 
 function embed(title, description, color = CONFIG.COLOR) {
@@ -1384,6 +1393,13 @@ async function rejectVideo(interaction) {
 // WELCOME + AUTO ROLE
 // ==========================================================
 client.on(Events.GuildMemberAdd, async member => {
+  // إعطاء رولين تلقائياً عند دخول العضو.
+  for (const roleId of CONFIG.AUTO_JOIN_ROLE_IDS || []) {
+    if (!hasRealId(roleId)) continue;
+    await safeAddRole(member, roleId);
+  }
+
+
   if (db.systems?.welcome === false) return;
   await safeAddRole(member, CONFIG.DEFAULT_MEMBER_ROLE_ID);
 
