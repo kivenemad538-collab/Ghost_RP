@@ -76,8 +76,8 @@ const CONFIG = {
   // ---------- Auto Roles ----------
   // البوت يعطي الرولين دول تلقائياً لأي شخص يدخل السيرفر.
   AUTO_JOIN_ROLE_IDS: [
-    'PUT_FIRST_AUTO_ROLE_ID',
-    'PUT_SECOND_AUTO_ROLE_ID'
+    '1535763946596728902',
+    '1535767262580047923'
   ],
   COLOR: 0x1687FF,
   WELCOME_BANNER_URL: 'https://cdn.discordapp.com/attachments/1535772685337100431/1536106506506862743/ChatGPT_Image_Aug_9_2026_06_54_02_PM.png',
