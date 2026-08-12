@@ -186,6 +186,37 @@ const CONFIG = {
   CREATOR_APPLICATION_REVIEW_CHANNEL_ID: '1537186507977261076',
   CREATOR_ACCEPTED_ROLE_ID: '1535770270688874587',
 
+  // ---------- Staff / Creator DM application questions ----------
+  STAFF_APPLICATION_QUESTIONS: [
+    'ما اسمك؟',
+    'كم عمرك؟',
+    'ما هو Discord ID الخاص بك؟',
+    'ما هو FiveM ID الخاص بك؟',
+    'منذ متى وأنت تلعب Roleplay؟',
+    'هل سبق لك العمل كإداري؟ وإذا نعم، اذكر خبرتك.',
+    'ما هي خبرتك في التعامل مع مشاكل اللاعبين؟',
+    'كيف تتصرف إذا قام لاعب بمخالفة القوانين أمامك؟',
+    'كيف تتصرف إذا حصل خلاف بينك وبين إداري آخر؟',
+    'كم ساعة تستطيع التواجد يومياً؟',
+    'ما الأوقات التي تكون متاحاً فيها غالباً؟',
+    'لماذا تريد الانضمام إلى إدارة Ghost RP؟',
+    'ماذا تستطيع أن تضيف لفريق الإدارة؟',
+    'هل قرأت قوانين السيرفر ومستعد للالتزام بها؟'
+  ],
+
+  CREATOR_APPLICATION_QUESTIONS: [
+    'ما اسمك؟',
+    'كم عمرك؟',
+    'ما هو Discord ID الخاص بك؟',
+    'ما اسم قناتك أو حسابك؟',
+    'كم عدد المتابعين (Followers) لديك؟',
+    'ضع رابط القناة أو الحساب.',
+    'ما نوع المحتوى الذي تقدمه؟',
+    'كم مرة تنشر أو تعمل بث في الأسبوع؟',
+    'هل سبق لك صناعة محتوى لسيرفرات Roleplay؟',
+    'لماذا تريد أن تصبح صانع محتوى في Ghost RP؟'
+  ],
+
   // ---------- Application ----------
   APPLICATION_QUESTIONS: [
     'ما اسمك؟',
@@ -342,6 +373,8 @@ const client = new Client({
 
 const spamTracker = new Map();
 const greetedUsers = new Map();
+const specialDmApplications = new Map();
+
 
 function embed(title, description, color = CONFIG.COLOR) {
   return new EmbedBuilder()
@@ -2404,6 +2437,156 @@ async function decisionSubmit(interaction, accept) {
   await interaction.reply({content:'✅ تم إرسال القرار للشخص في الخاص.',ephemeral:true});
 }
 
+async function startSpecialDmApplication(interaction, kind) {
+  const isStaff = kind === 'staff';
+  const questions = isStaff ? CONFIG.STAFF_APPLICATION_QUESTIONS : CONFIG.CREATOR_APPLICATION_QUESTIONS;
+
+  if (specialDmApplications.has(interaction.user.id)) {
+    return interaction.reply({content:'⚠️ عندك تقديم شغال بالفعل في الخاص.', ephemeral:true});
+  }
+
+  const dm = await interaction.user.createDM().catch(()=>null);
+  if (!dm) return interaction.reply({content:'❌ افتح الرسائل الخاصة ثم حاول مرة أخرى.', ephemeral:true});
+
+  specialDmApplications.set(interaction.user.id, {
+    kind,
+    index: 0,
+    answers: [],
+    platform: null
+  });
+
+  await interaction.reply({content:'✅ تم بدء التقديم. راجع الخاص.', ephemeral:true});
+
+  await dm.send({
+    embeds:[new EmbedBuilder()
+      .setColor(CONFIG.COLOR)
+      .setTitle(isStaff ? '🛡️ تقديم إدارة Ghost RP' : '🎥 تقديم صانع محتوى Ghost RP')
+      .setDescription([
+        '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━',
+        '',
+        `سيتم إرسال الأسئلة لك واحداً واحداً.`,
+        '',
+        'للإلغاء في أي وقت اكتب: `cancel`',
+        '',
+        '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
+      ].join('\n'))
+      .setFooter({text:CONFIG.SERVER_NAME})
+      .setTimestamp()]
+  });
+
+  if (!isStaff) {
+    await dm.send({
+      embeds:[embed('🎬 نوع البرنامج','اختر المنصة التي تصنع عليها المحتوى:')],
+      components:[new ActionRowBuilder().addComponents(
+        new ButtonBuilder().setCustomId('creator_platform:kick').setLabel('Kick').setStyle(ButtonStyle.Success),
+        new ButtonBuilder().setCustomId('creator_platform:youtube').setLabel('YouTube').setStyle(ButtonStyle.Danger),
+        new ButtonBuilder().setCustomId('creator_platform:tiktok').setLabel('TikTok').setStyle(ButtonStyle.Primary)
+      )]
+    });
+    return;
+  }
+
+  await sendSpecialDmQuestion(interaction.user.id);
+}
+
+async function selectCreatorPlatform(interaction, platform) {
+  const state = specialDmApplications.get(interaction.user.id);
+  if (!state || state.kind !== 'creator') {
+    return interaction.reply({content:'⚠️ مفيش تقديم صانع محتوى شغال حالياً.', ephemeral:true});
+  }
+
+  const names = {kick:'Kick', youtube:'YouTube', tiktok:'TikTok'};
+  if (!names[platform]) return;
+
+  state.platform = names[platform];
+  specialDmApplications.set(interaction.user.id,state);
+
+  await interaction.update({
+    embeds:[embed('✅ تم اختيار البرنامج',`البرنامج: **${names[platform]}**`)],
+    components:[]
+  });
+
+  await sendSpecialDmQuestion(interaction.user.id);
+}
+
+async function sendSpecialDmQuestion(userId) {
+  const state = specialDmApplications.get(userId);
+  if (!state) return;
+
+  const questions = state.kind === 'staff'
+    ? CONFIG.STAFF_APPLICATION_QUESTIONS
+    : CONFIG.CREATOR_APPLICATION_QUESTIONS;
+
+  if (state.index >= questions.length) return finishSpecialDmApplication(userId);
+
+  await safeDM(userId,{
+    embeds:[new EmbedBuilder()
+      .setColor(CONFIG.COLOR)
+      .setTitle(state.kind === 'staff' ? '🛡️ تقديم الإدارة' : '🎥 تقديم صانع محتوى')
+      .setDescription([
+        '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━',
+        '',
+        `**السؤال ${state.index + 1}/${questions.length}**`,
+        '',
+        questions[state.index],
+        '',
+        'للإلغاء اكتب: `cancel`',
+        '',
+        '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
+      ].join('\n'))
+      .setFooter({text:CONFIG.SERVER_NAME})
+    ]
+  });
+}
+
+async function finishSpecialDmApplication(userId) {
+  const state = specialDmApplications.get(userId);
+  if (!state) return;
+
+  specialDmApplications.delete(userId);
+
+  const reviewId = state.kind === 'staff'
+    ? CONFIG.STAFF_APPLICATION_REVIEW_CHANNEL_ID
+    : CONFIG.CREATOR_APPLICATION_REVIEW_CHANNEL_ID;
+
+  const review = await safeFetchChannel(reviewId);
+  const questions = state.kind === 'staff'
+    ? CONFIG.STAFF_APPLICATION_QUESTIONS
+    : CONFIG.CREATOR_APPLICATION_QUESTIONS;
+
+  const fields = [];
+  if (state.kind === 'creator') {
+    fields.push({name:'🎬 البرنامج',value:state.platform || 'غير محدد'});
+  }
+
+  for (let i=0;i<questions.length;i++) {
+    fields.push({
+      name:`${i+1}. ${questions[i]}`.slice(0,256),
+      value:(state.answers[i] || 'بدون إجابة').slice(0,1024)
+    });
+  }
+
+  if (review?.isTextBased()) {
+    const chunks = [];
+    for(let i=0;i<fields.length;i+=20) chunks.push(fields.slice(i,i+20));
+
+    for(let i=0;i<chunks.length;i++) {
+      const e = new EmbedBuilder()
+        .setColor(CONFIG.COLOR)
+        .setTitle(state.kind === 'staff' ? '🛡️ تقديم إدارة جديد' : '🎥 تقديم صانع محتوى جديد')
+        .setDescription(i===0 ? `المتقدم: <@${userId}> | \`${userId}\`` : 'تكملة الإجابات')
+        .addFields(chunks[i])
+        .setFooter({text:CONFIG.SERVER_NAME})
+        .setTimestamp();
+      await review.send({embeds:[e]});
+    }
+  }
+
+  await safeDM(userId,{
+    embeds:[embed('✅ تم إرسال التقديم',`تم إرسال تقديمك للمراجعة في **${CONFIG.SERVER_NAME}**.`,0x2ECC71)]
+  });
+}
+
 async function simpleApplyModal(interaction,kind) {
   const modal=new ModalBuilder().setCustomId(`${kind}_apply_submit`).setTitle(kind==='staff'?'تقديم إدارة':'تقديم صانع محتوى');
   modal.addComponents(
@@ -2491,8 +2674,9 @@ client.on(Events.InteractionCreate,async interaction=>{
       if(id==='bot_send') return botSendModal(interaction);
       if(id==='decision_accept') return decisionModal(interaction,true);
       if(id==='decision_reject') return decisionModal(interaction,false);
-      if(id==='staff_apply') return simpleApplyModal(interaction,'staff');
-      if(id==='creator_apply') return simpleApplyModal(interaction,'creator');
+      if(id.startsWith('creator_platform:')) return selectCreatorPlatform(interaction,id.split(':')[1]);
+      if(id==='staff_apply') return startSpecialDmApplication(interaction,'staff');
+      if(id==='creator_apply') return startSpecialDmApplication(interaction,'creator');
       if(id.startsWith('staff_accept:')) return decideSimple(interaction,'staff',true);
       if(id.startsWith('staff_reject:')) return decideSimple(interaction,'staff',false);
       if(id.startsWith('creator_accept:')) return decideSimple(interaction,'creator',true);
