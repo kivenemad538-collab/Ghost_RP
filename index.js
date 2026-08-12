@@ -30,7 +30,8 @@ const {
   entersState,
   VoiceConnectionStatus,
   AudioPlayerStatus,
-  StreamType
+  StreamType,
+  getVoiceConnection
 } = require('@discordjs/voice');
 
 // ==========================================================
@@ -168,12 +169,11 @@ const CONFIG = {
     '1535755333572763798'
   ],
 
-  // ---------- Activation decisions ----------
-  ACTIVATION_PANEL_CHANNEL_ID: 'PUT_ACTIVATION_PANEL_CHANNEL_ID',
-  ACTIVATION_RESULTS_CHANNEL_ID: 'PUT_ACTIVATION_RESULTS_CHANNEL_ID',
-  ACTIVATION_ACCEPTED_ROLE_ID: 'PUT_ACTIVATION_ACCEPTED_ROLE_ID',
-  ACTIVATION_REVIEWER_ROLE_IDS: [
-    'PUT_ACTIVATION_REVIEWER_ROLE_ID'
+  // ---------- Manual Accept / Reject Panel ----------
+  DECISION_PANEL_CHANNEL_ID: 'PUT_DECISION_PANEL_CHANNEL_ID',
+  DECISION_RESULTS_CHANNEL_ID: 'PUT_DECISION_RESULTS_CHANNEL_ID',
+  DECISION_REVIEWER_ROLE_IDS: [
+    'PUT_DECISION_REVIEWER_ROLE_ID'
   ],
 
   // ---------- Staff / Creator applications ----------
@@ -421,7 +421,6 @@ client.once(Events.ClientReady, async () => {
 
   reconcileApplicationState();
   await ensureApplicationPanel();
-  await connectSupportVoice();
 
   setInterval(releaseExpiredSecondRejections, 60 * 1000);
 });
@@ -1534,67 +1533,69 @@ let supportPlayer = null;
 let supportQueue = Promise.resolve();
 
 async function connectSupportVoice() {
-  try {
-    const guild =
-      client.guilds.cache.get(CONFIG.GUILD_ID) ||
-      await client.guilds.fetch(CONFIG.GUILD_ID).catch(() => null);
+  const guild =
+    client.guilds.cache.get(CONFIG.GUILD_ID) ||
+    await client.guilds.fetch(CONFIG.GUILD_ID).catch(() => null);
 
-    if (!guild) return;
+  if (!guild) throw new Error('Guild not found.');
 
-    const channel = await guild.channels.fetch(CONFIG.SUPPORT_VOICE_CHANNEL_ID).catch(() => null);
-    if (!channel || channel.type !== ChannelType.GuildVoice) return;
-
-    if (supportConnection) {
-      try {
-        await entersState(supportConnection, VoiceConnectionStatus.Ready, 5000);
-        return;
-      } catch {
-        try { supportConnection.destroy(); } catch {}
-        supportConnection = null;
-      }
-    }
-
-    supportConnection = joinVoiceChannel({
-      channelId: channel.id,
-      guildId: guild.id,
-      adapterCreator: guild.voiceAdapterCreator,
-      selfDeaf: false,
-      selfMute: false
-    });
-
-    supportConnection.on('stateChange', async (_, newState) => {
-      if (newState.status === VoiceConnectionStatus.Disconnected) {
-        try {
-          await Promise.race([
-            entersState(supportConnection, VoiceConnectionStatus.Signalling, 5000),
-            entersState(supportConnection, VoiceConnectionStatus.Connecting, 5000)
-          ]);
-        } catch {
-          try { supportConnection.destroy(); } catch {}
-          supportConnection = null;
-        }
-      }
-    });
-
-    await entersState(supportConnection, VoiceConnectionStatus.Ready, 20_000);
-
-    supportPlayer = createAudioPlayer();
-    supportConnection.subscribe(supportPlayer);
-
-    console.log('Connected to support voice channel.');
-  } catch (err) {
-    console.error('Support voice connection error:', err.message);
+  const channel = await guild.channels.fetch(CONFIG.SUPPORT_VOICE_CHANNEL_ID).catch(() => null);
+  if (!channel || channel.type !== ChannelType.GuildVoice) {
+    throw new Error('Support voice channel not found or is not a normal voice channel.');
   }
+
+  // Destroy any broken/stale voice connection before reconnecting.
+  const oldConnection = getVoiceConnection(guild.id);
+  if (oldConnection) {
+    try { oldConnection.destroy(); } catch {}
+  }
+  supportConnection = null;
+  supportPlayer = null;
+
+  let lastError = null;
+
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    try {
+      console.log(`Support voice connect attempt ${attempt}/3...`);
+
+      supportConnection = joinVoiceChannel({
+        channelId: channel.id,
+        guildId: guild.id,
+        adapterCreator: guild.voiceAdapterCreator,
+        selfDeaf: false,
+        selfMute: false
+      });
+
+      supportConnection.on('error', err => {
+        console.error('Support voice connection event error:', err.message);
+      });
+
+      await entersState(supportConnection, VoiceConnectionStatus.Ready, 30_000);
+
+      supportPlayer = createAudioPlayer();
+      supportConnection.subscribe(supportPlayer);
+
+      console.log('Connected to support voice channel successfully.');
+      return supportConnection;
+    } catch (err) {
+      lastError = err;
+      console.error(`Support voice attempt ${attempt} failed:`, err.message);
+      try { supportConnection?.destroy(); } catch {}
+      supportConnection = null;
+      supportPlayer = null;
+      await new Promise(resolve => setTimeout(resolve, 2500));
+    }
+  }
+
+  throw lastError || new Error('Could not connect to support voice.');
 }
 
 async function speakSupportGreeting() {
   if (db.systems?.voice === false) return;
 
   supportQueue = supportQueue.then(async () => {
-    const mediaFile = path.join(DATA_DIR, 'ghost-support-greeting.mp4');
-
     try {
-      if (!supportConnection || !supportPlayer) {
+      if (!supportConnection || !supportPlayer || supportConnection.state.status !== VoiceConnectionStatus.Ready) {
         await connectSupportVoice();
       }
 
@@ -1602,13 +1603,11 @@ async function speakSupportGreeting() {
         throw new Error('Voice connection/player is not ready.');
       }
 
-      await entersState(supportConnection, VoiceConnectionStatus.Ready, 20_000);
+      const mediaFile = path.join(DATA_DIR, 'ghost-support-greeting.mp4');
 
-      // Discord CDN links are remote HTTP files. Download the MP4 first because
-      // createAudioResource() is much more reliable with a local media file.
-      let mustDownload = !fs.existsSync(mediaFile) || fs.statSync(mediaFile).size < 1000;
-
-      if (mustDownload) {
+      // Download the AI-voice video once, then reuse the local file.
+      if (!fs.existsSync(mediaFile) || fs.statSync(mediaFile).size < 1000) {
+        console.log('Downloading Ghost RP support greeting media...');
         const response = await fetch(CONFIG.SUPPORT_GREETING_MEDIA_URL, {
           headers: { 'User-Agent': 'Mozilla/5.0' }
         });
@@ -1617,9 +1616,9 @@ async function speakSupportGreeting() {
           throw new Error(`Greeting media HTTP ${response.status}`);
         }
 
-        const arrayBuffer = await response.arrayBuffer();
-        fs.writeFileSync(mediaFile, Buffer.from(arrayBuffer));
-        console.log(`Support greeting downloaded: ${fs.statSync(mediaFile).size} bytes`);
+        const buffer = Buffer.from(await response.arrayBuffer());
+        fs.writeFileSync(mediaFile, buffer);
+        console.log(`Support greeting media saved: ${buffer.length} bytes`);
       }
 
       const resource = createAudioResource(mediaFile, {
@@ -1630,14 +1629,12 @@ async function speakSupportGreeting() {
       if (resource.volume) resource.volume.setVolume(1.0);
 
       supportPlayer.play(resource);
-
       await entersState(supportPlayer, AudioPlayerStatus.Playing, 20_000);
-      console.log('Playing Ghost RP support greeting.');
+      console.log('Ghost RP support greeting is playing.');
 
-      await entersState(supportPlayer, AudioPlayerStatus.Idle, 120_000)
-        .catch(() => {});
+      await entersState(supportPlayer, AudioPlayerStatus.Idle, 120_000).catch(() => {});
     } catch (err) {
-      console.error('Support media greeting error:', err);
+      console.error('Support media greeting error:', err.message);
     }
   });
 
@@ -2045,27 +2042,77 @@ async function postAdvancedPanels() {
     ]});
   }
 
-  const activation = await safeFetchChannel(CONFIG.ACTIVATION_PANEL_CHANNEL_ID);
-  if (activation?.isTextBased() && !(await panelExists(activation,'activation_accept'))) {
-    await activation.send({embeds:[embed('ââ ØªÙØ¯ÙÙØ§Øª Ø§ÙØªÙØ¹ÙÙ','Ø­Ø¯Ø¯ Ø§ÙØ´Ø®Øµ Ø¨Ø§ÙÙÙØ´Ù Ø£Ù Ø§ÙÙID.')],components:[
-      new ActionRowBuilder().addComponents(
-        new ButtonBuilder().setCustomId('activation_accept').setLabel('ÙØ¨ÙÙ').setStyle(ButtonStyle.Success),
-        new ButtonBuilder().setCustomId('activation_reject').setLabel('Ø±ÙØ¶').setStyle(ButtonStyle.Danger)
-      )
-    ]});
+  const decision = await safeFetchChannel(CONFIG.DECISION_PANEL_CHANNEL_ID);
+  if (decision?.isTextBased() && !(await panelExists(decision,'decision_accept'))) {
+    const decisionEmbed = new EmbedBuilder()
+      .setColor(CONFIG.COLOR)
+      .setTitle('ââ ÙØ¨ÙÙ / Ø±ÙØ¶')
+      .setDescription([
+        'ââââââââââââââââââââââââââââââââââââââââ',
+        '',
+        'Ø§Ø®ØªØ§Ø± **ÙØ¨ÙÙ** Ø£Ù **Ø±ÙØ¶** ÙÙ Ø§ÙØ£Ø²Ø±Ø§Ø± Ø¨Ø§ÙØ£Ø³ÙÙ.',
+        '',
+        'Ø¨Ø¹Ø¯ÙØ§ Ø§ÙØªØ¨ Discord ID Ø§ÙØ®Ø§Øµ Ø¨Ø§ÙØ´Ø®Øµ.',
+        '',
+        'ÙÙ Ø§ÙØ±ÙØ¶ ÙÙØ·ÙØ¨ ÙÙÙ Ø³Ø¨Ø¨ Ø§ÙØ±ÙØ¶.',
+        '',
+        'ââââââââââââââââââââââââââââââââââââââââ'
+      ].join('\n'))
+      .setFooter({ text: CONFIG.SERVER_NAME })
+      .setTimestamp();
+
+    await decision.send({
+      embeds:[decisionEmbed],
+      components:[
+        new ActionRowBuilder().addComponents(
+          new ButtonBuilder().setCustomId('decision_accept').setLabel('ÙØ¨ÙÙ').setEmoji('â').setStyle(ButtonStyle.Success),
+          new ButtonBuilder().setCustomId('decision_reject').setLabel('Ø±ÙØ¶').setEmoji('â').setStyle(ButtonStyle.Danger)
+        )
+      ]
+    });
   }
 
   const staff = await safeFetchChannel(CONFIG.STAFF_APPLICATION_PANEL_CHANNEL_ID);
   if (staff?.isTextBased() && !(await panelExists(staff,'staff_apply'))) {
-    await staff.send({embeds:[embed('ð¡ï¸ ØªÙØ¯ÙÙ Ø§ÙØ¥Ø¯Ø§Ø±Ø©','Ø§Ø¶ØºØ· ÙÙØªØ­ ÙÙÙØ°Ø¬ ØªÙØ¯ÙÙ Ø§ÙØ¥Ø¯Ø§Ø±Ø©.')],components:[
-      new ActionRowBuilder().addComponents(new ButtonBuilder().setCustomId('staff_apply').setLabel('ØªÙØ¯ÙÙ Ø¥Ø¯Ø§Ø±Ø©').setStyle(ButtonStyle.Primary))
+    const staffPanelEmbed = new EmbedBuilder()
+      .setColor(CONFIG.COLOR)
+      .setTitle('ð¡ï¸ ØªÙØ¯ÙÙ Ø§ÙØ¥Ø¯Ø§Ø±Ø©')
+      .setDescription([
+        'ââââââââââââââââââââââââââââââââââââââââ',
+        '',
+        'Ø§Ø¶ØºØ· Ø¹ÙÙ Ø²Ø± **ØªÙØ¯ÙÙ Ø¥Ø¯Ø§Ø±Ø©** ÙÙØªØ­ ÙÙÙØ°Ø¬ Ø§ÙØªÙØ¯ÙÙ.',
+        '',
+        'Ø¨Ø¹Ø¯ Ø§ÙØ¥Ø±Ø³Ø§Ù Ø³ÙØªÙ ÙØ±Ø§Ø¬Ø¹Ø© ØªÙØ¯ÙÙÙ ÙÙ Ø§ÙØ¥Ø¯Ø§Ø±Ø©.',
+        '',
+        'ââââââââââââââââââââââââââââââââââââââââ'
+      ].join('\n'))
+      .setFooter({ text: CONFIG.SERVER_NAME })
+      .setTimestamp();
+
+    await staff.send({embeds:[staffPanelEmbed],components:[
+      new ActionRowBuilder().addComponents(new ButtonBuilder().setCustomId('staff_apply').setLabel('ØªÙØ¯ÙÙ Ø¥Ø¯Ø§Ø±Ø©').setEmoji('ð¡ï¸').setStyle(ButtonStyle.Primary))
     ]});
   }
 
   const creator = await safeFetchChannel(CONFIG.CREATOR_APPLICATION_PANEL_CHANNEL_ID);
   if (creator?.isTextBased() && !(await panelExists(creator,'creator_apply'))) {
-    await creator.send({embeds:[embed('ð¥ ØªÙØ¯ÙÙ ØµØ§ÙØ¹ ÙØ­ØªÙÙ','Ø§Ø¶ØºØ· ÙÙØªØ­ ÙÙÙØ°Ø¬ Ø§ÙØªÙØ¯ÙÙ.')],components:[
-      new ActionRowBuilder().addComponents(new ButtonBuilder().setCustomId('creator_apply').setLabel('ØªÙØ¯ÙÙ ØµØ§ÙØ¹ ÙØ­ØªÙÙ').setStyle(ButtonStyle.Primary))
+    const creatorPanelEmbed = new EmbedBuilder()
+      .setColor(CONFIG.COLOR)
+      .setTitle('ð¥ ØªÙØ¯ÙÙ ØµØ§ÙØ¹ ÙØ­ØªÙÙ')
+      .setDescription([
+        'ââââââââââââââââââââââââââââââââââââââââ',
+        '',
+        'Ø§Ø¶ØºØ· Ø¹ÙÙ Ø²Ø± **ØªÙØ¯ÙÙ ØµØ§ÙØ¹ ÙØ­ØªÙÙ** ÙÙØªØ­ ÙÙÙØ°Ø¬ Ø§ÙØªÙØ¯ÙÙ.',
+        '',
+        'Ø¨Ø¹Ø¯ Ø§ÙØ¥Ø±Ø³Ø§Ù Ø³ÙØªÙ ÙØ±Ø§Ø¬Ø¹Ø© ØªÙØ¯ÙÙÙ ÙÙ Ø§ÙØ¥Ø¯Ø§Ø±Ø©.',
+        '',
+        'ââââââââââââââââââââââââââââââââââââââââ'
+      ].join('\n'))
+      .setFooter({ text: CONFIG.SERVER_NAME })
+      .setTimestamp();
+
+    await creator.send({embeds:[creatorPanelEmbed],components:[
+      new ActionRowBuilder().addComponents(new ButtonBuilder().setCustomId('creator_apply').setLabel('ØªÙØ¯ÙÙ ØµØ§ÙØ¹ ÙØ­ØªÙÙ').setEmoji('ð¥').setStyle(ButtonStyle.Primary))
     ]});
   }
 }
@@ -2255,24 +2302,91 @@ client.on(Events.MessageCreate, async message=>{
   if(body) await message.channel.send({content:body});
 });
 
-async function activationModal(interaction,accept) {
-  if(!hasAnyRole(interaction.member,[...CONFIG.ACTIVATION_REVIEWER_ROLE_IDS,...CONFIG.CONTROL_ROLE_IDS])) return interaction.reply({content:'â ÙÙØ³ ÙØ¯ÙÙ ØµÙØ§Ø­ÙØ©.',ephemeral:true});
-  const modal=new ModalBuilder().setCustomId(accept?'activation_accept_submit':'activation_reject_submit').setTitle(accept?'ÙØ¨ÙÙ ØªÙØ¹ÙÙ':'Ø±ÙØ¶ ØªÙØ¹ÙÙ');
-  modal.addComponents(new ActionRowBuilder().addComponents(new TextInputBuilder().setCustomId('user').setLabel('ÙÙØ´Ù Ø§ÙØ´Ø®Øµ Ø£Ù ID').setStyle(TextInputStyle.Short).setRequired(true)));
-  if(!accept) modal.addComponents(new ActionRowBuilder().addComponents(new TextInputBuilder().setCustomId('reason').setLabel('Ø³Ø¨Ø¨ Ø§ÙØ±ÙØ¶').setStyle(TextInputStyle.Paragraph).setRequired(true).setMaxLength(800)));
+async function decisionModal(interaction, accept) {
+  if (!hasAnyRole(interaction.member, [...CONFIG.DECISION_REVIEWER_ROLE_IDS, ...CONFIG.CONTROL_ROLE_IDS])) {
+    return interaction.reply({content:'â ÙÙØ³ ÙØ¯ÙÙ ØµÙØ§Ø­ÙØ©.',ephemeral:true});
+  }
+
+  const modal = new ModalBuilder()
+    .setCustomId(accept ? 'decision_accept_submit' : 'decision_reject_submit')
+    .setTitle(accept ? 'ÙØ¨ÙÙ Ø´Ø®Øµ' : 'Ø±ÙØ¶ Ø´Ø®Øµ');
+
+  modal.addComponents(
+    new ActionRowBuilder().addComponents(
+      new TextInputBuilder()
+        .setCustomId('user')
+        .setLabel('Discord ID Ø§ÙØ®Ø§Øµ Ø¨Ø§ÙØ´Ø®Øµ')
+        .setPlaceholder('123456789012345678')
+        .setStyle(TextInputStyle.Short)
+        .setRequired(true)
+    )
+  );
+
+  if (!accept) {
+    modal.addComponents(
+      new ActionRowBuilder().addComponents(
+        new TextInputBuilder()
+          .setCustomId('reason')
+          .setLabel('Ø³Ø¨Ø¨ Ø§ÙØ±ÙØ¶')
+          .setStyle(TextInputStyle.Paragraph)
+          .setRequired(true)
+          .setMaxLength(800)
+      )
+    );
+  }
+
   await interaction.showModal(modal);
 }
 
-async function activationSubmit(interaction,accept) {
-  const id=extractId(interaction.fields.getTextInputValue('user'));
-  const member=id?await interaction.guild.members.fetch(id).catch(()=>null):null;
-  if(!member) return interaction.reply({content:'â Ø§ÙØ´Ø®Øµ ØºÙØ± ÙÙØ¬ÙØ¯.',ephemeral:true});
-  const reason=accept?'':interaction.fields.getTextInputValue('reason').trim();
-  if(accept) await safeAddRole(member,CONFIG.ACTIVATION_ACCEPTED_ROLE_ID);
-  await safeDM(id,{embeds:[embed(accept?'â ØªÙ ÙØ¨ÙÙ Ø§ÙØªÙØ¹ÙÙ':'â ØªÙ Ø±ÙØ¶ Ø§ÙØªÙØ¹ÙÙ',accept?'ØªÙ ÙØ¨ÙÙÙ ÙÙ Ø§ÙØªÙØ¹ÙÙ.':`Ø§ÙØ³Ø¨Ø¨: ${reason}`,accept?0x2ECC71:0xE74C3C)]});
-  const results=await safeFetchChannel(CONFIG.ACTIVATION_RESULTS_CHANNEL_ID);
-  if(results?.isTextBased()) await results.send({embeds:[embed(accept?'â ÙØ¨ÙÙ ØªÙØ¹ÙÙ':'â Ø±ÙØ¶ ØªÙØ¹ÙÙ',`Ø§ÙØ´Ø®Øµ: <@${id}>\nØ¨ÙØ§Ø³Ø·Ø©: <@${interaction.user.id}>${reason?`\nØ§ÙØ³Ø¨Ø¨: ${reason}`:''}`,accept?0x2ECC71:0xE74C3C)]});
-  await interaction.reply({content:'â ØªÙ Ø¥Ø±Ø³Ø§Ù Ø§ÙÙØ±Ø§Ø±.',ephemeral:true});
+async function decisionSubmit(interaction, accept) {
+  if (!hasAnyRole(interaction.member, [...CONFIG.DECISION_REVIEWER_ROLE_IDS, ...CONFIG.CONTROL_ROLE_IDS])) {
+    return interaction.reply({content:'â ÙÙØ³ ÙØ¯ÙÙ ØµÙØ§Ø­ÙØ©.',ephemeral:true});
+  }
+
+  const id = extractId(interaction.fields.getTextInputValue('user'));
+  const member = id ? await interaction.guild.members.fetch(id).catch(()=>null) : null;
+
+  if (!member) {
+    return interaction.reply({content:'â Ø§ÙÙ ID ØºÙØ± ØµØ­ÙØ­ Ø£Ù Ø§ÙØ´Ø®Øµ ÙØ´ ÙÙØ¬ÙØ¯ ÙÙ Ø§ÙØ³ÙØ±ÙØ±.',ephemeral:true});
+  }
+
+  const reason = accept ? '' : interaction.fields.getTextInputValue('reason').trim();
+
+  await safeDM(id, {
+    embeds:[new EmbedBuilder()
+      .setColor(accept ? 0x2ECC71 : 0xE74C3C)
+      .setTitle(accept ? 'â ØªÙ ÙØ¨ÙÙÙ' : 'â ØªÙ Ø±ÙØ¶Ù')
+      .setDescription(
+        accept
+          ? ['ââââââââââââââââââââââââââââââââââââââââ','',`ØªÙ ÙØ¨ÙÙÙ ÙÙ **${CONFIG.SERVER_NAME}**.`,'','ââââââââââââââââââââââââââââââââââââââââ'].join('\n')
+          : ['ââââââââââââââââââââââââââââââââââââââââ','',`ØªÙ Ø±ÙØ¶Ù ÙÙ **${CONFIG.SERVER_NAME}**.`,'',`ð Ø§ÙØ³Ø¨Ø¨: ${reason}`,'','ââââââââââââââââââââââââââââââââââââââââ'].join('\n')
+      )
+      .setFooter({ text: CONFIG.SERVER_NAME })
+      .setTimestamp()]
+  });
+
+  const results = await safeFetchChannel(CONFIG.DECISION_RESULTS_CHANNEL_ID);
+  if (results?.isTextBased()) {
+    await results.send({
+      embeds:[new EmbedBuilder()
+        .setColor(accept ? 0x2ECC71 : 0xE74C3C)
+        .setTitle(accept ? 'â ÙØ¨ÙÙ' : 'â Ø±ÙØ¶')
+        .setDescription([
+          'ââââââââââââââââââââââââââââââââââââââââ',
+          '',
+          `Ø§ÙØ´Ø®Øµ: <@${id}>`,
+          '',
+          `Ø¨ÙØ§Ø³Ø·Ø©: <@${interaction.user.id}>`,
+          ...(reason ? ['', `ð Ø§ÙØ³Ø¨Ø¨: ${reason}`] : []),
+          '',
+          'ââââââââââââââââââââââââââââââââââââââââ'
+        ].join('\n'))
+        .setFooter({ text: CONFIG.SERVER_NAME })
+        .setTimestamp()]
+    });
+  }
+
+  await interaction.reply({content:'â ØªÙ Ø¥Ø±Ø³Ø§Ù Ø§ÙÙØ±Ø§Ø± ÙÙØ´Ø®Øµ ÙÙ Ø§ÙØ®Ø§Øµ.',ephemeral:true});
 }
 
 async function simpleApplyModal(interaction,kind) {
@@ -2360,8 +2474,8 @@ client.on(Events.InteractionCreate,async interaction=>{
       if(id.startsWith('sys:')) return toggleSystem(interaction,id.split(':')[1]);
       if(id==='sys_status'){if(!isControl(interaction.member))return interaction.reply({content:'â Ø§ÙØ¥Ø¯Ø§Ø±Ø© Ø§ÙØ¹ÙÙØ§ ÙÙØ·.',ephemeral:true});return interaction.reply({embeds:[embed('ð Ø­Ø§ÙØ© Ø§ÙØ£ÙØ¸ÙØ©',Object.entries(db.systems).map(([k,v])=>`${v?'â':'â'} ${k}`).join('\n'))],ephemeral:true});}
       if(id==='bot_send') return botSendModal(interaction);
-      if(id==='activation_accept') return activationModal(interaction,true);
-      if(id==='activation_reject') return activationModal(interaction,false);
+      if(id==='decision_accept') return decisionModal(interaction,true);
+      if(id==='decision_reject') return decisionModal(interaction,false);
       if(id==='staff_apply') return simpleApplyModal(interaction,'staff');
       if(id==='creator_apply') return simpleApplyModal(interaction,'creator');
       if(id.startsWith('staff_accept:')) return decideSimple(interaction,'staff',true);
@@ -2375,8 +2489,8 @@ client.on(Events.InteractionCreate,async interaction=>{
       if(id.startsWith('ticket_user_submit:')) return addTicketMember(interaction,db.tickets[id.split(':')[1]],false);
       if(id.startsWith('ticket_staff_submit:')) return addTicketMember(interaction,db.tickets[id.split(':')[1]],true);
       if(id.startsWith('ticket_rating_submit:')){const [,num,stars]=id.split(':');const t=db.tickets[num];if(!t||t.ownerId!==interaction.user.id)return interaction.reply({content:'â ØºÙØ± ÙØ³ÙÙØ­.',ephemeral:true});const reason=interaction.fields.getTextInputValue('reason');db.ticketRatings.push({num,userId:interaction.user.id,type:t.type,stars:Number(stars),reason,at:Date.now()});saveDB();const ch=await safeFetchChannel(CONFIG.TICKET_RATING_CHANNEL_ID);if(ch?.isTextBased())await ch.send({embeds:[embed('â­ ØªÙÙÙÙ ØªØ°ÙØ±Ø©',`#${num} | ${CONFIG.TICKET_TYPES[t.type].label}\n<@${interaction.user.id}>\n${'â­'.repeat(Number(stars))}\nØ§ÙØ³Ø¨Ø¨: ${reason}`)]});return interaction.reply({content:'â Ø´ÙØ±Ø§Ù Ø¹ÙÙ Ø§ÙØªÙÙÙÙ.',ephemeral:true});}
-      if(id==='activation_accept_submit') return activationSubmit(interaction,true);
-      if(id==='activation_reject_submit') return activationSubmit(interaction,false);
+      if(id==='decision_accept_submit') return decisionSubmit(interaction,true);
+      if(id==='decision_reject_submit') return decisionSubmit(interaction,false);
       if(id==='staff_apply_submit') return simpleApplySubmit(interaction,'staff');
       if(id==='creator_apply_submit') return simpleApplySubmit(interaction,'creator');
       if(id==='bot_send_submit') return botSendSubmit(interaction);
