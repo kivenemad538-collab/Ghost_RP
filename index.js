@@ -221,7 +221,10 @@ const CONFIG = {
   },
 
   SUPPORT_GREETING_TEXT:
-    'مرحبا بك في الدعم الفني الخاص بجوست آر بي. يرجى الانتظار قليلا.'
+    'مرحبا بك في الدعم الفني الخاص بجوست آر بي. يرجى الانتظار قليلا.',
+
+  SUPPORT_GREETING_MEDIA_URL:
+    'https://cdn.discordapp.com/attachments/1536347609164161034/1537199367503478905/20260812-2041-08.2038923.mp4?ex=6a7e2bf8&is=6a7cda78&hm=967c73ad0f0eac026765e8883bd7c40fcd277674a74d5e261576e12db7e1d6d0&'
 };
 
 // ==========================================================
@@ -1586,6 +1589,7 @@ async function connectSupportVoice() {
 
 async function speakSupportGreeting() {
   if (db.systems?.voice === false) return;
+
   supportQueue = supportQueue.then(async () => {
     try {
       if (!supportConnection || !supportPlayer) {
@@ -1594,35 +1598,20 @@ async function speakSupportGreeting() {
 
       if (!supportPlayer) return;
 
-      const url = googleTTS.getAudioUrl(CONFIG.SUPPORT_GREETING_TEXT, {
-        lang: 'ar',
-        slow: false,
-        host: 'https://translate.google.com'
-      });
-
-      const response = await fetch(url, {
-        headers: { 'User-Agent': 'Mozilla/5.0' }
-      });
-
-      if (!response.ok || !response.body) {
-        throw new Error(`TTS HTTP ${response.status}`);
-      }
-
-      const stream = Readable.fromWeb(response.body);
-
-      const resource = createAudioResource(stream, {
+      // تشغيل الصوت الموجود داخل ملف MP4 المرفوع على Discord.
+      const resource = createAudioResource(CONFIG.SUPPORT_GREETING_MEDIA_URL, {
         inputType: StreamType.Arbitrary
       });
 
       supportPlayer.play(resource);
 
-      await entersState(supportPlayer, AudioPlayerStatus.Playing, 15_000)
+      await entersState(supportPlayer, AudioPlayerStatus.Playing, 20_000)
         .catch(() => {});
 
-      await entersState(supportPlayer, AudioPlayerStatus.Idle, 60_000)
+      await entersState(supportPlayer, AudioPlayerStatus.Idle, 120_000)
         .catch(() => {});
     } catch (err) {
-      console.error('Support TTS error:', err.message);
+      console.error('Support media greeting error:', err.message);
     }
   });
 
