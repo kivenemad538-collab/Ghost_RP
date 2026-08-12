@@ -83,11 +83,11 @@ const CONFIG = {
   TICKET_LOG_CHANNEL_ID: '1536345331736776764',
   TICKET_RATING_CHANNEL_ID: '1536345751947313202',
 
-  // فقط الرولين دول يقدروا يستخدموا أوامر إدارة التذكرة الحساسة
+  // ÙÙØ· Ø§ÙØ±ÙÙÙÙ Ø¯ÙÙ ÙÙØ¯Ø±ÙØ§ ÙØ³ØªØ®Ø¯ÙÙØ§ Ø£ÙØ§ÙØ± Ø¥Ø¯Ø§Ø±Ø© Ø§ÙØªØ°ÙØ±Ø© Ø§ÙØ­Ø³Ø§Ø³Ø©
   TICKET_TEAM_ROLE_ID: '1535755153838313542',
   TICKET_MANAGER_ROLE_ID: '1535755234989572226',
 
-  // مستخدمة لعرض/دخول التذاكر كصلاحيات عامة
+  // ÙØ³ØªØ®Ø¯ÙØ© ÙØ¹Ø±Ø¶/Ø¯Ø®ÙÙ Ø§ÙØªØ°Ø§ÙØ± ÙØµÙØ§Ø­ÙØ§Øª Ø¹Ø§ÙØ©
   TICKET_ADMIN_ROLE_IDS: [
     '1535755153838313542',
     '1535755234989572226'
@@ -95,7 +95,7 @@ const CONFIG = {
 
   TICKET_TYPES: {
     support: {
-      label: 'الدعم الفني', emoji: '🎧',
+      label: 'Ø§ÙØ¯Ø¹Ù Ø§ÙÙÙÙ', emoji: 'ð§',
       categoryId: '1536126952618983535',
       teamRoleIds: ['PUT_SUPPORT_TEAM_ROLE_ID'],
       normalChannelId: '1536824749471301662',
@@ -103,7 +103,7 @@ const CONFIG = {
       urgentChannelId: '1536824248553705472'
     },
     monitoring: {
-      label: 'الرقابة', emoji: '👁️',
+      label: 'Ø§ÙØ±ÙØ§Ø¨Ø©', emoji: 'ðï¸',
       categoryId: '1536348218659438663',
       teamRoleIds: ['PUT_MONITORING_TEAM_ROLE_ID'],
       normalChannelId: '1536845236225974363',
@@ -111,7 +111,7 @@ const CONFIG = {
       urgentChannelId: '1536845288738652191'
     },
     player_complaint: {
-      label: 'شكوى ضد لاعب', emoji: '⚠️',
+      label: 'Ø´ÙÙÙ Ø¶Ø¯ ÙØ§Ø¹Ø¨', emoji: 'â ï¸',
       categoryId: '1536348415494070352',
       teamRoleIds: ['PUT_COMPLAINT_TEAM_ROLE_ID'],
       normalChannelId: '1536845484126371861',
@@ -119,7 +119,7 @@ const CONFIG = {
       urgentChannelId: '1536845528946450472'
     },
     appeal: {
-      label: 'استئناف', emoji: '🔄',
+      label: 'Ø§Ø³ØªØ¦ÙØ§Ù', emoji: 'ð',
       categoryId: '1536142385795563662',
       teamRoleIds: ['PUT_APPEAL_TEAM_ROLE_ID'],
       normalChannelId: '1536845709104390225',
@@ -127,7 +127,7 @@ const CONFIG = {
       urgentChannelId: '1536845754390413484'
     },
     staff_complaint: {
-      label: 'شكوى ضد إداري', emoji: '🚔',
+      label: 'Ø´ÙÙÙ Ø¶Ø¯ Ø¥Ø¯Ø§Ø±Ù', emoji: 'ð',
       categoryId: '1536348677268971560',
       teamRoleIds: ['PUT_STAFF_COMPLAINT_TEAM_ROLE_ID'],
       normalChannelId: '1536845900767563888',
@@ -135,7 +135,7 @@ const CONFIG = {
       urgentChannelId: '1536845947903025222'
     },
     store: {
-      label: 'المتجر', emoji: '🛒',
+      label: 'Ø§ÙÙØªØ¬Ø±', emoji: 'ð',
       categoryId: '1536144785986027521',
       teamRoleIds: ['PUT_STORE_TEAM_ROLE_ID'],
       normalChannelId: '1536846114223816705',
@@ -143,7 +143,7 @@ const CONFIG = {
       urgentChannelId: '1536846147983908956'
     },
     compensation: {
-      label: 'التعويضات', emoji: '💰',
+      label: 'Ø§ÙØªØ¹ÙÙØ¶Ø§Øª', emoji: 'ð°',
       categoryId: '1536348299588800592',
       teamRoleIds: ['PUT_COMPENSATION_TEAM_ROLE_ID'],
       normalChannelId: '1536846371829579787',
@@ -151,7 +151,7 @@ const CONFIG = {
       urgentChannelId: '1536846411390525520'
     },
     bug: {
-      label: 'الإبلاغ عن الأخطاء', emoji: '🐞',
+      label: 'Ø§ÙØ¥Ø¨ÙØ§Øº Ø¹Ù Ø§ÙØ£Ø®Ø·Ø§Ø¡', emoji: 'ð',
       categoryId: '1536342904631595139',
       teamRoleIds: ['PUT_BUG_TEAM_ROLE_ID'],
       normalChannelId: '1536844960194764880',
@@ -188,16 +188,16 @@ const CONFIG = {
 
   // ---------- Application ----------
   APPLICATION_QUESTIONS: [
-    'ما اسمك؟',
-    'كم عمرك؟',
-    'ما هو الـ ID الخاص بك في FiveM إن وجد؟',
-    'ما خبرتك في الـ Roleplay؟',
-    'اشرح لنا معنى RDM.',
-    'اشرح لنا معنى VDM.',
-    'اشرح لنا معنى NLR.',
-    'اشرح لنا معنى Power Gaming.',
-    'اشرح لنا معنى Meta Gaming.',
-    'لماذا تريد الانضمام إلى Ghost RP؟'
+    'ÙØ§ Ø§Ø³ÙÙØ',
+    'ÙÙ Ø¹ÙØ±ÙØ',
+    'ÙØ§ ÙÙ Ø§ÙÙ ID Ø§ÙØ®Ø§Øµ Ø¨Ù ÙÙ FiveM Ø¥Ù ÙØ¬Ø¯Ø',
+    'ÙØ§ Ø®Ø¨Ø±ØªÙ ÙÙ Ø§ÙÙ RoleplayØ',
+    'Ø§Ø´Ø±Ø­ ÙÙØ§ ÙØ¹ÙÙ RDM.',
+    'Ø§Ø´Ø±Ø­ ÙÙØ§ ÙØ¹ÙÙ VDM.',
+    'Ø§Ø´Ø±Ø­ ÙÙØ§ ÙØ¹ÙÙ NLR.',
+    'Ø§Ø´Ø±Ø­ ÙÙØ§ ÙØ¹ÙÙ Power Gaming.',
+    'Ø§Ø´Ø±Ø­ ÙÙØ§ ÙØ¹ÙÙ Meta Gaming.',
+    'ÙÙØ§Ø°Ø§ ØªØ±ÙØ¯ Ø§ÙØ§ÙØ¶ÙØ§Ù Ø¥ÙÙ Ghost RPØ'
   ],
 
   SECOND_REJECTION_BLOCK_DAYS: 7,
@@ -221,7 +221,7 @@ const CONFIG = {
   },
 
   SUPPORT_GREETING_TEXT:
-    'مرحبا بك في الدعم الفني الخاص بجوست آر بي. يرجى الانتظار قليلا.',
+    'ÙØ±Ø­Ø¨Ø§ Ø¨Ù ÙÙ Ø§ÙØ¯Ø¹Ù Ø§ÙÙÙÙ Ø§ÙØ®Ø§Øµ Ø¨Ø¬ÙØ³Øª Ø¢Ø± Ø¨Ù. ÙØ±Ø¬Ù Ø§ÙØ§ÙØªØ¸Ø§Ø± ÙÙÙÙØ§.',
 
   SUPPORT_GREETING_MEDIA_URL:
     'https://cdn.discordapp.com/attachments/1536347609164161034/1537199367503478905/20260812-2041-08.2038923.mp4?ex=6a7e2bf8&is=6a7cda78&hm=967c73ad0f0eac026765e8883bd7c40fcd277674a74d5e261576e12db7e1d6d0&'
@@ -471,16 +471,16 @@ async function releaseExpiredSecondRejections() {
     await safeDM(userId, {
       embeds: [
         embed(
-          'يمكنك التقديم الآن ✅',
-          `انتهت مدة منع التقديم في **${CONFIG.SERVER_NAME}** ويمكنك التقديم من جديد.`,
+          'ÙÙÙÙÙ Ø§ÙØªÙØ¯ÙÙ Ø§ÙØ¢Ù â',
+          `Ø§ÙØªÙØª ÙØ¯Ø© ÙÙØ¹ Ø§ÙØªÙØ¯ÙÙ ÙÙ **${CONFIG.SERVER_NAME}** ÙÙÙÙÙÙ Ø§ÙØªÙØ¯ÙÙ ÙÙ Ø¬Ø¯ÙØ¯.`,
           0x2ECC71
         )
       ]
     });
 
     await sendLog(
-      'انتهاء منع التقديم',
-      `<@${userId}> انتهى منعه الأسبوعي وتم تصفير عدد مرات الرفض.`,
+      'Ø§ÙØªÙØ§Ø¡ ÙÙØ¹ Ø§ÙØªÙØ¯ÙÙ',
+      `<@${userId}> Ø§ÙØªÙÙ ÙÙØ¹Ù Ø§ÙØ£Ø³Ø¨ÙØ¹Ù ÙØªÙ ØªØµÙÙØ± Ø¹Ø¯Ø¯ ÙØ±Ø§Øª Ø§ÙØ±ÙØ¶.`,
       0x2ECC71
     );
   }
@@ -503,27 +503,27 @@ async function ensureApplicationPanel() {
   const row = new ActionRowBuilder().addComponents(
     new ButtonBuilder()
       .setCustomId('application_start')
-      .setLabel('التقديم')
-      .setEmoji('📝')
+      .setLabel('Ø§ÙØªÙØ¯ÙÙ')
+      .setEmoji('ð')
       .setStyle(ButtonStyle.Primary)
   );
 
   const msg = await channel.send({
     embeds: [
       embed(
-        `${CONFIG.SERVER_NAME} | نظام التقديم`,
+        `${CONFIG.SERVER_NAME} | ÙØ¸Ø§Ù Ø§ÙØªÙØ¯ÙÙ`,
         [
-          '👻 أهلاً بك في نظام تقديم **Ghost RP**',
+          'ð» Ø£ÙÙØ§Ù Ø¨Ù ÙÙ ÙØ¸Ø§Ù ØªÙØ¯ÙÙ **Ghost RP**',
           '',
-          '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━',
+          'ââââââââââââââââââââââââââââââââââââââââ',
           '',
-          '📝 اضغط على زر **التقديم** بالأسفل لبدء طلبك.',
+          'ð Ø§Ø¶ØºØ· Ø¹ÙÙ Ø²Ø± **Ø§ÙØªÙØ¯ÙÙ** Ø¨Ø§ÙØ£Ø³ÙÙ ÙØ¨Ø¯Ø¡ Ø·ÙØ¨Ù.',
           '',
-          '📩 سيتم إرسال الأسئلة لك في الخاص سؤالاً بعد سؤال.',
+          'ð© Ø³ÙØªÙ Ø¥Ø±Ø³Ø§Ù Ø§ÙØ£Ø³Ø¦ÙØ© ÙÙ ÙÙ Ø§ÙØ®Ø§Øµ Ø³Ø¤Ø§ÙØ§Ù Ø¨Ø¹Ø¯ Ø³Ø¤Ø§Ù.',
           '',
-          '❌ يمكنك إلغاء التقديم في أي وقت بكتابة: `cancel`',
+          'â ÙÙÙÙÙ Ø¥ÙØºØ§Ø¡ Ø§ÙØªÙØ¯ÙÙ ÙÙ Ø£Ù ÙÙØª Ø¨ÙØªØ§Ø¨Ø©: `cancel`',
           '',
-          '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
+          'ââââââââââââââââââââââââââââââââ'
         ].join('\n')
       )
     ],
@@ -540,12 +540,12 @@ async function ensureApplicationPanel() {
 // APPLICATION FLOW
 // ==========================================================
 async function startApplication(interaction) {
-  if (db.systems?.applications === false) return interaction.reply({content:'⛔ التقديمات متوقفة حالياً.', ephemeral:true});
+  if (db.systems?.applications === false) return interaction.reply({content:'â Ø§ÙØªÙØ¯ÙÙØ§Øª ÙØªÙÙÙØ© Ø­Ø§ÙÙØ§Ù.', ephemeral:true});
   const userId = interaction.user.id;
   const rec = getUserRecord(userId);
   const now = Date.now();
 
-  // لو الإدارة شالت رول الرفض الثاني يدويًا، يقدر يقدم فورًا.
+  // ÙÙ Ø§ÙØ¥Ø¯Ø§Ø±Ø© Ø´Ø§ÙØª Ø±ÙÙ Ø§ÙØ±ÙØ¶ Ø§ÙØ«Ø§ÙÙ ÙØ¯ÙÙÙØ§Ø ÙÙØ¯Ø± ÙÙØ¯Ù ÙÙØ±ÙØ§.
   if (rec.blockedUntil > now && interaction.guild && hasRealId(CONFIG.SECOND_REJECTION_ROLE_ID)) {
     const member = await interaction.guild.members.fetch(userId).catch(() => null);
     if (member && !member.roles.cache.has(CONFIG.SECOND_REJECTION_ROLE_ID)) {
@@ -560,8 +560,8 @@ async function startApplication(interaction) {
     const unix = Math.floor(rec.blockedUntil / 1000);
     return interaction.reply({
       content:
-        `❌ أنت ممنوع من التقديم بسبب رفضك مرتين.\n` +
-        `يمكنك التقديم مرة أخرى <t:${unix}:R>.`,
+        `â Ø£ÙØª ÙÙÙÙØ¹ ÙÙ Ø§ÙØªÙØ¯ÙÙ Ø¨Ø³Ø¨Ø¨ Ø±ÙØ¶Ù ÙØ±ØªÙÙ.\n` +
+        `ÙÙÙÙÙ Ø§ÙØªÙØ¯ÙÙ ÙØ±Ø© Ø£Ø®Ø±Ù <t:${unix}:R>.`,
       ephemeral: true
     });
   }
@@ -572,7 +572,7 @@ async function startApplication(interaction) {
 
   if (rec.activeApplication || db.pendingApplications[userId] || existingPendingReview) {
     return interaction.reply({
-      content: '⚠️ لديك تقديم مفتوح بالفعل.',
+      content: 'â ï¸ ÙØ¯ÙÙ ØªÙØ¯ÙÙ ÙÙØªÙØ­ Ø¨Ø§ÙÙØ¹Ù.',
       ephemeral: true
     });
   }
@@ -583,20 +583,20 @@ async function startApplication(interaction) {
     await dm.send({
       embeds: [
         embed(
-          `${CONFIG.SERVER_NAME} | بدء التقديم`,
+          `${CONFIG.SERVER_NAME} | Ø¨Ø¯Ø¡ Ø§ÙØªÙØ¯ÙÙ`,
           [
-            '👋 أهلاً وسهلاً بك في **Ghost RP**',
+            'ð Ø£ÙÙØ§Ù ÙØ³ÙÙØ§Ù Ø¨Ù ÙÙ **Ghost RP**',
             '',
-            '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━',
+            'ââââââââââââââââââââââââââââââââââââââââ',
             '',
-            '📝 سيتم إرسال أسئلة التقديم لك سؤالاً بعد سؤال.',
+            'ð Ø³ÙØªÙ Ø¥Ø±Ø³Ø§Ù Ø£Ø³Ø¦ÙØ© Ø§ÙØªÙØ¯ÙÙ ÙÙ Ø³Ø¤Ø§ÙØ§Ù Ø¨Ø¹Ø¯ Ø³Ø¤Ø§Ù.',
             '',
-            '📌 جاوب على كل سؤال بوضوح حتى ينتقل البوت للسؤال التالي.',
+            'ð Ø¬Ø§ÙØ¨ Ø¹ÙÙ ÙÙ Ø³Ø¤Ø§Ù Ø¨ÙØ¶ÙØ­ Ø­ØªÙ ÙÙØªÙÙ Ø§ÙØ¨ÙØª ÙÙØ³Ø¤Ø§Ù Ø§ÙØªØ§ÙÙ.',
             '',
-            '❌ لو حابب تلغي التقديم اكتب:',
+            'â ÙÙ Ø­Ø§Ø¨Ø¨ ØªÙØºÙ Ø§ÙØªÙØ¯ÙÙ Ø§ÙØªØ¨:',
             '`cancel`',
             '',
-            '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
+            'ââââââââââââââââââââââââââââââââ'
           ].join('\n')
         )
       ]
@@ -604,7 +604,7 @@ async function startApplication(interaction) {
   } catch {
     return interaction.reply({
       content:
-        '❌ لا أستطيع إرسال رسالة خاصة لك. فعّل الرسائل الخاصة من أعضاء السيرفر ثم حاول مرة أخرى.',
+        'â ÙØ§ Ø£Ø³ØªØ·ÙØ¹ Ø¥Ø±Ø³Ø§Ù Ø±Ø³Ø§ÙØ© Ø®Ø§ØµØ© ÙÙ. ÙØ¹ÙÙ Ø§ÙØ±Ø³Ø§Ø¦Ù Ø§ÙØ®Ø§ØµØ© ÙÙ Ø£Ø¹Ø¶Ø§Ø¡ Ø§ÙØ³ÙØ±ÙØ± Ø«Ù Ø­Ø§ÙÙ ÙØ±Ø© Ø£Ø®Ø±Ù.',
       ephemeral: true
     });
   }
@@ -619,7 +619,7 @@ async function startApplication(interaction) {
   saveDB();
 
   await interaction.reply({
-    content: '✅ بدأ التقديم. راجع الخاص.',
+    content: 'â Ø¨Ø¯Ø£ Ø§ÙØªÙØ¯ÙÙ. Ø±Ø§Ø¬Ø¹ Ø§ÙØ®Ø§Øµ.',
     ephemeral: true
   });
 
@@ -636,19 +636,19 @@ async function askNextQuestion(userId) {
   await safeDM(userId, {
     embeds: [
       embed(
-        `${CONFIG.SERVER_NAME} | التقديم`,
+        `${CONFIG.SERVER_NAME} | Ø§ÙØªÙØ¯ÙÙ`,
         [
-          '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━',
+          'ââââââââââââââââââââââââââââââââ',
           '',
-          `📌 **السؤال ${state.index + 1} من ${CONFIG.APPLICATION_QUESTIONS.length}**`,
+          `ð **Ø§ÙØ³Ø¤Ø§Ù ${state.index + 1} ÙÙ ${CONFIG.APPLICATION_QUESTIONS.length}**`,
           '',
-          `❓ ${question}`,
+          `â ${question}`,
           '',
-          `📊 التقدم: **${state.index + 1}/${CONFIG.APPLICATION_QUESTIONS.length}**`,
+          `ð Ø§ÙØªÙØ¯Ù: **${state.index + 1}/${CONFIG.APPLICATION_QUESTIONS.length}**`,
           '',
-          '❌ للإلغاء اكتب: `cancel`',
+          'â ÙÙØ¥ÙØºØ§Ø¡ Ø§ÙØªØ¨: `cancel`',
           '',
-          '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
+          'ââââââââââââââââââââââââââââââââ'
         ].join('\n')
       )
     ]
@@ -673,13 +673,13 @@ async function handleApplicationDM(message) {
     await message.reply({
       embeds: [
         embed(
-          'تم إلغاء التقديم',
+          'ØªÙ Ø¥ÙØºØ§Ø¡ Ø§ÙØªÙØ¯ÙÙ',
           [
-            '❌ تم إلغاء تقديمك بنجاح.',
+            'â ØªÙ Ø¥ÙØºØ§Ø¡ ØªÙØ¯ÙÙÙ Ø¨ÙØ¬Ø§Ø­.',
             '',
-            'يمكنك بدء تقديم جديد في أي وقت من روم التقديم.',
+            'ÙÙÙÙÙ Ø¨Ø¯Ø¡ ØªÙØ¯ÙÙ Ø¬Ø¯ÙØ¯ ÙÙ Ø£Ù ÙÙØª ÙÙ Ø±ÙÙ Ø§ÙØªÙØ¯ÙÙ.',
             '',
-            '👻 **Ghost RP**'
+            'ð» **Ghost RP**'
           ].join('\n')
         )
       ]
@@ -689,7 +689,7 @@ async function handleApplicationDM(message) {
   }
 
   if (!answer) {
-    await message.reply('❌ اكتب إجابة قبل الانتقال للسؤال التالي.');
+    await message.reply('â Ø§ÙØªØ¨ Ø¥Ø¬Ø§Ø¨Ø© ÙØ¨Ù Ø§ÙØ§ÙØªÙØ§Ù ÙÙØ³Ø¤Ø§Ù Ø§ÙØªØ§ÙÙ.');
     return true;
   }
 
@@ -729,21 +729,21 @@ async function handleApplicationDM(message) {
     await message.reply({
       embeds: [
         embed(
-          'تعذر إرسال التقديم ❌',
+          'ØªØ¹Ø°Ø± Ø¥Ø±Ø³Ø§Ù Ø§ÙØªÙØ¯ÙÙ â',
           [
-            '❌ حصل خطأ أثناء إرسال التقديم للإدارة.',
+            'â Ø­ØµÙ Ø®Ø·Ø£ Ø£Ø«ÙØ§Ø¡ Ø¥Ø±Ø³Ø§Ù Ø§ÙØªÙØ¯ÙÙ ÙÙØ¥Ø¯Ø§Ø±Ø©.',
             '',
-            'يرجى التواصل مع الإدارة أو المحاولة مرة أخرى بعد قليل.',
+            'ÙØ±Ø¬Ù Ø§ÙØªÙØ§ØµÙ ÙØ¹ Ø§ÙØ¥Ø¯Ø§Ø±Ø© Ø£Ù Ø§ÙÙØ­Ø§ÙÙØ© ÙØ±Ø© Ø£Ø®Ø±Ù Ø¨Ø¹Ø¯ ÙÙÙÙ.',
             '',
-            '👻 **Ghost RP**'
+            'ð» **Ghost RP**'
           ].join('\n')
         )
       ]
     });
 
     await sendLog(
-      'خطأ في التقديم',
-      `تعذر إرسال تقديم <@${userId}> إلى روم المراجعة.`,
+      'Ø®Ø·Ø£ ÙÙ Ø§ÙØªÙØ¯ÙÙ',
+      `ØªØ¹Ø°Ø± Ø¥Ø±Ø³Ø§Ù ØªÙØ¯ÙÙ <@${userId}> Ø¥ÙÙ Ø±ÙÙ Ø§ÙÙØ±Ø§Ø¬Ø¹Ø©.`,
       0xE74C3C
     );
 
@@ -753,15 +753,15 @@ async function handleApplicationDM(message) {
   await message.reply({
     embeds: [
       embed(
-        'تم إرسال التقديم ✅',
+        'ØªÙ Ø¥Ø±Ø³Ø§Ù Ø§ÙØªÙØ¯ÙÙ â',
         [
-          `✅ تم إرسال تقديمك إلى إدارة **${CONFIG.SERVER_NAME}** بنجاح.`,
+          `â ØªÙ Ø¥Ø±Ø³Ø§Ù ØªÙØ¯ÙÙÙ Ø¥ÙÙ Ø¥Ø¯Ø§Ø±Ø© **${CONFIG.SERVER_NAME}** Ø¨ÙØ¬Ø§Ø­.`,
           '',
-          '📋 التقديم الآن تحت المراجعة.',
+          'ð Ø§ÙØªÙØ¯ÙÙ Ø§ÙØ¢Ù ØªØ­Øª Ø§ÙÙØ±Ø§Ø¬Ø¹Ø©.',
           '',
-          '📩 سيتم إرسال نتيجة القبول أو الرفض لك في الخاص.',
+          'ð© Ø³ÙØªÙ Ø¥Ø±Ø³Ø§Ù ÙØªÙØ¬Ø© Ø§ÙÙØ¨ÙÙ Ø£Ù Ø§ÙØ±ÙØ¶ ÙÙ ÙÙ Ø§ÙØ®Ø§Øµ.',
           '',
-          'شكراً لتقديمك معنا 👻'
+          'Ø´ÙØ±Ø§Ù ÙØªÙØ¯ÙÙÙ ÙØ¹ÙØ§ ð»'
         ].join('\n'),
         0x2ECC71
       )
@@ -780,13 +780,13 @@ async function sendApplicationForReview(applicationId) {
 
   const fields = app.answers.map((answer, i) => ({
     name: `${i + 1}. ${CONFIG.APPLICATION_QUESTIONS[i]}`,
-    value: answer.slice(0, 1024) || 'بدون إجابة'
+    value: answer.slice(0, 1024) || 'Ø¨Ø¯ÙÙ Ø¥Ø¬Ø§Ø¨Ø©'
   }));
 
   const reviewEmbed = new EmbedBuilder()
     .setColor(CONFIG.COLOR)
-    .setTitle(`${CONFIG.SERVER_NAME} | تقديم جديد`)
-    .setDescription(`**المتقدم:** <@${app.userId}>\n**Discord ID:** \`${app.userId}\``)
+    .setTitle(`${CONFIG.SERVER_NAME} | ØªÙØ¯ÙÙ Ø¬Ø¯ÙØ¯`)
+    .setDescription(`**Ø§ÙÙØªÙØ¯Ù:** <@${app.userId}>\n**Discord ID:** \`${app.userId}\``)
     .addFields(fields.slice(0, 25))
     .setFooter({ text: `Application ID: ${applicationId}` })
     .setTimestamp();
@@ -794,14 +794,14 @@ async function sendApplicationForReview(applicationId) {
   const row = new ActionRowBuilder().addComponents(
     new ButtonBuilder()
       .setCustomId(`app_accept:${applicationId}`)
-      .setLabel('قبول')
-      .setEmoji('✅')
+      .setLabel('ÙØ¨ÙÙ')
+      .setEmoji('â')
       .setStyle(ButtonStyle.Success),
 
     new ButtonBuilder()
       .setCustomId(`app_reject:${applicationId}`)
-      .setLabel('رفض')
-      .setEmoji('❌')
+      .setLabel('Ø±ÙØ¶')
+      .setEmoji('â')
       .setStyle(ButtonStyle.Danger)
   );
 
@@ -890,7 +890,7 @@ client.on(Events.InteractionCreate, async interaction => {
 
     if (interaction.isRepliable()) {
       const payload = {
-        content: '❌ حصل خطأ غير متوقع. حاول مرة أخرى.',
+        content: 'â Ø­ØµÙ Ø®Ø·Ø£ ØºÙØ± ÙØªÙÙØ¹. Ø­Ø§ÙÙ ÙØ±Ø© Ø£Ø®Ø±Ù.',
         ephemeral: true
       };
 
@@ -909,7 +909,7 @@ client.on(Events.InteractionCreate, async interaction => {
 async function acceptApplication(interaction) {
   if (!interaction.guild || !isReviewer(interaction.member)) {
     return interaction.reply({
-      content: '❌ ليس لديك صلاحية قبول أو رفض التقديمات.',
+      content: 'â ÙÙØ³ ÙØ¯ÙÙ ØµÙØ§Ø­ÙØ© ÙØ¨ÙÙ Ø£Ù Ø±ÙØ¶ Ø§ÙØªÙØ¯ÙÙØ§Øª.',
       ephemeral: true
     });
   }
@@ -919,7 +919,7 @@ async function acceptApplication(interaction) {
 
   if (!app || app.status !== 'pending') {
     return interaction.reply({
-      content: '⚠️ تم اتخاذ قرار في هذا التقديم بالفعل.',
+      content: 'â ï¸ ØªÙ Ø§ØªØ®Ø§Ø° ÙØ±Ø§Ø± ÙÙ ÙØ°Ø§ Ø§ÙØªÙØ¯ÙÙ Ø¨Ø§ÙÙØ¹Ù.',
       ephemeral: true
     });
   }
@@ -948,19 +948,19 @@ async function acceptApplication(interaction) {
   await safeDM(app.userId, {
     embeds: [
       embed(
-        'تم قبولك ✅',
+        'ØªÙ ÙØ¨ÙÙÙ â',
         [
-          '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━',
-          '🎉 **مبروك! تم قبولك بنجاح**',
+          'ââââââââââââââââââââââââââââââââââââââââ',
+          'ð **ÙØ¨Ø±ÙÙ! ØªÙ ÙØ¨ÙÙÙ Ø¨ÙØ¬Ø§Ø­**',
           '',
-          `✅ تم قبول تقديمك في **${CONFIG.SERVER_NAME}**.`,
+          `â ØªÙ ÙØ¨ÙÙ ØªÙØ¯ÙÙÙ ÙÙ **${CONFIG.SERVER_NAME}**.`,
           '',
-          '🎖️ تمت إضافة رتبة القبول الخاصة بك.',
+          'ðï¸ ØªÙØª Ø¥Ø¶Ø§ÙØ© Ø±ØªØ¨Ø© Ø§ÙÙØ¨ÙÙ Ø§ÙØ®Ø§ØµØ© Ø¨Ù.',
           '',
-          '📌 تأكد من قراءة القوانين قبل بدء اللعب.',
+          'ð ØªØ£ÙØ¯ ÙÙ ÙØ±Ø§Ø¡Ø© Ø§ÙÙÙØ§ÙÙÙ ÙØ¨Ù Ø¨Ø¯Ø¡ Ø§ÙÙØ¹Ø¨.',
           '',
-          'نتمنى لك تجربة ممتعة معنا 👻',
-          '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
+          'ÙØªÙÙÙ ÙÙ ØªØ¬Ø±Ø¨Ø© ÙÙØªØ¹Ø© ÙØ¹ÙØ§ ð»',
+          'ââââââââââââââââââââââââââââââââââââââââ'
         ].join('\n'),
         0x2ECC71
       )
@@ -970,8 +970,8 @@ async function acceptApplication(interaction) {
   const doneEmbed = EmbedBuilder.from(interaction.message.embeds[0])
     .setColor(0x2ECC71)
     .addFields({
-      name: 'النتيجة',
-      value: `✅ تم القبول بواسطة <@${interaction.user.id}>`
+      name: 'Ø§ÙÙØªÙØ¬Ø©',
+      value: `â ØªÙ Ø§ÙÙØ¨ÙÙ Ø¨ÙØ§Ø³Ø·Ø© <@${interaction.user.id}>`
     });
 
   await interaction.update({
@@ -980,8 +980,8 @@ async function acceptApplication(interaction) {
   });
 
   await sendLog(
-    'قبول تقديم',
-    `**المتقدم:** <@${app.userId}>\n**تم القبول بواسطة:** <@${interaction.user.id}>`,
+    'ÙØ¨ÙÙ ØªÙØ¯ÙÙ',
+    `**Ø§ÙÙØªÙØ¯Ù:** <@${app.userId}>\n**ØªÙ Ø§ÙÙØ¨ÙÙ Ø¨ÙØ§Ø³Ø·Ø©:** <@${interaction.user.id}>`,
     0x2ECC71
   );
 }
@@ -989,7 +989,7 @@ async function acceptApplication(interaction) {
 async function openRejectModal(interaction, type) {
   if (!interaction.guild || !isReviewer(interaction.member)) {
     return interaction.reply({
-      content: '❌ ليس لديك صلاحية قبول أو رفض.',
+      content: 'â ÙÙØ³ ÙØ¯ÙÙ ØµÙØ§Ø­ÙØ© ÙØ¨ÙÙ Ø£Ù Ø±ÙØ¶.',
       ephemeral: true
     });
   }
@@ -1000,7 +1000,7 @@ async function openRejectModal(interaction, type) {
     const app = db.applications[targetId];
     if (!app || app.status !== 'pending') {
       return interaction.reply({
-        content: '⚠️ تم اتخاذ قرار في هذا التقديم بالفعل.',
+        content: 'â ï¸ ØªÙ Ø§ØªØ®Ø§Ø° ÙØ±Ø§Ø± ÙÙ ÙØ°Ø§ Ø§ÙØªÙØ¯ÙÙ Ø¨Ø§ÙÙØ¹Ù.',
         ephemeral: true
       });
     }
@@ -1010,7 +1010,7 @@ async function openRejectModal(interaction, type) {
     const video = db.videos[targetId];
     if (!video || video.status !== 'pending') {
       return interaction.reply({
-        content: '⚠️ تم اتخاذ قرار في هذا الفيديو بالفعل.',
+        content: 'â ï¸ ØªÙ Ø§ØªØ®Ø§Ø° ÙØ±Ø§Ø± ÙÙ ÙØ°Ø§ Ø§ÙÙÙØ¯ÙÙ Ø¨Ø§ÙÙØ¹Ù.',
         ephemeral: true
       });
     }
@@ -1018,11 +1018,11 @@ async function openRejectModal(interaction, type) {
 
   const modal = new ModalBuilder()
     .setCustomId(`reject_${type}:${targetId}`)
-    .setTitle(type === 'application' ? 'سبب رفض التقديم' : 'سبب رفض الفيديو');
+    .setTitle(type === 'application' ? 'Ø³Ø¨Ø¨ Ø±ÙØ¶ Ø§ÙØªÙØ¯ÙÙ' : 'Ø³Ø¨Ø¨ Ø±ÙØ¶ Ø§ÙÙÙØ¯ÙÙ');
 
   const reason = new TextInputBuilder()
     .setCustomId('reason')
-    .setLabel('اكتب سبب الرفض')
+    .setLabel('Ø§ÙØªØ¨ Ø³Ø¨Ø¨ Ø§ÙØ±ÙØ¶')
     .setStyle(TextInputStyle.Paragraph)
     .setRequired(true)
     .setMinLength(2)
@@ -1038,7 +1038,7 @@ async function openRejectModal(interaction, type) {
 async function rejectApplication(interaction) {
   if (!interaction.guild || !isReviewer(interaction.member)) {
     return interaction.reply({
-      content: '❌ ليس لديك صلاحية.',
+      content: 'â ÙÙØ³ ÙØ¯ÙÙ ØµÙØ§Ø­ÙØ©.',
       ephemeral: true
     });
   }
@@ -1049,7 +1049,7 @@ async function rejectApplication(interaction) {
 
   if (!app || app.status !== 'pending') {
     return interaction.reply({
-      content: '⚠️ تم اتخاذ قرار في هذا التقديم بالفعل.',
+      content: 'â ï¸ ØªÙ Ø§ØªØ®Ø§Ø° ÙØ±Ø§Ø± ÙÙ ÙØ°Ø§ Ø§ÙØªÙØ¯ÙÙ Ø¨Ø§ÙÙØ¹Ù.',
       ephemeral: true
     });
   }
@@ -1074,7 +1074,7 @@ async function rejectApplication(interaction) {
       await safeAddRole(rejectedMember, CONFIG.FIRST_REJECTION_ROLE_ID);
       await safeRemoveRole(rejectedMember, CONFIG.SECOND_REJECTION_ROLE_ID);
     }
-    blockText = '\n⚠️ الرفض الأول.';
+    blockText = '\nâ ï¸ Ø§ÙØ±ÙØ¶ Ø§ÙØ£ÙÙ.';
   }
 
   if (rec.rejectionCount >= 2) {
@@ -1090,7 +1090,7 @@ async function rejectApplication(interaction) {
     }
 
     blockText =
-      `\n⛔ الرفض الثاني. يمكنك التقديم مرة أخرى <t:${Math.floor(blockedUntil / 1000)}:R>.`;
+      `\nâ Ø§ÙØ±ÙØ¶ Ø§ÙØ«Ø§ÙÙ. ÙÙÙÙÙ Ø§ÙØªÙØ¯ÙÙ ÙØ±Ø© Ø£Ø®Ø±Ù <t:${Math.floor(blockedUntil / 1000)}:R>.`;
   }
 
   app.status = 'rejected';
@@ -1099,8 +1099,8 @@ async function rejectApplication(interaction) {
   await safeDM(app.userId, {
     embeds: [
       embed(
-        'تم رفض تقديمك ❌',
-        ['━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', `📌 السبب: ${reason}`, blockText, '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'].filter(Boolean).join('\n'),
+        'ØªÙ Ø±ÙØ¶ ØªÙØ¯ÙÙÙ â',
+        ['ââââââââââââââââââââââââââââââââââââââââ', `ð Ø§ÙØ³Ø¨Ø¨: ${reason}`, blockText, 'ââââââââââââââââââââââââââââââââââââââââ'].filter(Boolean).join('\n'),
         0xE74C3C
       )
     ]
@@ -1110,15 +1110,15 @@ async function rejectApplication(interaction) {
     .setColor(0xE74C3C)
     .addFields(
       {
-        name: 'النتيجة',
-        value: `❌ تم الرفض بواسطة <@${interaction.user.id}>`
+        name: 'Ø§ÙÙØªÙØ¬Ø©',
+        value: `â ØªÙ Ø§ÙØ±ÙØ¶ Ø¨ÙØ§Ø³Ø·Ø© <@${interaction.user.id}>`
       },
       {
-        name: 'سبب الرفض',
+        name: 'Ø³Ø¨Ø¨ Ø§ÙØ±ÙØ¶',
         value: reason.slice(0, 1024)
       },
       {
-        name: 'عدد مرات الرفض',
+        name: 'Ø¹Ø¯Ø¯ ÙØ±Ø§Øª Ø§ÙØ±ÙØ¶',
         value: `${rec.rejectionCount}`
       }
     );
@@ -1129,14 +1129,14 @@ async function rejectApplication(interaction) {
   });
 
   await sendLog(
-    'رفض تقديم',
+    'Ø±ÙØ¶ ØªÙØ¯ÙÙ',
     [
-      `**المتقدم:** <@${app.userId}>`,
-      `**تم الرفض بواسطة:** <@${interaction.user.id}>`,
-      `**السبب:** ${reason}`,
-      `**عدد مرات الرفض:** ${rec.rejectionCount}`,
+      `**Ø§ÙÙØªÙØ¯Ù:** <@${app.userId}>`,
+      `**ØªÙ Ø§ÙØ±ÙØ¶ Ø¨ÙØ§Ø³Ø·Ø©:** <@${interaction.user.id}>`,
+      `**Ø§ÙØ³Ø¨Ø¨:** ${reason}`,
+      `**Ø¹Ø¯Ø¯ ÙØ±Ø§Øª Ø§ÙØ±ÙØ¶:** ${rec.rejectionCount}`,
       blockedUntil
-        ? `**منع التقديم حتى:** <t:${Math.floor(blockedUntil / 1000)}:F>`
+        ? `**ÙÙØ¹ Ø§ÙØªÙØ¯ÙÙ Ø­ØªÙ:** <t:${Math.floor(blockedUntil / 1000)}:F>`
         : ''
     ].filter(Boolean).join('\n'),
     0xE74C3C
@@ -1177,29 +1177,29 @@ async function handleVideoSubmission(message) {
   const row = new ActionRowBuilder().addComponents(
     new ButtonBuilder()
       .setCustomId(`video_accept:${message.id}`)
-      .setLabel('قبول')
-      .setEmoji('✅')
+      .setLabel('ÙØ¨ÙÙ')
+      .setEmoji('â')
       .setStyle(ButtonStyle.Success),
 
     new ButtonBuilder()
       .setCustomId(`video_reject:${message.id}`)
-      .setLabel('رفض')
-      .setEmoji('❌')
+      .setLabel('Ø±ÙØ¶')
+      .setEmoji('â')
       .setStyle(ButtonStyle.Danger)
   );
 
   const reply = await message.reply({
     embeds: [
       embed(
-        `${CONFIG.SERVER_NAME} | مراجعة الفيديو`,
+        `${CONFIG.SERVER_NAME} | ÙØ±Ø§Ø¬Ø¹Ø© Ø§ÙÙÙØ¯ÙÙ`,
         [
-          `👤 **صاحب الفيديو:** <@${message.author.id}>`,
+          `ð¤ **ØµØ§Ø­Ø¨ Ø§ÙÙÙØ¯ÙÙ:** <@${message.author.id}>`,
           '',
-          '🎥 تم استلام الفيديو بنجاح.',
+          'ð¥ ØªÙ Ø§Ø³ØªÙØ§Ù Ø§ÙÙÙØ¯ÙÙ Ø¨ÙØ¬Ø§Ø­.',
           '',
-          '⏳ **الحالة:** في انتظار مراجعة الإدارة.',
+          'â³ **Ø§ÙØ­Ø§ÙØ©:** ÙÙ Ø§ÙØªØ¸Ø§Ø± ÙØ±Ø§Ø¬Ø¹Ø© Ø§ÙØ¥Ø¯Ø§Ø±Ø©.',
           '',
-          'سيظهر قرار القبول أو الرفض هنا.'
+          'Ø³ÙØ¸ÙØ± ÙØ±Ø§Ø± Ø§ÙÙØ¨ÙÙ Ø£Ù Ø§ÙØ±ÙØ¶ ÙÙØ§.'
         ].join('\n')
       )
     ],
@@ -1215,7 +1215,7 @@ async function handleVideoSubmission(message) {
 async function acceptVideo(interaction) {
   if (!interaction.guild || !isReviewer(interaction.member)) {
     return interaction.reply({
-      content: '❌ ليس لديك صلاحية قبول أو رفض الفيديوهات.',
+      content: 'â ÙÙØ³ ÙØ¯ÙÙ ØµÙØ§Ø­ÙØ© ÙØ¨ÙÙ Ø£Ù Ø±ÙØ¶ Ø§ÙÙÙØ¯ÙÙÙØ§Øª.',
       ephemeral: true
     });
   }
@@ -1225,7 +1225,7 @@ async function acceptVideo(interaction) {
 
   if (!video || video.status !== 'pending') {
     return interaction.reply({
-      content: '⚠️ تم اتخاذ قرار في هذا الفيديو بالفعل.',
+      content: 'â ï¸ ØªÙ Ø§ØªØ®Ø§Ø° ÙØ±Ø§Ø± ÙÙ ÙØ°Ø§ Ø§ÙÙÙØ¯ÙÙ Ø¨Ø§ÙÙØ¹Ù.',
       ephemeral: true
     });
   }
@@ -1244,15 +1244,15 @@ async function acceptVideo(interaction) {
   await safeDM(video.userId, {
     embeds: [
       embed(
-        'تم قبول الفيديو ✅',
+        'ØªÙ ÙØ¨ÙÙ Ø§ÙÙÙØ¯ÙÙ â',
         [
-          '✅ **تم قبول الفيديو الخاص بك**',
+          'â **ØªÙ ÙØ¨ÙÙ Ø§ÙÙÙØ¯ÙÙ Ø§ÙØ®Ø§Øµ Ø¨Ù**',
           '',
-          `تم قبول الفيديو في **${CONFIG.SERVER_NAME}** بنجاح.`,
+          `ØªÙ ÙØ¨ÙÙ Ø§ÙÙÙØ¯ÙÙ ÙÙ **${CONFIG.SERVER_NAME}** Ø¨ÙØ¬Ø§Ø­.`,
           '',
-          '🎖️ تمت إضافة الرتبة الخاصة بك.',
+          'ðï¸ ØªÙØª Ø¥Ø¶Ø§ÙØ© Ø§ÙØ±ØªØ¨Ø© Ø§ÙØ®Ø§ØµØ© Ø¨Ù.',
           '',
-          'شكراً لمشاركتك معنا 👻'
+          'Ø´ÙØ±Ø§Ù ÙÙØ´Ø§Ø±ÙØªÙ ÙØ¹ÙØ§ ð»'
         ].join('\n'),
         0x2ECC71
       )
@@ -1261,10 +1261,10 @@ async function acceptVideo(interaction) {
 
   const doneEmbed = EmbedBuilder.from(interaction.message.embeds[0])
     .setColor(0x2ECC71)
-    .setDescription(`**صاحب الفيديو:** <@${video.userId}>`)
+    .setDescription(`**ØµØ§Ø­Ø¨ Ø§ÙÙÙØ¯ÙÙ:** <@${video.userId}>`)
     .addFields({
-      name: 'النتيجة',
-      value: `✅ تم القبول بواسطة <@${interaction.user.id}>`
+      name: 'Ø§ÙÙØªÙØ¬Ø©',
+      value: `â ØªÙ Ø§ÙÙØ¨ÙÙ Ø¨ÙØ§Ø³Ø·Ø© <@${interaction.user.id}>`
     });
 
   await interaction.update({
@@ -1273,8 +1273,8 @@ async function acceptVideo(interaction) {
   });
 
   await sendLog(
-    'قبول فيديو',
-    `**صاحب الفيديو:** <@${video.userId}>\n**تم القبول بواسطة:** <@${interaction.user.id}>`,
+    'ÙØ¨ÙÙ ÙÙØ¯ÙÙ',
+    `**ØµØ§Ø­Ø¨ Ø§ÙÙÙØ¯ÙÙ:** <@${video.userId}>\n**ØªÙ Ø§ÙÙØ¨ÙÙ Ø¨ÙØ§Ø³Ø·Ø©:** <@${interaction.user.id}>`,
     0x2ECC71
   );
 }
@@ -1282,7 +1282,7 @@ async function acceptVideo(interaction) {
 async function rejectVideo(interaction) {
   if (!interaction.guild || !isReviewer(interaction.member)) {
     return interaction.reply({
-      content: '❌ ليس لديك صلاحية.',
+      content: 'â ÙÙØ³ ÙØ¯ÙÙ ØµÙØ§Ø­ÙØ©.',
       ephemeral: true
     });
   }
@@ -1293,7 +1293,7 @@ async function rejectVideo(interaction) {
 
   if (!video || video.status !== 'pending') {
     return interaction.reply({
-      content: '⚠️ تم اتخاذ قرار في هذا الفيديو بالفعل.',
+      content: 'â ï¸ ØªÙ Ø§ØªØ®Ø§Ø° ÙØ±Ø§Ø± ÙÙ ÙØ°Ø§ Ø§ÙÙÙØ¯ÙÙ Ø¨Ø§ÙÙØ¹Ù.',
       ephemeral: true
     });
   }
@@ -1307,15 +1307,15 @@ async function rejectVideo(interaction) {
   await safeDM(video.userId, {
     embeds: [
       embed(
-        'تم رفض الفيديو ❌',
+        'ØªÙ Ø±ÙØ¶ Ø§ÙÙÙØ¯ÙÙ â',
         [
-          '❌ **تم رفض الفيديو الخاص بك**',
+          'â **ØªÙ Ø±ÙØ¶ Ø§ÙÙÙØ¯ÙÙ Ø§ÙØ®Ø§Øµ Ø¨Ù**',
           '',
-          `تم رفض الفيديو في **${CONFIG.SERVER_NAME}**.`,
+          `ØªÙ Ø±ÙØ¶ Ø§ÙÙÙØ¯ÙÙ ÙÙ **${CONFIG.SERVER_NAME}**.`,
           '',
-          `📌 **سبب الرفض:** ${reason}`,
+          `ð **Ø³Ø¨Ø¨ Ø§ÙØ±ÙØ¶:** ${reason}`,
           '',
-          'يمكنك تعديل المطلوب والمحاولة مرة أخرى.'
+          'ÙÙÙÙÙ ØªØ¹Ø¯ÙÙ Ø§ÙÙØ·ÙÙØ¨ ÙØ§ÙÙØ­Ø§ÙÙØ© ÙØ±Ø© Ø£Ø®Ø±Ù.'
         ].join('\n'),
         0xE74C3C
       )
@@ -1324,14 +1324,14 @@ async function rejectVideo(interaction) {
 
   const doneEmbed = EmbedBuilder.from(interaction.message.embeds[0])
     .setColor(0xE74C3C)
-    .setDescription(`**صاحب الفيديو:** <@${video.userId}>`)
+    .setDescription(`**ØµØ§Ø­Ø¨ Ø§ÙÙÙØ¯ÙÙ:** <@${video.userId}>`)
     .addFields(
       {
-        name: 'النتيجة',
-        value: `❌ تم الرفض بواسطة <@${interaction.user.id}>`
+        name: 'Ø§ÙÙØªÙØ¬Ø©',
+        value: `â ØªÙ Ø§ÙØ±ÙØ¶ Ø¨ÙØ§Ø³Ø·Ø© <@${interaction.user.id}>`
       },
       {
-        name: 'سبب الرفض',
+        name: 'Ø³Ø¨Ø¨ Ø§ÙØ±ÙØ¶',
         value: reason.slice(0, 1024)
       }
     );
@@ -1342,8 +1342,8 @@ async function rejectVideo(interaction) {
   });
 
   await sendLog(
-    'رفض فيديو',
-    `**صاحب الفيديو:** <@${video.userId}>\n**تم الرفض بواسطة:** <@${interaction.user.id}>\n**السبب:** ${reason}`,
+    'Ø±ÙØ¶ ÙÙØ¯ÙÙ',
+    `**ØµØ§Ø­Ø¨ Ø§ÙÙÙØ¯ÙÙ:** <@${video.userId}>\n**ØªÙ Ø§ÙØ±ÙØ¶ Ø¨ÙØ§Ø³Ø·Ø©:** <@${interaction.user.id}>\n**Ø§ÙØ³Ø¨Ø¨:** ${reason}`,
     0xE74C3C
   );
 }
@@ -1360,49 +1360,49 @@ client.on(Events.GuildMemberAdd, async member => {
   if (ch?.isTextBased()) {
     const row = new ActionRowBuilder().addComponents(
       new ButtonBuilder()
-        .setLabel('القوانين')
-        .setEmoji('📜')
+        .setLabel('Ø§ÙÙÙØ§ÙÙÙ')
+        .setEmoji('ð')
         .setStyle(ButtonStyle.Link)
         .setURL(channelUrl(CONFIG.RULES_CHANNEL_ID)),
 
       new ButtonBuilder()
-        .setLabel('التقديم')
-        .setEmoji('📝')
+        .setLabel('Ø§ÙØªÙØ¯ÙÙ')
+        .setEmoji('ð')
         .setStyle(ButtonStyle.Link)
         .setURL(channelUrl(CONFIG.APPLICATION_PANEL_CHANNEL_ID)),
 
       new ButtonBuilder()
         .setCustomId('welcome_rating')
-        .setLabel('التقييم')
-        .setEmoji('⭐')
+        .setLabel('Ø§ÙØªÙÙÙÙ')
+        .setEmoji('â­')
         .setStyle(ButtonStyle.Primary)
     );
 
     const welcomeEmbed = new EmbedBuilder()
       .setColor(CONFIG.COLOR)
-      .setTitle(`👻 مرحباً بك في ${CONFIG.SERVER_NAME}`)
+      .setTitle(`ð» ÙØ±Ø­Ø¨Ø§Ù Ø¨Ù ÙÙ ${CONFIG.SERVER_NAME}`)
       .setDescription(
         [
-          '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━',
+          'ââââââââââââââââââââââââââââââââââââ',
           '',
-          `🎉 أهلاً وسهلاً بك يا <@${member.id}>`,
+          `ð Ø£ÙÙØ§Ù ÙØ³ÙÙØ§Ù Ø¨Ù ÙØ§ <@${member.id}>`,
           '',
-          `أنت الآن عضو جديد في **${CONFIG.SERVER_NAME}**.`,
+          `Ø£ÙØª Ø§ÙØ¢Ù Ø¹Ø¶Ù Ø¬Ø¯ÙØ¯ ÙÙ **${CONFIG.SERVER_NAME}**.`,
           '',
-          '📜 اقرأ القوانين جيداً قبل البدء.',
+          'ð Ø§ÙØ±Ø£ Ø§ÙÙÙØ§ÙÙÙ Ø¬ÙØ¯Ø§Ù ÙØ¨Ù Ø§ÙØ¨Ø¯Ø¡.',
           '',
-          '📝 لو حابب تقدم، اضغط على زر **التقديم** بالأسفل.',
+          'ð ÙÙ Ø­Ø§Ø¨Ø¨ ØªÙØ¯ÙØ Ø§Ø¶ØºØ· Ø¹ÙÙ Ø²Ø± **Ø§ÙØªÙØ¯ÙÙ** Ø¨Ø§ÙØ£Ø³ÙÙ.',
           '',
-          '⭐ تقدر كمان تبعت تقييمك للسيرفر من زر **التقييم**.',
+          'â­ ØªÙØ¯Ø± ÙÙØ§Ù ØªØ¨Ø¹Øª ØªÙÙÙÙÙ ÙÙØ³ÙØ±ÙØ± ÙÙ Ø²Ø± **Ø§ÙØªÙÙÙÙ**.',
           '',
-          '💙 نتمنى لك وقت ممتع وتجربة Roleplay قوية معنا.',
+          'ð ÙØªÙÙÙ ÙÙ ÙÙØª ÙÙØªØ¹ ÙØªØ¬Ø±Ø¨Ø© Roleplay ÙÙÙØ© ÙØ¹ÙØ§.',
           '',
-          '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
+          'ââââââââââââââââââââââââââââââââââââ'
         ].join('\n')
       )
       .setImage(CONFIG.WELCOME_BANNER_URL)
       .setThumbnail(member.user.displayAvatarURL({ dynamic: true, size: 256 }))
-      .setFooter({ text: `${CONFIG.SERVER_NAME} • Welcome` })
+      .setFooter({ text: `${CONFIG.SERVER_NAME} â¢ Welcome` })
       .setTimestamp();
 
     await ch.send({
@@ -1413,13 +1413,13 @@ client.on(Events.GuildMemberAdd, async member => {
   }
 
   await sendLog(
-    'عضو جديد',
+    'Ø¹Ø¶Ù Ø¬Ø¯ÙØ¯',
     [
-      `👤 **العضو:** <@${member.id}>`,
+      `ð¤ **Ø§ÙØ¹Ø¶Ù:** <@${member.id}>`,
       '',
-      '✅ دخل السيرفر وتم إعطاؤه الرتبة الافتراضية.',
+      'â Ø¯Ø®Ù Ø§ÙØ³ÙØ±ÙØ± ÙØªÙ Ø¥Ø¹Ø·Ø§Ø¤Ù Ø§ÙØ±ØªØ¨Ø© Ø§ÙØ§ÙØªØ±Ø§Ø¶ÙØ©.',
       '',
-      `🆔 **ID:** \`${member.id}\``
+      `ð **ID:** \`${member.id}\``
     ].join('\n'),
     0x2ECC71
   );
@@ -1427,8 +1427,8 @@ client.on(Events.GuildMemberAdd, async member => {
 
 client.on(Events.GuildMemberRemove, async member => {
   await sendLog(
-    'خروج عضو',
-    `👤 **العضو:** <@${member.id}>\n\n🚪 خرج من السيرفر.\n\n🆔 **ID:** \`${member.id}\``,
+    'Ø®Ø±ÙØ¬ Ø¹Ø¶Ù',
+    `ð¤ **Ø§ÙØ¹Ø¶Ù:** <@${member.id}>\n\nðª Ø®Ø±Ø¬ ÙÙ Ø§ÙØ³ÙØ±ÙØ±.\n\nð **ID:** \`${member.id}\``,
     0xE67E22
   );
 });
@@ -1437,15 +1437,15 @@ client.on(Events.GuildMemberRemove, async member => {
 // RATINGS
 // ==========================================================
 async function openRatingModal(interaction) {
-  if (db.systems?.ratings === false) return interaction.reply({content:'⛔ التقييمات متوقفة حالياً.', ephemeral:true});
+  if (db.systems?.ratings === false) return interaction.reply({content:'â Ø§ÙØªÙÙÙÙØ§Øª ÙØªÙÙÙØ© Ø­Ø§ÙÙØ§Ù.', ephemeral:true});
   const modal = new ModalBuilder()
     .setCustomId('rating_modal')
-    .setTitle(`${CONFIG.SERVER_NAME} | التقييم`);
+    .setTitle(`${CONFIG.SERVER_NAME} | Ø§ÙØªÙÙÙÙ`);
 
   const stars = new TextInputBuilder()
     .setCustomId('stars')
-    .setLabel('التقييم من 1 إلى 5')
-    .setPlaceholder('مثال: 5')
+    .setLabel('Ø§ÙØªÙÙÙÙ ÙÙ 1 Ø¥ÙÙ 5')
+    .setPlaceholder('ÙØ«Ø§Ù: 5')
     .setStyle(TextInputStyle.Short)
     .setRequired(true)
     .setMinLength(1)
@@ -1453,8 +1453,8 @@ async function openRatingModal(interaction) {
 
   const reason = new TextInputBuilder()
     .setCustomId('rating_reason')
-    .setLabel('سبب التقييم')
-    .setPlaceholder('اكتب سبب تقييمك...')
+    .setLabel('Ø³Ø¨Ø¨ Ø§ÙØªÙÙÙÙ')
+    .setPlaceholder('Ø§ÙØªØ¨ Ø³Ø¨Ø¨ ØªÙÙÙÙÙ...')
     .setStyle(TextInputStyle.Paragraph)
     .setRequired(true)
     .setMinLength(2)
@@ -1475,7 +1475,7 @@ async function submitRating(interaction) {
 
   if (!Number.isInteger(stars) || stars < 1 || stars > 5) {
     return interaction.reply({
-      content: '❌ التقييم لازم يكون رقم من 1 إلى 5.',
+      content: 'â Ø§ÙØªÙÙÙÙ ÙØ§Ø²Ù ÙÙÙÙ Ø±ÙÙ ÙÙ 1 Ø¥ÙÙ 5.',
       ephemeral: true
     });
   }
@@ -1500,15 +1500,15 @@ async function submitRating(interaction) {
     await ch.send({
       embeds: [
         embed(
-          `${CONFIG.SERVER_NAME} | تقييم جديد`,
+          `${CONFIG.SERVER_NAME} | ØªÙÙÙÙ Ø¬Ø¯ÙØ¯`,
           [
-            `👤 **العضو:** <@${interaction.user.id}>`,
+            `ð¤ **Ø§ÙØ¹Ø¶Ù:** <@${interaction.user.id}>`,
             '',
-            `⭐ **التقييم:** ${'⭐'.repeat(stars)} (${stars}/5)`,
+            `â­ **Ø§ÙØªÙÙÙÙ:** ${'â­'.repeat(stars)} (${stars}/5)`,
             '',
-            `📝 **سبب التقييم:** ${reason}`,
+            `ð **Ø³Ø¨Ø¨ Ø§ÙØªÙÙÙÙ:** ${reason}`,
             '',
-            '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
+            'ââââââââââââââââââââââââââââââââ'
           ].join('\n')
         )
       ]
@@ -1516,13 +1516,13 @@ async function submitRating(interaction) {
   }
 
   await interaction.reply({
-    content: '✅ شكراً! تم إرسال تقييمك.',
+    content: 'â Ø´ÙØ±Ø§Ù! ØªÙ Ø¥Ø±Ø³Ø§Ù ØªÙÙÙÙÙ.',
     ephemeral: true
   });
 
   await sendLog(
-    'تقييم جديد',
-    `**من:** <@${interaction.user.id}>\n**التقييم:** ${stars}/5\n**السبب:** ${reason}`
+    'ØªÙÙÙÙ Ø¬Ø¯ÙØ¯',
+    `**ÙÙ:** <@${interaction.user.id}>\n**Ø§ÙØªÙÙÙÙ:** ${stars}/5\n**Ø§ÙØ³Ø¨Ø¨:** ${reason}`
   );
 }
 
@@ -1591,27 +1591,53 @@ async function speakSupportGreeting() {
   if (db.systems?.voice === false) return;
 
   supportQueue = supportQueue.then(async () => {
+    const mediaFile = path.join(DATA_DIR, 'ghost-support-greeting.mp4');
+
     try {
       if (!supportConnection || !supportPlayer) {
         await connectSupportVoice();
       }
 
-      if (!supportPlayer) return;
+      if (!supportConnection || !supportPlayer) {
+        throw new Error('Voice connection/player is not ready.');
+      }
 
-      // تشغيل الصوت الموجود داخل ملف MP4 المرفوع على Discord.
-      const resource = createAudioResource(CONFIG.SUPPORT_GREETING_MEDIA_URL, {
-        inputType: StreamType.Arbitrary
+      await entersState(supportConnection, VoiceConnectionStatus.Ready, 20_000);
+
+      // Discord CDN links are remote HTTP files. Download the MP4 first because
+      // createAudioResource() is much more reliable with a local media file.
+      let mustDownload = !fs.existsSync(mediaFile) || fs.statSync(mediaFile).size < 1000;
+
+      if (mustDownload) {
+        const response = await fetch(CONFIG.SUPPORT_GREETING_MEDIA_URL, {
+          headers: { 'User-Agent': 'Mozilla/5.0' }
+        });
+
+        if (!response.ok) {
+          throw new Error(`Greeting media HTTP ${response.status}`);
+        }
+
+        const arrayBuffer = await response.arrayBuffer();
+        fs.writeFileSync(mediaFile, Buffer.from(arrayBuffer));
+        console.log(`Support greeting downloaded: ${fs.statSync(mediaFile).size} bytes`);
+      }
+
+      const resource = createAudioResource(mediaFile, {
+        inputType: StreamType.Arbitrary,
+        inlineVolume: true
       });
+
+      if (resource.volume) resource.volume.setVolume(1.0);
 
       supportPlayer.play(resource);
 
-      await entersState(supportPlayer, AudioPlayerStatus.Playing, 20_000)
-        .catch(() => {});
+      await entersState(supportPlayer, AudioPlayerStatus.Playing, 20_000);
+      console.log('Playing Ghost RP support greeting.');
 
       await entersState(supportPlayer, AudioPlayerStatus.Idle, 120_000)
         .catch(() => {});
     } catch (err) {
-      console.error('Support media greeting error:', err.message);
+      console.error('Support media greeting error:', err);
     }
   });
 
@@ -1634,8 +1660,8 @@ client.on(Events.VoiceStateUpdate, async (oldState, newState) => {
   await speakSupportGreeting();
 
   await sendLog(
-    'دخول الدعم الفني',
-    `🎧 **العضو:** <@${newState.id}>\n\n✅ دخل روم الدعم الفني.\n\n⏳ يرجى انتظار أحد أفراد الدعم.`
+    'Ø¯Ø®ÙÙ Ø§ÙØ¯Ø¹Ù Ø§ÙÙÙÙ',
+    `ð§ **Ø§ÙØ¹Ø¶Ù:** <@${newState.id}>\n\nâ Ø¯Ø®Ù Ø±ÙÙ Ø§ÙØ¯Ø¹Ù Ø§ÙÙÙÙ.\n\nâ³ ÙØ±Ø¬Ù Ø§ÙØªØ¸Ø§Ø± Ø£Ø­Ø¯ Ø£ÙØ±Ø§Ø¯ Ø§ÙØ¯Ø¹Ù.`
   );
 });
 
@@ -1669,12 +1695,12 @@ async function runProtection(message) {
 
     await warnTemporarily(
       message.channel,
-      `<@${message.author.id}> ممنوع المنشن الجماعي.`
+      `<@${message.author.id}> ÙÙÙÙØ¹ Ø§ÙÙÙØ´Ù Ø§ÙØ¬ÙØ§Ø¹Ù.`
     );
 
     await sendLog(
-      'حماية | Mass Mention',
-      `<@${member.id}> حاول عمل منشن جماعي في <#${message.channel.id}>.`,
+      'Ø­ÙØ§ÙØ© | Mass Mention',
+      `<@${member.id}> Ø­Ø§ÙÙ Ø¹ÙÙ ÙÙØ´Ù Ø¬ÙØ§Ø¹Ù ÙÙ <#${message.channel.id}>.`,
       0xE74C3C
     );
 
@@ -1690,12 +1716,12 @@ async function runProtection(message) {
 
     await warnTemporarily(
       message.channel,
-      `<@${message.author.id}> روابط دعوات Discord ممنوعة.`
+      `<@${message.author.id}> Ø±ÙØ§Ø¨Ø· Ø¯Ø¹ÙØ§Øª Discord ÙÙÙÙØ¹Ø©.`
     );
 
     await sendLog(
-      'حماية | Discord Invite',
-      `<@${member.id}> أرسل دعوة Discord في <#${message.channel.id}>.`,
+      'Ø­ÙØ§ÙØ© | Discord Invite',
+      `<@${member.id}> Ø£Ø±Ø³Ù Ø¯Ø¹ÙØ© Discord ÙÙ <#${message.channel.id}>.`,
       0xE74C3C
     );
 
@@ -1711,12 +1737,12 @@ async function runProtection(message) {
 
     await warnTemporarily(
       message.channel,
-      `<@${message.author.id}> الروابط غير مسموح بها هنا.`
+      `<@${message.author.id}> Ø§ÙØ±ÙØ§Ø¨Ø· ØºÙØ± ÙØ³ÙÙØ­ Ø¨ÙØ§ ÙÙØ§.`
     );
 
     await sendLog(
-      'حماية | Link',
-      `<@${member.id}> أرسل رابطاً في <#${message.channel.id}>.`,
+      'Ø­ÙØ§ÙØ© | Link',
+      `<@${member.id}> Ø£Ø±Ø³Ù Ø±Ø§Ø¨Ø·Ø§Ù ÙÙ <#${message.channel.id}>.`,
       0xE74C3C
     );
 
@@ -1745,12 +1771,12 @@ async function runProtection(message) {
 
     await warnTemporarily(
       message.channel,
-      `<@${message.author.id}> تم إيقافك مؤقتاً بسبب السبام.`
+      `<@${message.author.id}> ØªÙ Ø¥ÙÙØ§ÙÙ ÙØ¤ÙØªØ§Ù Ø¨Ø³Ø¨Ø¨ Ø§ÙØ³Ø¨Ø§Ù.`
     );
 
     await sendLog(
-      'حماية | Spam',
-      `<@${member.id}> تم عمل Timeout له بسبب السبام في <#${message.channel.id}>.`,
+      'Ø­ÙØ§ÙØ© | Spam',
+      `<@${member.id}> ØªÙ Ø¹ÙÙ Timeout ÙÙ Ø¨Ø³Ø¨Ø¨ Ø§ÙØ³Ø¨Ø§Ù ÙÙ <#${message.channel.id}>.`,
       0xE74C3C
     );
 
@@ -1770,12 +1796,12 @@ async function runProtection(message) {
 
       await warnTemporarily(
         message.channel,
-        `<@${message.author.id}> قلل استخدام الحروف الكبيرة.`
+        `<@${message.author.id}> ÙÙÙ Ø§Ø³ØªØ®Ø¯Ø§Ù Ø§ÙØ­Ø±ÙÙ Ø§ÙÙØ¨ÙØ±Ø©.`
       );
 
       await sendLog(
-        'حماية | Caps',
-        `<@${member.id}> تم حذف رسالة Caps في <#${message.channel.id}>.`,
+        'Ø­ÙØ§ÙØ© | Caps',
+        `<@${member.id}> ØªÙ Ø­Ø°Ù Ø±Ø³Ø§ÙØ© Caps ÙÙ <#${message.channel.id}>.`,
         0xE67E22
       );
 
@@ -1810,11 +1836,11 @@ client.on(Events.MessageDelete, async message => {
   if (!message.guild || message.author?.bot) return;
 
   await sendLog(
-    'حذف رسالة',
+    'Ø­Ø°Ù Ø±Ø³Ø§ÙØ©',
     [
-      `**العضو:** ${message.author ? `<@${message.author.id}>` : 'غير معروف'}`,
-      `**الروم:** <#${message.channel.id}>`,
-      `**المحتوى:** ${message.content?.slice(0, 1000) || 'غير متاح'}`
+      `**Ø§ÙØ¹Ø¶Ù:** ${message.author ? `<@${message.author.id}>` : 'ØºÙØ± ÙØ¹Ø±ÙÙ'}`,
+      `**Ø§ÙØ±ÙÙ:** <#${message.channel.id}>`,
+      `**Ø§ÙÙØ­ØªÙÙ:** ${message.content?.slice(0, 1000) || 'ØºÙØ± ÙØªØ§Ø­'}`
     ].join('\n'),
     0xE74C3C
   );
@@ -1825,12 +1851,12 @@ client.on(Events.MessageUpdate, async (oldMessage, newMessage) => {
   if (oldMessage.content === newMessage.content) return;
 
   await sendLog(
-    'تعديل رسالة',
+    'ØªØ¹Ø¯ÙÙ Ø±Ø³Ø§ÙØ©',
     [
-      `**العضو:** <@${newMessage.author.id}>`,
-      `**الروم:** <#${newMessage.channel.id}>`,
-      `**قبل:** ${oldMessage.content?.slice(0, 500) || 'غير متاح'}`,
-      `**بعد:** ${newMessage.content?.slice(0, 500) || 'غير متاح'}`
+      `**Ø§ÙØ¹Ø¶Ù:** <@${newMessage.author.id}>`,
+      `**Ø§ÙØ±ÙÙ:** <#${newMessage.channel.id}>`,
+      `**ÙØ¨Ù:** ${oldMessage.content?.slice(0, 500) || 'ØºÙØ± ÙØªØ§Ø­'}`,
+      `**Ø¨Ø¹Ø¯:** ${newMessage.content?.slice(0, 500) || 'ØºÙØ± ÙØªØ§Ø­'}`
     ].join('\n'),
     0xF1C40F
   );
@@ -1838,31 +1864,31 @@ client.on(Events.MessageUpdate, async (oldMessage, newMessage) => {
 
 client.on(Events.GuildBanAdd, async ban => {
   await sendLog(
-    'حظر عضو',
-    `<@${ban.user.id}> تم حظره من السيرفر.`,
+    'Ø­Ø¸Ø± Ø¹Ø¶Ù',
+    `<@${ban.user.id}> ØªÙ Ø­Ø¸Ø±Ù ÙÙ Ø§ÙØ³ÙØ±ÙØ±.`,
     0xE74C3C
   );
 });
 
 client.on(Events.GuildBanRemove, async ban => {
   await sendLog(
-    'فك حظر عضو',
-    `<@${ban.user.id}> تم فك الحظر عنه.`,
+    'ÙÙ Ø­Ø¸Ø± Ø¹Ø¶Ù',
+    `<@${ban.user.id}> ØªÙ ÙÙ Ø§ÙØ­Ø¸Ø± Ø¹ÙÙ.`,
     0x2ECC71
   );
 });
 
 client.on(Events.ChannelCreate, async channel => {
   await sendLog(
-    'إنشاء روم',
-    `تم إنشاء الروم: <#${channel.id}>`
+    'Ø¥ÙØ´Ø§Ø¡ Ø±ÙÙ',
+    `ØªÙ Ø¥ÙØ´Ø§Ø¡ Ø§ÙØ±ÙÙ: <#${channel.id}>`
   );
 });
 
 client.on(Events.ChannelDelete, async channel => {
   await sendLog(
-    'حذف روم',
-    `تم حذف روم: **${channel.name}** (\`${channel.id}\`)`,
+    'Ø­Ø°Ù Ø±ÙÙ',
+    `ØªÙ Ø­Ø°Ù Ø±ÙÙ: **${channel.name}** (\`${channel.id}\`)`,
     0xE74C3C
   );
 });
@@ -1871,22 +1897,22 @@ client.on(Events.ChannelUpdate, async (oldChannel, newChannel) => {
   if (oldChannel.name === newChannel.name) return;
 
   await sendLog(
-    'تعديل روم',
-    `تم تغيير اسم الروم من **${oldChannel.name}** إلى **${newChannel.name}**.`
+    'ØªØ¹Ø¯ÙÙ Ø±ÙÙ',
+    `ØªÙ ØªØºÙÙØ± Ø§Ø³Ù Ø§ÙØ±ÙÙ ÙÙ **${oldChannel.name}** Ø¥ÙÙ **${newChannel.name}**.`
   );
 });
 
 client.on(Events.RoleCreate, async role => {
   await sendLog(
-    'إنشاء رتبة',
-    `تم إنشاء رتبة: <@&${role.id}>`
+    'Ø¥ÙØ´Ø§Ø¡ Ø±ØªØ¨Ø©',
+    `ØªÙ Ø¥ÙØ´Ø§Ø¡ Ø±ØªØ¨Ø©: <@&${role.id}>`
   );
 });
 
 client.on(Events.RoleDelete, async role => {
   await sendLog(
-    'حذف رتبة',
-    `تم حذف رتبة: **${role.name}** (\`${role.id}\`)`,
+    'Ø­Ø°Ù Ø±ØªØ¨Ø©',
+    `ØªÙ Ø­Ø°Ù Ø±ØªØ¨Ø©: **${role.name}** (\`${role.id}\`)`,
     0xE74C3C
   );
 });
@@ -1900,23 +1926,23 @@ client.on(Events.GuildMemberUpdate, async (oldMember, newMember) => {
 
   if (added.size) {
     await sendLog(
-      'إضافة رتبة لعضو',
-      `<@${newMember.id}> حصل على: ${added.map(r => `<@&${r.id}>`).join(', ')}`
+      'Ø¥Ø¶Ø§ÙØ© Ø±ØªØ¨Ø© ÙØ¹Ø¶Ù',
+      `<@${newMember.id}> Ø­ØµÙ Ø¹ÙÙ: ${added.map(r => `<@&${r.id}>`).join(', ')}`
     );
   }
 
   if (removed.size) {
     await sendLog(
-      'إزالة رتبة من عضو',
-      `<@${newMember.id}> تم إزالة: ${removed.map(r => `<@&${r.id}>`).join(', ')}`,
+      'Ø¥Ø²Ø§ÙØ© Ø±ØªØ¨Ø© ÙÙ Ø¹Ø¶Ù',
+      `<@${newMember.id}> ØªÙ Ø¥Ø²Ø§ÙØ©: ${removed.map(r => `<@&${r.id}>`).join(', ')}`,
       0xE67E22
     );
   }
 
   if (oldMember.nickname !== newMember.nickname) {
     await sendLog(
-      'تغيير Nickname',
-      `<@${newMember.id}>\n**قبل:** ${oldMember.nickname || oldMember.user.username}\n**بعد:** ${newMember.nickname || newMember.user.username}`
+      'ØªØºÙÙØ± Nickname',
+      `<@${newMember.id}>\n**ÙØ¨Ù:** ${oldMember.nickname || oldMember.user.username}\n**Ø¨Ø¹Ø¯:** ${newMember.nickname || newMember.user.username}`
     );
   }
 });
@@ -1945,7 +1971,7 @@ function ticketStaff(member, ticket) {
   return hasAnyRole(member, [...(cfg?.teamRoleIds || []), ...CONFIG.TICKET_ADMIN_ROLE_IDS, ...CONFIG.CONTROL_ROLE_IDS]);
 }
 
-// الأزرار الحساسة: فريق التذاكر + مسؤول التذاكر فقط.
+// Ø§ÙØ£Ø²Ø±Ø§Ø± Ø§ÙØ­Ø³Ø§Ø³Ø©: ÙØ±ÙÙ Ø§ÙØªØ°Ø§ÙØ± + ÙØ³Ø¤ÙÙ Ø§ÙØªØ°Ø§ÙØ± ÙÙØ·.
 function ticketManagementStaff(member) {
   if (!member) return false;
   return [CONFIG.TICKET_TEAM_ROLE_ID, CONFIG.TICKET_MANAGER_ROLE_ID]
@@ -1955,9 +1981,9 @@ function ticketManagementStaff(member) {
 
 function priorityData(priority) {
   return {
-    normal: { label:'عادي', emoji:'🟢', color:0x2ECC71 },
-    important: { label:'هام', emoji:'🟡', color:0xF1C40F },
-    urgent: { label:'ضروري', emoji:'🔴', color:0xE74C3C }
+    normal: { label:'Ø¹Ø§Ø¯Ù', emoji:'ð¢', color:0x2ECC71 },
+    important: { label:'ÙØ§Ù', emoji:'ð¡', color:0xF1C40F },
+    urgent: { label:'Ø¶Ø±ÙØ±Ù', emoji:'ð´', color:0xE74C3C }
   }[priority];
 }
 
@@ -1981,65 +2007,65 @@ async function postAdvancedPanels() {
   const ticketCh = await safeFetchChannel(CONFIG.TICKET_PANEL_CHANNEL_ID);
   if (ticketCh?.isTextBased() && !(await panelExists(ticketCh,'ticket_type:support'))) {
     const r1 = new ActionRowBuilder().addComponents(
-      new ButtonBuilder().setCustomId('ticket_type:support').setLabel('الدعم الفني').setEmoji('🎧').setStyle(ButtonStyle.Primary),
-      new ButtonBuilder().setCustomId('ticket_type:monitoring').setLabel('الرقابة').setEmoji('👁️').setStyle(ButtonStyle.Primary),
-      new ButtonBuilder().setCustomId('ticket_type:player_complaint').setLabel('شكوى ضد لاعب').setEmoji('⚠️').setStyle(ButtonStyle.Primary),
-      new ButtonBuilder().setCustomId('ticket_type:appeal').setLabel('استئناف').setEmoji('🔄').setStyle(ButtonStyle.Primary)
+      new ButtonBuilder().setCustomId('ticket_type:support').setLabel('Ø§ÙØ¯Ø¹Ù Ø§ÙÙÙÙ').setEmoji('ð§').setStyle(ButtonStyle.Primary),
+      new ButtonBuilder().setCustomId('ticket_type:monitoring').setLabel('Ø§ÙØ±ÙØ§Ø¨Ø©').setEmoji('ðï¸').setStyle(ButtonStyle.Primary),
+      new ButtonBuilder().setCustomId('ticket_type:player_complaint').setLabel('Ø´ÙÙÙ Ø¶Ø¯ ÙØ§Ø¹Ø¨').setEmoji('â ï¸').setStyle(ButtonStyle.Primary),
+      new ButtonBuilder().setCustomId('ticket_type:appeal').setLabel('Ø§Ø³ØªØ¦ÙØ§Ù').setEmoji('ð').setStyle(ButtonStyle.Primary)
     );
     const r2 = new ActionRowBuilder().addComponents(
-      new ButtonBuilder().setCustomId('ticket_type:staff_complaint').setLabel('شكوى ضد إداري').setEmoji('🚔').setStyle(ButtonStyle.Primary),
-      new ButtonBuilder().setCustomId('ticket_type:store').setLabel('المتجر').setEmoji('🛒').setStyle(ButtonStyle.Primary),
-      new ButtonBuilder().setCustomId('ticket_type:compensation').setLabel('التعويضات').setEmoji('💰').setStyle(ButtonStyle.Primary),
-      new ButtonBuilder().setCustomId('ticket_type:bug').setLabel('الإبلاغ عن الأخطاء').setEmoji('🐞').setStyle(ButtonStyle.Primary)
+      new ButtonBuilder().setCustomId('ticket_type:staff_complaint').setLabel('Ø´ÙÙÙ Ø¶Ø¯ Ø¥Ø¯Ø§Ø±Ù').setEmoji('ð').setStyle(ButtonStyle.Primary),
+      new ButtonBuilder().setCustomId('ticket_type:store').setLabel('Ø§ÙÙØªØ¬Ø±').setEmoji('ð').setStyle(ButtonStyle.Primary),
+      new ButtonBuilder().setCustomId('ticket_type:compensation').setLabel('Ø§ÙØªØ¹ÙÙØ¶Ø§Øª').setEmoji('ð°').setStyle(ButtonStyle.Primary),
+      new ButtonBuilder().setCustomId('ticket_type:bug').setLabel('Ø§ÙØ¥Ø¨ÙØ§Øº Ø¹Ù Ø§ÙØ£Ø®Ø·Ø§Ø¡').setEmoji('ð').setStyle(ButtonStyle.Primary)
     );
-    await ticketCh.send({embeds:[embed('🎫 نظام التذاكر','اختر نوع التذكرة، وبعدها اختار **عادي / هام / ضروري**.')],components:[r1,r2]});
+    await ticketCh.send({embeds:[embed('ð« ÙØ¸Ø§Ù Ø§ÙØªØ°Ø§ÙØ±','Ø§Ø®ØªØ± ÙÙØ¹ Ø§ÙØªØ°ÙØ±Ø©Ø ÙØ¨Ø¹Ø¯ÙØ§ Ø§Ø®ØªØ§Ø± **Ø¹Ø§Ø¯Ù / ÙØ§Ù / Ø¶Ø±ÙØ±Ù**.')],components:[r1,r2]});
   }
 
   const control = await safeFetchChannel(CONFIG.CONTROL_PANEL_CHANNEL_ID);
   if (control?.isTextBased() && !(await panelExists(control,'sys:tickets'))) {
     const r1 = new ActionRowBuilder().addComponents(
-      new ButtonBuilder().setCustomId('sys:tickets').setLabel('التذاكر').setStyle(ButtonStyle.Primary),
-      new ButtonBuilder().setCustomId('sys:applications').setLabel('التقديمات').setStyle(ButtonStyle.Primary),
-      new ButtonBuilder().setCustomId('sys:welcome').setLabel('الترحيب').setStyle(ButtonStyle.Primary),
-      new ButtonBuilder().setCustomId('sys:protection').setLabel('الحماية').setStyle(ButtonStyle.Primary),
-      new ButtonBuilder().setCustomId('sys:ratings').setLabel('التقييم').setStyle(ButtonStyle.Primary)
+      new ButtonBuilder().setCustomId('sys:tickets').setLabel('Ø§ÙØªØ°Ø§ÙØ±').setStyle(ButtonStyle.Primary),
+      new ButtonBuilder().setCustomId('sys:applications').setLabel('Ø§ÙØªÙØ¯ÙÙØ§Øª').setStyle(ButtonStyle.Primary),
+      new ButtonBuilder().setCustomId('sys:welcome').setLabel('Ø§ÙØªØ±Ø­ÙØ¨').setStyle(ButtonStyle.Primary),
+      new ButtonBuilder().setCustomId('sys:protection').setLabel('Ø§ÙØ­ÙØ§ÙØ©').setStyle(ButtonStyle.Primary),
+      new ButtonBuilder().setCustomId('sys:ratings').setLabel('Ø§ÙØªÙÙÙÙ').setStyle(ButtonStyle.Primary)
     );
     const r2 = new ActionRowBuilder().addComponents(
-      new ButtonBuilder().setCustomId('sys:videos').setLabel('الفيديوهات').setStyle(ButtonStyle.Primary),
-      new ButtonBuilder().setCustomId('sys:voice').setLabel('فويس الدعم').setStyle(ButtonStyle.Primary),
-      new ButtonBuilder().setCustomId('sys_status').setLabel('الحالة').setEmoji('📊').setStyle(ButtonStyle.Secondary)
+      new ButtonBuilder().setCustomId('sys:videos').setLabel('Ø§ÙÙÙØ¯ÙÙÙØ§Øª').setStyle(ButtonStyle.Primary),
+      new ButtonBuilder().setCustomId('sys:voice').setLabel('ÙÙÙØ³ Ø§ÙØ¯Ø¹Ù').setStyle(ButtonStyle.Primary),
+      new ButtonBuilder().setCustomId('sys_status').setLabel('Ø§ÙØ­Ø§ÙØ©').setEmoji('ð').setStyle(ButtonStyle.Secondary)
     );
-    await control.send({embeds:[embed('⚙️ لوحة التحكم','تشغيل وإيقاف أنظمة البوت.')],components:[r1,r2]});
+    await control.send({embeds:[embed('âï¸ ÙÙØ­Ø© Ø§ÙØªØ­ÙÙ','ØªØ´ØºÙÙ ÙØ¥ÙÙØ§Ù Ø£ÙØ¸ÙØ© Ø§ÙØ¨ÙØª.')],components:[r1,r2]});
   }
 
   const sendCh = await safeFetchChannel(CONFIG.BOT_SEND_PANEL_CHANNEL_ID);
   if (sendCh?.isTextBased() && !(await panelExists(sendCh,'bot_send'))) {
-    await sendCh.send({embeds:[embed('📨 إرسال عن طريق البوت','حدد الاتشانل والرسالة.')],components:[
-      new ActionRowBuilder().addComponents(new ButtonBuilder().setCustomId('bot_send').setLabel('إرسال رسالة').setEmoji('📨').setStyle(ButtonStyle.Primary))
+    await sendCh.send({embeds:[embed('ð¨ Ø¥Ø±Ø³Ø§Ù Ø¹Ù Ø·Ø±ÙÙ Ø§ÙØ¨ÙØª','Ø­Ø¯Ø¯ Ø§ÙØ§ØªØ´Ø§ÙÙ ÙØ§ÙØ±Ø³Ø§ÙØ©.')],components:[
+      new ActionRowBuilder().addComponents(new ButtonBuilder().setCustomId('bot_send').setLabel('Ø¥Ø±Ø³Ø§Ù Ø±Ø³Ø§ÙØ©').setEmoji('ð¨').setStyle(ButtonStyle.Primary))
     ]});
   }
 
   const activation = await safeFetchChannel(CONFIG.ACTIVATION_PANEL_CHANNEL_ID);
   if (activation?.isTextBased() && !(await panelExists(activation,'activation_accept'))) {
-    await activation.send({embeds:[embed('✅❌ تقديمات التفعيل','حدد الشخص بالمنشن أو الـID.')],components:[
+    await activation.send({embeds:[embed('ââ ØªÙØ¯ÙÙØ§Øª Ø§ÙØªÙØ¹ÙÙ','Ø­Ø¯Ø¯ Ø§ÙØ´Ø®Øµ Ø¨Ø§ÙÙÙØ´Ù Ø£Ù Ø§ÙÙID.')],components:[
       new ActionRowBuilder().addComponents(
-        new ButtonBuilder().setCustomId('activation_accept').setLabel('قبول').setStyle(ButtonStyle.Success),
-        new ButtonBuilder().setCustomId('activation_reject').setLabel('رفض').setStyle(ButtonStyle.Danger)
+        new ButtonBuilder().setCustomId('activation_accept').setLabel('ÙØ¨ÙÙ').setStyle(ButtonStyle.Success),
+        new ButtonBuilder().setCustomId('activation_reject').setLabel('Ø±ÙØ¶').setStyle(ButtonStyle.Danger)
       )
     ]});
   }
 
   const staff = await safeFetchChannel(CONFIG.STAFF_APPLICATION_PANEL_CHANNEL_ID);
   if (staff?.isTextBased() && !(await panelExists(staff,'staff_apply'))) {
-    await staff.send({embeds:[embed('🛡️ تقديم الإدارة','اضغط لفتح نموذج تقديم الإدارة.')],components:[
-      new ActionRowBuilder().addComponents(new ButtonBuilder().setCustomId('staff_apply').setLabel('تقديم إدارة').setStyle(ButtonStyle.Primary))
+    await staff.send({embeds:[embed('ð¡ï¸ ØªÙØ¯ÙÙ Ø§ÙØ¥Ø¯Ø§Ø±Ø©','Ø§Ø¶ØºØ· ÙÙØªØ­ ÙÙÙØ°Ø¬ ØªÙØ¯ÙÙ Ø§ÙØ¥Ø¯Ø§Ø±Ø©.')],components:[
+      new ActionRowBuilder().addComponents(new ButtonBuilder().setCustomId('staff_apply').setLabel('ØªÙØ¯ÙÙ Ø¥Ø¯Ø§Ø±Ø©').setStyle(ButtonStyle.Primary))
     ]});
   }
 
   const creator = await safeFetchChannel(CONFIG.CREATOR_APPLICATION_PANEL_CHANNEL_ID);
   if (creator?.isTextBased() && !(await panelExists(creator,'creator_apply'))) {
-    await creator.send({embeds:[embed('🎥 تقديم صانع محتوى','اضغط لفتح نموذج التقديم.')],components:[
-      new ActionRowBuilder().addComponents(new ButtonBuilder().setCustomId('creator_apply').setLabel('تقديم صانع محتوى').setStyle(ButtonStyle.Primary))
+    await creator.send({embeds:[embed('ð¥ ØªÙØ¯ÙÙ ØµØ§ÙØ¹ ÙØ­ØªÙÙ','Ø§Ø¶ØºØ· ÙÙØªØ­ ÙÙÙØ°Ø¬ Ø§ÙØªÙØ¯ÙÙ.')],components:[
+      new ActionRowBuilder().addComponents(new ButtonBuilder().setCustomId('creator_apply').setLabel('ØªÙØ¯ÙÙ ØµØ§ÙØ¹ ÙØ­ØªÙÙ').setStyle(ButtonStyle.Primary))
     ]});
   }
 }
@@ -2050,21 +2076,21 @@ client.once(Events.ClientReady, async ()=>{
 });
 
 async function choosePriority(interaction, typeKey) {
-  if (db.systems?.tickets === false) return interaction.reply({content:'⛔ التذاكر متوقفة.',ephemeral:true});
+  if (db.systems?.tickets === false) return interaction.reply({content:'â Ø§ÙØªØ°Ø§ÙØ± ÙØªÙÙÙØ©.',ephemeral:true});
   const cfg = CONFIG.TICKET_TYPES[typeKey];
   if (!cfg) return;
   const row = new ActionRowBuilder().addComponents(
-    new ButtonBuilder().setCustomId(`ticket_priority:${typeKey}:normal`).setLabel('عادي').setEmoji('🟢').setStyle(ButtonStyle.Success),
-    new ButtonBuilder().setCustomId(`ticket_priority:${typeKey}:important`).setLabel('هام').setEmoji('🟡').setStyle(ButtonStyle.Primary),
-    new ButtonBuilder().setCustomId(`ticket_priority:${typeKey}:urgent`).setLabel('ضروري').setEmoji('🔴').setStyle(ButtonStyle.Danger)
+    new ButtonBuilder().setCustomId(`ticket_priority:${typeKey}:normal`).setLabel('Ø¹Ø§Ø¯Ù').setEmoji('ð¢').setStyle(ButtonStyle.Success),
+    new ButtonBuilder().setCustomId(`ticket_priority:${typeKey}:important`).setLabel('ÙØ§Ù').setEmoji('ð¡').setStyle(ButtonStyle.Primary),
+    new ButtonBuilder().setCustomId(`ticket_priority:${typeKey}:urgent`).setLabel('Ø¶Ø±ÙØ±Ù').setEmoji('ð´').setStyle(ButtonStyle.Danger)
   );
-  await interaction.reply({embeds:[embed(`${cfg.emoji} ${cfg.label}`,'اختر الأولوية:')],components:[row],ephemeral:true});
+  await interaction.reply({embeds:[embed(`${cfg.emoji} ${cfg.label}`,'Ø§Ø®ØªØ± Ø§ÙØ£ÙÙÙÙØ©:')],components:[row],ephemeral:true});
 }
 
 async function ticketProblemModal(interaction,typeKey,priority) {
   const cfg = CONFIG.TICKET_TYPES[typeKey];
   const modal = new ModalBuilder().setCustomId(`ticket_create:${typeKey}:${priority}`).setTitle(`${cfg.label} - ${priorityData(priority).label}`);
-  const problem = new TextInputBuilder().setCustomId('problem').setLabel('اكتب المشكلة').setStyle(TextInputStyle.Paragraph).setRequired(true).setMinLength(5).setMaxLength(1500);
+  const problem = new TextInputBuilder().setCustomId('problem').setLabel('Ø§ÙØªØ¨ Ø§ÙÙØ´ÙÙØ©').setStyle(TextInputStyle.Paragraph).setRequired(true).setMinLength(5).setMaxLength(1500);
   modal.addComponents(new ActionRowBuilder().addComponents(problem));
   await interaction.showModal(modal);
 }
@@ -2072,16 +2098,16 @@ async function ticketProblemModal(interaction,typeKey,priority) {
 function ticketRows(num) {
   return [
     new ActionRowBuilder().addComponents(
-      new ButtonBuilder().setCustomId(`ticket_claim:${num}`).setLabel('استلام').setStyle(ButtonStyle.Success),
-      new ButtonBuilder().setCustomId(`ticket_add_user:${num}`).setLabel('إضافة شخص').setStyle(ButtonStyle.Secondary),
-      new ButtonBuilder().setCustomId(`ticket_add_staff:${num}`).setLabel('إضافة إداري').setStyle(ButtonStyle.Secondary),
-      new ButtonBuilder().setCustomId(`ticket_warn:${num}`).setLabel('تنبيه 24 ساعة').setStyle(ButtonStyle.Primary),
-      new ButtonBuilder().setCustomId(`ticket_close:${num}`).setLabel('إغلاق').setStyle(ButtonStyle.Danger)
+      new ButtonBuilder().setCustomId(`ticket_claim:${num}`).setLabel('Ø§Ø³ØªÙØ§Ù').setStyle(ButtonStyle.Success),
+      new ButtonBuilder().setCustomId(`ticket_add_user:${num}`).setLabel('Ø¥Ø¶Ø§ÙØ© Ø´Ø®Øµ').setStyle(ButtonStyle.Secondary),
+      new ButtonBuilder().setCustomId(`ticket_add_staff:${num}`).setLabel('Ø¥Ø¶Ø§ÙØ© Ø¥Ø¯Ø§Ø±Ù').setStyle(ButtonStyle.Secondary),
+      new ButtonBuilder().setCustomId(`ticket_warn:${num}`).setLabel('ØªÙØ¨ÙÙ 24 Ø³Ø§Ø¹Ø©').setStyle(ButtonStyle.Primary),
+      new ButtonBuilder().setCustomId(`ticket_close:${num}`).setLabel('Ø¥ØºÙØ§Ù').setStyle(ButtonStyle.Danger)
     ),
     new ActionRowBuilder().addComponents(
-      new ButtonBuilder().setCustomId(`ticket_reopen:${num}`).setLabel('إعادة فتح').setStyle(ButtonStyle.Success),
-      new ButtonBuilder().setCustomId(`ticket_copy:${num}`).setLabel('نسخ').setStyle(ButtonStyle.Secondary),
-      new ButtonBuilder().setCustomId(`ticket_delete:${num}`).setLabel('مسح').setStyle(ButtonStyle.Danger)
+      new ButtonBuilder().setCustomId(`ticket_reopen:${num}`).setLabel('Ø¥Ø¹Ø§Ø¯Ø© ÙØªØ­').setStyle(ButtonStyle.Success),
+      new ButtonBuilder().setCustomId(`ticket_copy:${num}`).setLabel('ÙØ³Ø®').setStyle(ButtonStyle.Secondary),
+      new ButtonBuilder().setCustomId(`ticket_delete:${num}`).setLabel('ÙØ³Ø­').setStyle(ButtonStyle.Danger)
     )
   ];
 }
@@ -2092,7 +2118,7 @@ async function createTicket(interaction,typeKey,priority) {
   const problem = interaction.fields.getTextInputValue('problem').trim();
 
   const open = Object.values(db.tickets).find(t=>t.ownerId===interaction.user.id && t.type===typeKey && t.status!=='deleted');
-  if (open) return interaction.reply({content:`⚠️ عندك تذكرة من النوع ده: <#${open.channelId}>`,ephemeral:true});
+  if (open) return interaction.reply({content:`â ï¸ Ø¹ÙØ¯Ù ØªØ°ÙØ±Ø© ÙÙ Ø§ÙÙÙØ¹ Ø¯Ù: <#${open.channelId}>`,ephemeral:true});
 
   db.ticketCounter++;
   const num = String(db.ticketCounter).padStart(4,'0');
@@ -2116,71 +2142,71 @@ async function createTicket(interaction,typeKey,priority) {
 
   await ch.send({
     content:`<@${interaction.user.id}> ${cfg.teamRoleIds.filter(hasRealId).map(id=>`<@&${id}>`).join(' ')}`,
-    embeds:[embed(`${cfg.emoji} تذكرة #${num}`,`**النوع:** ${cfg.label}\n**الأولوية:** ${p.emoji} ${p.label}\n**صاحب التذكرة:** <@${interaction.user.id}>\n\n**المشكلة:**\n${problem}`,p.color)],
+    embeds:[embed(`${cfg.emoji} ØªØ°ÙØ±Ø© #${num}`,`**Ø§ÙÙÙØ¹:** ${cfg.label}\n**Ø§ÙØ£ÙÙÙÙØ©:** ${p.emoji} ${p.label}\n**ØµØ§Ø­Ø¨ Ø§ÙØªØ°ÙØ±Ø©:** <@${interaction.user.id}>\n\n**Ø§ÙÙØ´ÙÙØ©:**\n${problem}`,p.color)],
     components:ticketRows(num)
   });
 
-  await interaction.reply({content:`✅ تم فتح التذكرة: ${ch}`,ephemeral:true});
+  await interaction.reply({content:`â ØªÙ ÙØªØ­ Ø§ÙØªØ°ÙØ±Ø©: ${ch}`,ephemeral:true});
 
   const notifyId = priority==='normal'?cfg.normalChannelId:(priority==='important'?cfg.importantChannelId:cfg.urgentChannelId);
   const notify = await safeFetchChannel(notifyId);
   if (notify?.isTextBased()) {
     await notify.send({
       content:cfg.teamRoleIds.filter(hasRealId).map(id=>`<@&${id}>`).join(' '),
-      embeds:[embed(`${p.emoji} ${p.label} | ${cfg.label}`,`تذكرة #${num}\nصاحبها: <@${interaction.user.id}>`,p.color)],
-      components:[new ActionRowBuilder().addComponents(new ButtonBuilder().setLabel('دخول التذكرة').setStyle(ButtonStyle.Link).setURL(ch.url))]
+      embeds:[embed(`${p.emoji} ${p.label} | ${cfg.label}`,`ØªØ°ÙØ±Ø© #${num}\nØµØ§Ø­Ø¨ÙØ§: <@${interaction.user.id}>`,p.color)],
+      components:[new ActionRowBuilder().addComponents(new ButtonBuilder().setLabel('Ø¯Ø®ÙÙ Ø§ÙØªØ°ÙØ±Ø©').setStyle(ButtonStyle.Link).setURL(ch.url))]
     });
   }
-  await ticketLog('فتح تذكرة',`#${num} | ${cfg.label} | ${p.label}\n<@${interaction.user.id}>`);
+  await ticketLog('ÙØªØ­ ØªØ°ÙØ±Ø©',`#${num} | ${cfg.label} | ${p.label}\n<@${interaction.user.id}>`);
 }
 
 async function ticketMemberModal(interaction,ticket,staffOnly=false) {
   const allowed = staffOnly ? ticketManagementStaff(interaction.member) : ticketStaff(interaction.member,ticket);
-  if (!allowed) return interaction.reply({content:'❌ ليس لديك صلاحية لهذا الإجراء.',ephemeral:true});
-  const modal = new ModalBuilder().setCustomId(`${staffOnly?'ticket_staff_submit':'ticket_user_submit'}:${ticket.number}`).setTitle(staffOnly?'إضافة إداري':'إضافة شخص');
-  const user = new TextInputBuilder().setCustomId('user').setLabel('منشن الشخص أو Discord ID').setStyle(TextInputStyle.Short).setRequired(true);
+  if (!allowed) return interaction.reply({content:'â ÙÙØ³ ÙØ¯ÙÙ ØµÙØ§Ø­ÙØ© ÙÙØ°Ø§ Ø§ÙØ¥Ø¬Ø±Ø§Ø¡.',ephemeral:true});
+  const modal = new ModalBuilder().setCustomId(`${staffOnly?'ticket_staff_submit':'ticket_user_submit'}:${ticket.number}`).setTitle(staffOnly?'Ø¥Ø¶Ø§ÙØ© Ø¥Ø¯Ø§Ø±Ù':'Ø¥Ø¶Ø§ÙØ© Ø´Ø®Øµ');
+  const user = new TextInputBuilder().setCustomId('user').setLabel('ÙÙØ´Ù Ø§ÙØ´Ø®Øµ Ø£Ù Discord ID').setStyle(TextInputStyle.Short).setRequired(true);
   modal.addComponents(new ActionRowBuilder().addComponents(user));
   await interaction.showModal(modal);
 }
 
 async function addTicketMember(interaction,ticket,staffOnly=false) {
   const allowed = staffOnly ? ticketManagementStaff(interaction.member) : ticketStaff(interaction.member,ticket);
-  if (!allowed) return interaction.reply({content:'❌ ليس لديك صلاحية لهذا الإجراء.',ephemeral:true});
+  if (!allowed) return interaction.reply({content:'â ÙÙØ³ ÙØ¯ÙÙ ØµÙØ§Ø­ÙØ© ÙÙØ°Ø§ Ø§ÙØ¥Ø¬Ø±Ø§Ø¡.',ephemeral:true});
   const id=extractId(interaction.fields.getTextInputValue('user'));
   const member=id?await interaction.guild.members.fetch(id).catch(()=>null):null;
-  if (!member) return interaction.reply({content:'❌ الشخص لازم يكون موجود في السيرفر.',ephemeral:true});
-  if (staffOnly && !ticketStaff(member,ticket)) return interaction.reply({content:'❌ الشخص مش من فريق التذكرة.',ephemeral:true});
+  if (!member) return interaction.reply({content:'â Ø§ÙØ´Ø®Øµ ÙØ§Ø²Ù ÙÙÙÙ ÙÙØ¬ÙØ¯ ÙÙ Ø§ÙØ³ÙØ±ÙØ±.',ephemeral:true});
+  if (staffOnly && !ticketStaff(member,ticket)) return interaction.reply({content:'â Ø§ÙØ´Ø®Øµ ÙØ´ ÙÙ ÙØ±ÙÙ Ø§ÙØªØ°ÙØ±Ø©.',ephemeral:true});
   await interaction.channel.permissionOverwrites.edit(member.id,{ViewChannel:true,SendMessages:true,ReadMessageHistory:true,AttachFiles:true});
   if (!ticket.addedUsers.includes(member.id)) ticket.addedUsers.push(member.id);
   if (staffOnly && !ticket.claimedBy.includes(member.id)) ticket.claimedBy.push(member.id);
   saveDB();
-  await interaction.reply({content:`✅ تمت إضافة <@${member.id}>.`});
+  await interaction.reply({content:`â ØªÙØª Ø¥Ø¶Ø§ÙØ© <@${member.id}>.`});
 }
 
-async function closeTicketNow(interaction,ticket,reason='تم الإغلاق بواسطة الإدارة') {
-  if (!ticketManagementStaff(interaction.member)) return interaction.reply({content:'❌ فريق التذاكر أو مسؤول التذاكر فقط.',ephemeral:true});
+async function closeTicketNow(interaction,ticket,reason='ØªÙ Ø§ÙØ¥ØºÙØ§Ù Ø¨ÙØ§Ø³Ø·Ø© Ø§ÙØ¥Ø¯Ø§Ø±Ø©') {
+  if (!ticketManagementStaff(interaction.member)) return interaction.reply({content:'â ÙØ±ÙÙ Ø§ÙØªØ°Ø§ÙØ± Ø£Ù ÙØ³Ø¤ÙÙ Ø§ÙØªØ°Ø§ÙØ± ÙÙØ·.',ephemeral:true});
   ticket.status='closed'; ticket.warningDeadline=0; ticket.closeReason=reason; saveDB();
   await interaction.channel.permissionOverwrites.edit(ticket.ownerId,{ViewChannel:false,SendMessages:false}).catch(()=>{});
-  await interaction.reply({content:`🔒 تم إغلاق التذكرة.\nالسبب: ${reason}`});
+  await interaction.reply({content:`ð ØªÙ Ø¥ØºÙØ§Ù Ø§ÙØªØ°ÙØ±Ø©.\nØ§ÙØ³Ø¨Ø¨: ${reason}`});
   await safeDM(ticket.ownerId,{
-    embeds:[embed('🔒 تم إغلاق التذكرة',`#${ticket.number} | ${CONFIG.TICKET_TYPES[ticket.type].label}\nالسبب: ${reason}`)],
+    embeds:[embed('ð ØªÙ Ø¥ØºÙØ§Ù Ø§ÙØªØ°ÙØ±Ø©',`#${ticket.number} | ${CONFIG.TICKET_TYPES[ticket.type].label}\nØ§ÙØ³Ø¨Ø¨: ${reason}`)],
     components:[new ActionRowBuilder().addComponents(
-      ...[1,2,3,4,5].map(n=>new ButtonBuilder().setCustomId(`ticket_rate:${ticket.number}:${n}`).setLabel(`${n} ⭐`).setStyle(ButtonStyle.Secondary))
+      ...[1,2,3,4,5].map(n=>new ButtonBuilder().setCustomId(`ticket_rate:${ticket.number}:${n}`).setLabel(`${n} â­`).setStyle(ButtonStyle.Secondary))
     )]
   });
-  await ticketLog('إغلاق تذكرة',`#${ticket.number}\nبواسطة <@${interaction.user.id}>\nالسبب: ${reason}`,0xE74C3C);
+  await ticketLog('Ø¥ØºÙØ§Ù ØªØ°ÙØ±Ø©',`#${ticket.number}\nØ¨ÙØ§Ø³Ø·Ø© <@${interaction.user.id}>\nØ§ÙØ³Ø¨Ø¨: ${reason}`,0xE74C3C);
 }
 
 async function reopenTicketNow(interaction,ticket) {
-  if (!ticketManagementStaff(interaction.member)) return interaction.reply({content:'❌ فريق التذاكر أو مسؤول التذاكر فقط.',ephemeral:true});
+  if (!ticketManagementStaff(interaction.member)) return interaction.reply({content:'â ÙØ±ÙÙ Ø§ÙØªØ°Ø§ÙØ± Ø£Ù ÙØ³Ø¤ÙÙ Ø§ÙØªØ°Ø§ÙØ± ÙÙØ·.',ephemeral:true});
   ticket.status='open'; ticket.warningDeadline=0; saveDB();
   await interaction.channel.permissionOverwrites.edit(ticket.ownerId,{ViewChannel:true,SendMessages:true,ReadMessageHistory:true});
-  await interaction.reply({content:'♻️ تم إعادة فتح التذكرة.'});
-  await safeDM(ticket.ownerId,{embeds:[embed('♻️ إعادة فتح التذكرة',`تم إعادة فتح تذكرتك #${ticket.number}.`)]});
+  await interaction.reply({content:'â»ï¸ ØªÙ Ø¥Ø¹Ø§Ø¯Ø© ÙØªØ­ Ø§ÙØªØ°ÙØ±Ø©.'});
+  await safeDM(ticket.ownerId,{embeds:[embed('â»ï¸ Ø¥Ø¹Ø§Ø¯Ø© ÙØªØ­ Ø§ÙØªØ°ÙØ±Ø©',`ØªÙ Ø¥Ø¹Ø§Ø¯Ø© ÙØªØ­ ØªØ°ÙØ±ØªÙ #${ticket.number}.`)]});
 }
 
 async function ticketTranscript(interaction,ticket) {
-  if (!ticketManagementStaff(interaction.member)) return interaction.reply({content:'❌ فريق التذاكر أو مسؤول التذاكر فقط.',ephemeral:true});
+  if (!ticketManagementStaff(interaction.member)) return interaction.reply({content:'â ÙØ±ÙÙ Ø§ÙØªØ°Ø§ÙØ± Ø£Ù ÙØ³Ø¤ÙÙ Ø§ÙØªØ°Ø§ÙØ± ÙÙØ·.',ephemeral:true});
   let arr=[],before;
   for(let i=0;i<10;i++){
     const batch=await interaction.channel.messages.fetch({limit:100,before}).catch(()=>null);
@@ -2191,14 +2217,14 @@ async function ticketTranscript(interaction,ticket) {
   arr.sort((a,b)=>a.createdTimestamp-b.createdTimestamp);
   const txt=arr.map(m=>`[${new Date(m.createdTimestamp).toISOString()}] ${m.author?.tag||'Unknown'}: ${m.content||'[Embed/Attachment]'}`).join('\n');
   const file=new AttachmentBuilder(Buffer.from(txt,'utf8'),{name:`ticket-${ticket.number}.txt`});
-  await interaction.reply({content:'📋 نسخة التذكرة:',files:[file],ephemeral:true});
+  await interaction.reply({content:'ð ÙØ³Ø®Ø© Ø§ÙØªØ°ÙØ±Ø©:',files:[file],ephemeral:true});
 }
 
 async function warnTicket24(interaction,ticket) {
-  if (!ticketManagementStaff(interaction.member)) return interaction.reply({content:'❌ فريق التذاكر أو مسؤول التذاكر فقط.',ephemeral:true});
+  if (!ticketManagementStaff(interaction.member)) return interaction.reply({content:'â ÙØ±ÙÙ Ø§ÙØªØ°Ø§ÙØ± Ø£Ù ÙØ³Ø¤ÙÙ Ø§ÙØªØ°Ø§ÙØ± ÙÙØ·.',ephemeral:true});
   ticket.warningDeadline=Date.now()+24*60*60*1000; saveDB();
-  await interaction.reply({content:`<@${ticket.ownerId}> ⚠️ لو مفيش رد خلال 24 ساعة التذكرة هتتقفل تلقائي.`});
-  await safeDM(ticket.ownerId,{embeds:[embed('⚠️ تنبيه تذكرة',`تذكرتك #${ticket.number} تحتاج رد خلال 24 ساعة.`)]});
+  await interaction.reply({content:`<@${ticket.ownerId}> â ï¸ ÙÙ ÙÙÙØ´ Ø±Ø¯ Ø®ÙØ§Ù 24 Ø³Ø§Ø¹Ø© Ø§ÙØªØ°ÙØ±Ø© ÙØªØªÙÙÙ ØªÙÙØ§Ø¦Ù.`});
+  await safeDM(ticket.ownerId,{embeds:[embed('â ï¸ ØªÙØ¨ÙÙ ØªØ°ÙØ±Ø©',`ØªØ°ÙØ±ØªÙ #${ticket.number} ØªØ­ØªØ§Ø¬ Ø±Ø¯ Ø®ÙØ§Ù 24 Ø³Ø§Ø¹Ø©.`)]});
 }
 
 async function checkTicketWarnings() {
@@ -2208,15 +2234,15 @@ async function checkTicketWarnings() {
     if(t.status!=='open'||!t.warningDeadline||t.warningDeadline>Date.now()) continue;
     const ch=await guild.channels.fetch(t.channelId).catch(()=>null);
     if(!ch) continue;
-    t.status='closed'; t.warningDeadline=0; t.closeReason='عدم التفاعل خلال 24 ساعة'; saveDB();
+    t.status='closed'; t.warningDeadline=0; t.closeReason='Ø¹Ø¯Ù Ø§ÙØªÙØ§Ø¹Ù Ø®ÙØ§Ù 24 Ø³Ø§Ø¹Ø©'; saveDB();
     await ch.permissionOverwrites.edit(t.ownerId,{ViewChannel:false,SendMessages:false}).catch(()=>{});
-    await ch.send({content:'🔒 تم الإغلاق تلقائياً بسبب عدم التفاعل خلال 24 ساعة.'}).catch(()=>{});
-    await safeDM(t.ownerId,{embeds:[embed('🔒 تم إغلاق التذكرة',`#${t.number}\nالسبب: عدم التفاعل خلال 24 ساعة.`)]});
-    await ticketLog('إغلاق تلقائي',`#${t.number} - عدم التفاعل 24 ساعة`,0xE74C3C);
+    await ch.send({content:'ð ØªÙ Ø§ÙØ¥ØºÙØ§Ù ØªÙÙØ§Ø¦ÙØ§Ù Ø¨Ø³Ø¨Ø¨ Ø¹Ø¯Ù Ø§ÙØªÙØ§Ø¹Ù Ø®ÙØ§Ù 24 Ø³Ø§Ø¹Ø©.'}).catch(()=>{});
+    await safeDM(t.ownerId,{embeds:[embed('ð ØªÙ Ø¥ØºÙØ§Ù Ø§ÙØªØ°ÙØ±Ø©',`#${t.number}\nØ§ÙØ³Ø¨Ø¨: Ø¹Ø¯Ù Ø§ÙØªÙØ§Ø¹Ù Ø®ÙØ§Ù 24 Ø³Ø§Ø¹Ø©.`)]});
+    await ticketLog('Ø¥ØºÙØ§Ù ØªÙÙØ§Ø¦Ù',`#${t.number} - Ø¹Ø¯Ù Ø§ÙØªÙØ§Ø¹Ù 24 Ø³Ø§Ø¹Ø©`,0xE74C3C);
   }
 }
 
-// أمر !say داخل التذكرة: الأمر يختفي والبوت يبعت النص
+// Ø£ÙØ± !say Ø¯Ø§Ø®Ù Ø§ÙØªØ°ÙØ±Ø©: Ø§ÙØ£ÙØ± ÙØ®ØªÙÙ ÙØ§ÙØ¨ÙØª ÙØ¨Ø¹Øª Ø§ÙÙØµ
 client.on(Events.MessageCreate, async message=>{
   if(!message.guild||message.author.bot) return;
   const t=ticketFromChannel(message.channel.id);
@@ -2230,31 +2256,31 @@ client.on(Events.MessageCreate, async message=>{
 });
 
 async function activationModal(interaction,accept) {
-  if(!hasAnyRole(interaction.member,[...CONFIG.ACTIVATION_REVIEWER_ROLE_IDS,...CONFIG.CONTROL_ROLE_IDS])) return interaction.reply({content:'❌ ليس لديك صلاحية.',ephemeral:true});
-  const modal=new ModalBuilder().setCustomId(accept?'activation_accept_submit':'activation_reject_submit').setTitle(accept?'قبول تفعيل':'رفض تفعيل');
-  modal.addComponents(new ActionRowBuilder().addComponents(new TextInputBuilder().setCustomId('user').setLabel('منشن الشخص أو ID').setStyle(TextInputStyle.Short).setRequired(true)));
-  if(!accept) modal.addComponents(new ActionRowBuilder().addComponents(new TextInputBuilder().setCustomId('reason').setLabel('سبب الرفض').setStyle(TextInputStyle.Paragraph).setRequired(true).setMaxLength(800)));
+  if(!hasAnyRole(interaction.member,[...CONFIG.ACTIVATION_REVIEWER_ROLE_IDS,...CONFIG.CONTROL_ROLE_IDS])) return interaction.reply({content:'â ÙÙØ³ ÙØ¯ÙÙ ØµÙØ§Ø­ÙØ©.',ephemeral:true});
+  const modal=new ModalBuilder().setCustomId(accept?'activation_accept_submit':'activation_reject_submit').setTitle(accept?'ÙØ¨ÙÙ ØªÙØ¹ÙÙ':'Ø±ÙØ¶ ØªÙØ¹ÙÙ');
+  modal.addComponents(new ActionRowBuilder().addComponents(new TextInputBuilder().setCustomId('user').setLabel('ÙÙØ´Ù Ø§ÙØ´Ø®Øµ Ø£Ù ID').setStyle(TextInputStyle.Short).setRequired(true)));
+  if(!accept) modal.addComponents(new ActionRowBuilder().addComponents(new TextInputBuilder().setCustomId('reason').setLabel('Ø³Ø¨Ø¨ Ø§ÙØ±ÙØ¶').setStyle(TextInputStyle.Paragraph).setRequired(true).setMaxLength(800)));
   await interaction.showModal(modal);
 }
 
 async function activationSubmit(interaction,accept) {
   const id=extractId(interaction.fields.getTextInputValue('user'));
   const member=id?await interaction.guild.members.fetch(id).catch(()=>null):null;
-  if(!member) return interaction.reply({content:'❌ الشخص غير موجود.',ephemeral:true});
+  if(!member) return interaction.reply({content:'â Ø§ÙØ´Ø®Øµ ØºÙØ± ÙÙØ¬ÙØ¯.',ephemeral:true});
   const reason=accept?'':interaction.fields.getTextInputValue('reason').trim();
   if(accept) await safeAddRole(member,CONFIG.ACTIVATION_ACCEPTED_ROLE_ID);
-  await safeDM(id,{embeds:[embed(accept?'✅ تم قبول التفعيل':'❌ تم رفض التفعيل',accept?'تم قبولك في التفعيل.':`السبب: ${reason}`,accept?0x2ECC71:0xE74C3C)]});
+  await safeDM(id,{embeds:[embed(accept?'â ØªÙ ÙØ¨ÙÙ Ø§ÙØªÙØ¹ÙÙ':'â ØªÙ Ø±ÙØ¶ Ø§ÙØªÙØ¹ÙÙ',accept?'ØªÙ ÙØ¨ÙÙÙ ÙÙ Ø§ÙØªÙØ¹ÙÙ.':`Ø§ÙØ³Ø¨Ø¨: ${reason}`,accept?0x2ECC71:0xE74C3C)]});
   const results=await safeFetchChannel(CONFIG.ACTIVATION_RESULTS_CHANNEL_ID);
-  if(results?.isTextBased()) await results.send({embeds:[embed(accept?'✅ قبول تفعيل':'❌ رفض تفعيل',`الشخص: <@${id}>\nبواسطة: <@${interaction.user.id}>${reason?`\nالسبب: ${reason}`:''}`,accept?0x2ECC71:0xE74C3C)]});
-  await interaction.reply({content:'✅ تم إرسال القرار.',ephemeral:true});
+  if(results?.isTextBased()) await results.send({embeds:[embed(accept?'â ÙØ¨ÙÙ ØªÙØ¹ÙÙ':'â Ø±ÙØ¶ ØªÙØ¹ÙÙ',`Ø§ÙØ´Ø®Øµ: <@${id}>\nØ¨ÙØ§Ø³Ø·Ø©: <@${interaction.user.id}>${reason?`\nØ§ÙØ³Ø¨Ø¨: ${reason}`:''}`,accept?0x2ECC71:0xE74C3C)]});
+  await interaction.reply({content:'â ØªÙ Ø¥Ø±Ø³Ø§Ù Ø§ÙÙØ±Ø§Ø±.',ephemeral:true});
 }
 
 async function simpleApplyModal(interaction,kind) {
-  const modal=new ModalBuilder().setCustomId(`${kind}_apply_submit`).setTitle(kind==='staff'?'تقديم إدارة':'تقديم صانع محتوى');
+  const modal=new ModalBuilder().setCustomId(`${kind}_apply_submit`).setTitle(kind==='staff'?'ØªÙØ¯ÙÙ Ø¥Ø¯Ø§Ø±Ø©':'ØªÙØ¯ÙÙ ØµØ§ÙØ¹ ÙØ­ØªÙÙ');
   modal.addComponents(
-    new ActionRowBuilder().addComponents(new TextInputBuilder().setCustomId('age').setLabel('العمر').setStyle(TextInputStyle.Short).setRequired(true)),
-    new ActionRowBuilder().addComponents(new TextInputBuilder().setCustomId('experience').setLabel('الخبرة').setStyle(TextInputStyle.Paragraph).setRequired(true).setMaxLength(1000)),
-    new ActionRowBuilder().addComponents(new TextInputBuilder().setCustomId('reason').setLabel('سبب التقديم').setStyle(TextInputStyle.Paragraph).setRequired(true).setMaxLength(1000))
+    new ActionRowBuilder().addComponents(new TextInputBuilder().setCustomId('age').setLabel('Ø§ÙØ¹ÙØ±').setStyle(TextInputStyle.Short).setRequired(true)),
+    new ActionRowBuilder().addComponents(new TextInputBuilder().setCustomId('experience').setLabel('Ø§ÙØ®Ø¨Ø±Ø©').setStyle(TextInputStyle.Paragraph).setRequired(true).setMaxLength(1000)),
+    new ActionRowBuilder().addComponents(new TextInputBuilder().setCustomId('reason').setLabel('Ø³Ø¨Ø¨ Ø§ÙØªÙØ¯ÙÙ').setStyle(TextInputStyle.Paragraph).setRequired(true).setMaxLength(1000))
   );
   await interaction.showModal(modal);
 }
@@ -2265,39 +2291,39 @@ async function simpleApplySubmit(interaction,kind) {
   store[data.id]=data; saveDB();
   const reviewId=kind==='staff'?CONFIG.STAFF_APPLICATION_REVIEW_CHANNEL_ID:CONFIG.CREATOR_APPLICATION_REVIEW_CHANNEL_ID;
   const ch=await safeFetchChannel(reviewId);
-  if(!ch?.isTextBased()) return interaction.reply({content:'❌ روم المراجعة غير مضبوط.',ephemeral:true});
-  await ch.send({embeds:[embed(kind==='staff'?'🛡️ تقديم إدارة':'🎥 تقديم صانع محتوى',`المتقدم: <@${data.userId}>\nالعمر: ${data.age}\n\nالخبرة: ${data.experience}\n\nالسبب: ${data.reason}`)],components:[
+  if(!ch?.isTextBased()) return interaction.reply({content:'â Ø±ÙÙ Ø§ÙÙØ±Ø§Ø¬Ø¹Ø© ØºÙØ± ÙØ¶Ø¨ÙØ·.',ephemeral:true});
+  await ch.send({embeds:[embed(kind==='staff'?'ð¡ï¸ ØªÙØ¯ÙÙ Ø¥Ø¯Ø§Ø±Ø©':'ð¥ ØªÙØ¯ÙÙ ØµØ§ÙØ¹ ÙØ­ØªÙÙ',`Ø§ÙÙØªÙØ¯Ù: <@${data.userId}>\nØ§ÙØ¹ÙØ±: ${data.age}\n\nØ§ÙØ®Ø¨Ø±Ø©: ${data.experience}\n\nØ§ÙØ³Ø¨Ø¨: ${data.reason}`)],components:[
     new ActionRowBuilder().addComponents(
-      new ButtonBuilder().setCustomId(`${kind}_accept:${data.id}`).setLabel('قبول').setStyle(ButtonStyle.Success),
-      new ButtonBuilder().setCustomId(`${kind}_reject:${data.id}`).setLabel('رفض').setStyle(ButtonStyle.Danger)
+      new ButtonBuilder().setCustomId(`${kind}_accept:${data.id}`).setLabel('ÙØ¨ÙÙ').setStyle(ButtonStyle.Success),
+      new ButtonBuilder().setCustomId(`${kind}_reject:${data.id}`).setLabel('Ø±ÙØ¶').setStyle(ButtonStyle.Danger)
     )
   ]});
-  await interaction.reply({content:'✅ تم إرسال التقديم.',ephemeral:true});
+  await interaction.reply({content:'â ØªÙ Ø¥Ø±Ø³Ø§Ù Ø§ÙØªÙØ¯ÙÙ.',ephemeral:true});
 }
 
 async function decideSimple(interaction,kind,accept) {
-  if(!isReviewer(interaction.member)&&!isControl(interaction.member)) return interaction.reply({content:'❌ ليس لديك صلاحية.',ephemeral:true});
+  if(!isReviewer(interaction.member)&&!isControl(interaction.member)) return interaction.reply({content:'â ÙÙØ³ ÙØ¯ÙÙ ØµÙØ§Ø­ÙØ©.',ephemeral:true});
   const id=interaction.customId.split(':').slice(1).join(':');
   const store=kind==='staff'?db.staffApplications:db.creatorApplications;
   const data=store[id];
-  if(!data||data.status!=='pending') return interaction.reply({content:'⚠️ تم اتخاذ قرار بالفعل.',ephemeral:true});
+  if(!data||data.status!=='pending') return interaction.reply({content:'â ï¸ ØªÙ Ø§ØªØ®Ø§Ø° ÙØ±Ø§Ø± Ø¨Ø§ÙÙØ¹Ù.',ephemeral:true});
   data.status=accept?'accepted':'rejected'; data.reviewedBy=interaction.user.id; saveDB();
   if(accept){
     const m=await interaction.guild.members.fetch(data.userId).catch(()=>null);
     if(m) await safeAddRole(m,kind==='staff'?CONFIG.STAFF_PREACCEPTED_ROLE_ID:CONFIG.CREATOR_ACCEPTED_ROLE_ID);
   }
-  const msg=kind==='staff'&&accept?`تم قبولك مبدئياً. مواعيد المقابلة: ${channelUrl(CONFIG.STAFF_INTERVIEW_SCHEDULE_CHANNEL_ID)}`:(accept?'تم قبولك وتمت إضافة الرتبة.':'تم رفض التقديم.');
-  await safeDM(data.userId,{embeds:[embed(accept?'✅ تم القبول':'❌ تم الرفض',msg,accept?0x2ECC71:0xE74C3C)]});
-  const e=EmbedBuilder.from(interaction.message.embeds[0]).setColor(accept?0x2ECC71:0xE74C3C).addFields({name:'القرار',value:`${accept?'✅ قبول':'❌ رفض'} بواسطة <@${interaction.user.id}>`});
+  const msg=kind==='staff'&&accept?`ØªÙ ÙØ¨ÙÙÙ ÙØ¨Ø¯Ø¦ÙØ§Ù. ÙÙØ§Ø¹ÙØ¯ Ø§ÙÙÙØ§Ø¨ÙØ©: ${channelUrl(CONFIG.STAFF_INTERVIEW_SCHEDULE_CHANNEL_ID)}`:(accept?'ØªÙ ÙØ¨ÙÙÙ ÙØªÙØª Ø¥Ø¶Ø§ÙØ© Ø§ÙØ±ØªØ¨Ø©.':'ØªÙ Ø±ÙØ¶ Ø§ÙØªÙØ¯ÙÙ.');
+  await safeDM(data.userId,{embeds:[embed(accept?'â ØªÙ Ø§ÙÙØ¨ÙÙ':'â ØªÙ Ø§ÙØ±ÙØ¶',msg,accept?0x2ECC71:0xE74C3C)]});
+  const e=EmbedBuilder.from(interaction.message.embeds[0]).setColor(accept?0x2ECC71:0xE74C3C).addFields({name:'Ø§ÙÙØ±Ø§Ø±',value:`${accept?'â ÙØ¨ÙÙ':'â Ø±ÙØ¶'} Ø¨ÙØ§Ø³Ø·Ø© <@${interaction.user.id}>`});
   await interaction.update({embeds:[e],components:[]});
 }
 
 async function botSendModal(interaction) {
-  if(!isControl(interaction.member)) return interaction.reply({content:'❌ الإدارة العليا فقط.',ephemeral:true});
-  const modal=new ModalBuilder().setCustomId('bot_send_submit').setTitle('إرسال عن طريق البوت');
+  if(!isControl(interaction.member)) return interaction.reply({content:'â Ø§ÙØ¥Ø¯Ø§Ø±Ø© Ø§ÙØ¹ÙÙØ§ ÙÙØ·.',ephemeral:true});
+  const modal=new ModalBuilder().setCustomId('bot_send_submit').setTitle('Ø¥Ø±Ø³Ø§Ù Ø¹Ù Ø·Ø±ÙÙ Ø§ÙØ¨ÙØª');
   modal.addComponents(
-    new ActionRowBuilder().addComponents(new TextInputBuilder().setCustomId('channel').setLabel('منشن الاتشانل أو Channel ID').setStyle(TextInputStyle.Short).setRequired(true)),
-    new ActionRowBuilder().addComponents(new TextInputBuilder().setCustomId('message').setLabel('الرسالة').setStyle(TextInputStyle.Paragraph).setRequired(true).setMaxLength(2000))
+    new ActionRowBuilder().addComponents(new TextInputBuilder().setCustomId('channel').setLabel('ÙÙØ´Ù Ø§ÙØ§ØªØ´Ø§ÙÙ Ø£Ù Channel ID').setStyle(TextInputStyle.Short).setRequired(true)),
+    new ActionRowBuilder().addComponents(new TextInputBuilder().setCustomId('message').setLabel('Ø§ÙØ±Ø³Ø§ÙØ©').setStyle(TextInputStyle.Paragraph).setRequired(true).setMaxLength(2000))
   );
   await interaction.showModal(modal);
 }
@@ -2305,15 +2331,15 @@ async function botSendModal(interaction) {
 async function botSendSubmit(interaction) {
   const id=extractId(interaction.fields.getTextInputValue('channel'));
   const ch=await safeFetchChannel(id);
-  if(!ch?.isTextBased()) return interaction.reply({content:'❌ الاتشانل غير صحيح.',ephemeral:true});
+  if(!ch?.isTextBased()) return interaction.reply({content:'â Ø§ÙØ§ØªØ´Ø§ÙÙ ØºÙØ± ØµØ­ÙØ­.',ephemeral:true});
   await ch.send({content:interaction.fields.getTextInputValue('message')});
-  await interaction.reply({content:'✅ تم الإرسال.',ephemeral:true});
+  await interaction.reply({content:'â ØªÙ Ø§ÙØ¥Ø±Ø³Ø§Ù.',ephemeral:true});
 }
 
 async function toggleSystem(interaction,name) {
-  if(!isControl(interaction.member)) return interaction.reply({content:'❌ الإدارة العليا فقط.',ephemeral:true});
+  if(!isControl(interaction.member)) return interaction.reply({content:'â Ø§ÙØ¥Ø¯Ø§Ø±Ø© Ø§ÙØ¹ÙÙØ§ ÙÙØ·.',ephemeral:true});
   db.systems[name]=!db.systems[name]; saveDB();
-  await interaction.reply({content:`${db.systems[name]?'✅ تم تشغيل':'⛔ تم إيقاف'} **${name}**.`,ephemeral:true});
+  await interaction.reply({content:`${db.systems[name]?'â ØªÙ ØªØ´ØºÙÙ':'â ØªÙ Ø¥ÙÙØ§Ù'} **${name}**.`,ephemeral:true});
 }
 
 client.on(Events.InteractionCreate,async interaction=>{
@@ -2322,17 +2348,17 @@ client.on(Events.InteractionCreate,async interaction=>{
       const id=interaction.customId;
       if(id.startsWith('ticket_type:')) return choosePriority(interaction,id.split(':')[1]);
       if(id.startsWith('ticket_priority:')){const [,t,p]=id.split(':');return ticketProblemModal(interaction,t,p);}
-      if(id.startsWith('ticket_claim:')){const t=db.tickets[id.split(':')[1]];if(!ticketManagementStaff(interaction.member,t))return interaction.reply({content:'❌ للإدارة فقط.',ephemeral:true});if(!t.claimedBy.includes(interaction.user.id))t.claimedBy.push(interaction.user.id);saveDB();return interaction.reply({content:`✅ استلم التذكرة <@${interaction.user.id}>.`});}
+      if(id.startsWith('ticket_claim:')){const t=db.tickets[id.split(':')[1]];if(!ticketManagementStaff(interaction.member,t))return interaction.reply({content:'â ÙÙØ¥Ø¯Ø§Ø±Ø© ÙÙØ·.',ephemeral:true});if(!t.claimedBy.includes(interaction.user.id))t.claimedBy.push(interaction.user.id);saveDB();return interaction.reply({content:`â Ø§Ø³ØªÙÙ Ø§ÙØªØ°ÙØ±Ø© <@${interaction.user.id}>.`});}
       if(id.startsWith('ticket_add_user:')) return ticketMemberModal(interaction,db.tickets[id.split(':')[1]],false);
       if(id.startsWith('ticket_add_staff:')) return ticketMemberModal(interaction,db.tickets[id.split(':')[1]],true);
       if(id.startsWith('ticket_warn:')) return warnTicket24(interaction,db.tickets[id.split(':')[1]]);
       if(id.startsWith('ticket_close:')) return closeTicketNow(interaction,db.tickets[id.split(':')[1]]);
       if(id.startsWith('ticket_reopen:')) return reopenTicketNow(interaction,db.tickets[id.split(':')[1]]);
       if(id.startsWith('ticket_copy:')) return ticketTranscript(interaction,db.tickets[id.split(':')[1]]);
-      if(id.startsWith('ticket_delete:')){const t=db.tickets[id.split(':')[1]];if(!ticketManagementStaff(interaction.member))return interaction.reply({content:'❌ فريق التذاكر أو مسؤول التذاكر فقط.',ephemeral:true});await interaction.reply({content:'🗑️ سيتم المسح خلال 5 ثواني.'});t.status='deleted';saveDB();return setTimeout(()=>interaction.channel.delete().catch(()=>{}),5000);}
-      if(id.startsWith('ticket_rate:')){const [,num,stars]=id.split(':');const modal=new ModalBuilder().setCustomId(`ticket_rating_submit:${num}:${stars}`).setTitle(`تقييم ${stars}/5`);modal.addComponents(new ActionRowBuilder().addComponents(new TextInputBuilder().setCustomId('reason').setLabel('سبب التقييم').setStyle(TextInputStyle.Paragraph).setRequired(true)));return interaction.showModal(modal);}
+      if(id.startsWith('ticket_delete:')){const t=db.tickets[id.split(':')[1]];if(!ticketManagementStaff(interaction.member))return interaction.reply({content:'â ÙØ±ÙÙ Ø§ÙØªØ°Ø§ÙØ± Ø£Ù ÙØ³Ø¤ÙÙ Ø§ÙØªØ°Ø§ÙØ± ÙÙØ·.',ephemeral:true});await interaction.reply({content:'ðï¸ Ø³ÙØªÙ Ø§ÙÙØ³Ø­ Ø®ÙØ§Ù 5 Ø«ÙØ§ÙÙ.'});t.status='deleted';saveDB();return setTimeout(()=>interaction.channel.delete().catch(()=>{}),5000);}
+      if(id.startsWith('ticket_rate:')){const [,num,stars]=id.split(':');const modal=new ModalBuilder().setCustomId(`ticket_rating_submit:${num}:${stars}`).setTitle(`ØªÙÙÙÙ ${stars}/5`);modal.addComponents(new ActionRowBuilder().addComponents(new TextInputBuilder().setCustomId('reason').setLabel('Ø³Ø¨Ø¨ Ø§ÙØªÙÙÙÙ').setStyle(TextInputStyle.Paragraph).setRequired(true)));return interaction.showModal(modal);}
       if(id.startsWith('sys:')) return toggleSystem(interaction,id.split(':')[1]);
-      if(id==='sys_status'){if(!isControl(interaction.member))return interaction.reply({content:'❌ الإدارة العليا فقط.',ephemeral:true});return interaction.reply({embeds:[embed('📊 حالة الأنظمة',Object.entries(db.systems).map(([k,v])=>`${v?'✅':'⛔'} ${k}`).join('\n'))],ephemeral:true});}
+      if(id==='sys_status'){if(!isControl(interaction.member))return interaction.reply({content:'â Ø§ÙØ¥Ø¯Ø§Ø±Ø© Ø§ÙØ¹ÙÙØ§ ÙÙØ·.',ephemeral:true});return interaction.reply({embeds:[embed('ð Ø­Ø§ÙØ© Ø§ÙØ£ÙØ¸ÙØ©',Object.entries(db.systems).map(([k,v])=>`${v?'â':'â'} ${k}`).join('\n'))],ephemeral:true});}
       if(id==='bot_send') return botSendModal(interaction);
       if(id==='activation_accept') return activationModal(interaction,true);
       if(id==='activation_reject') return activationModal(interaction,false);
@@ -2348,14 +2374,14 @@ client.on(Events.InteractionCreate,async interaction=>{
       if(id.startsWith('ticket_create:')){const [,t,p]=id.split(':');return createTicket(interaction,t,p);}
       if(id.startsWith('ticket_user_submit:')) return addTicketMember(interaction,db.tickets[id.split(':')[1]],false);
       if(id.startsWith('ticket_staff_submit:')) return addTicketMember(interaction,db.tickets[id.split(':')[1]],true);
-      if(id.startsWith('ticket_rating_submit:')){const [,num,stars]=id.split(':');const t=db.tickets[num];if(!t||t.ownerId!==interaction.user.id)return interaction.reply({content:'❌ غير مسموح.',ephemeral:true});const reason=interaction.fields.getTextInputValue('reason');db.ticketRatings.push({num,userId:interaction.user.id,type:t.type,stars:Number(stars),reason,at:Date.now()});saveDB();const ch=await safeFetchChannel(CONFIG.TICKET_RATING_CHANNEL_ID);if(ch?.isTextBased())await ch.send({embeds:[embed('⭐ تقييم تذكرة',`#${num} | ${CONFIG.TICKET_TYPES[t.type].label}\n<@${interaction.user.id}>\n${'⭐'.repeat(Number(stars))}\nالسبب: ${reason}`)]});return interaction.reply({content:'✅ شكراً على التقييم.',ephemeral:true});}
+      if(id.startsWith('ticket_rating_submit:')){const [,num,stars]=id.split(':');const t=db.tickets[num];if(!t||t.ownerId!==interaction.user.id)return interaction.reply({content:'â ØºÙØ± ÙØ³ÙÙØ­.',ephemeral:true});const reason=interaction.fields.getTextInputValue('reason');db.ticketRatings.push({num,userId:interaction.user.id,type:t.type,stars:Number(stars),reason,at:Date.now()});saveDB();const ch=await safeFetchChannel(CONFIG.TICKET_RATING_CHANNEL_ID);if(ch?.isTextBased())await ch.send({embeds:[embed('â­ ØªÙÙÙÙ ØªØ°ÙØ±Ø©',`#${num} | ${CONFIG.TICKET_TYPES[t.type].label}\n<@${interaction.user.id}>\n${'â­'.repeat(Number(stars))}\nØ§ÙØ³Ø¨Ø¨: ${reason}`)]});return interaction.reply({content:'â Ø´ÙØ±Ø§Ù Ø¹ÙÙ Ø§ÙØªÙÙÙÙ.',ephemeral:true});}
       if(id==='activation_accept_submit') return activationSubmit(interaction,true);
       if(id==='activation_reject_submit') return activationSubmit(interaction,false);
       if(id==='staff_apply_submit') return simpleApplySubmit(interaction,'staff');
       if(id==='creator_apply_submit') return simpleApplySubmit(interaction,'creator');
       if(id==='bot_send_submit') return botSendSubmit(interaction);
     }
-  }catch(err){console.error('Advanced system error:',err);if(interaction.isRepliable()&&!interaction.replied&&!interaction.deferred)await interaction.reply({content:'❌ حصل خطأ.',ephemeral:true}).catch(()=>{});}
+  }catch(err){console.error('Advanced system error:',err);if(interaction.isRepliable()&&!interaction.replied&&!interaction.deferred)await interaction.reply({content:'â Ø­ØµÙ Ø®Ø·Ø£.',ephemeral:true}).catch(()=>{});}
 });
 
 
