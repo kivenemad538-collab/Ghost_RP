@@ -317,6 +317,14 @@ function emptyDB() {
     tickets: {},
     ticketCounter: 0,
     ticketRatings: [],
+    ticketSchedule: {
+      enabled: false,
+      openAt: 0,
+      closeAt: 0,
+      timezone: 'Africa/Cairo',
+      updatedBy: null,
+      updatedAt: 0
+    },
     systems: {
       tickets: true,
       applications: true,
@@ -348,6 +356,16 @@ function loadDB() {
       tickets: parsed.tickets || {},
       ticketCounter: parsed.ticketCounter || 0,
       ticketRatings: parsed.ticketRatings || [],
+      ticketSchedule: {
+        enabled: false,
+        openAt: 0,
+        closeAt: 0,
+        timezone: 'Africa/Cairo',
+        updatedBy: null,
+        updatedAt: 0,
+        ...(parsed.ticketSchedule || {})
+      },
+      monitoringApplications: parsed.monitoringApplications || {},
       systems: {
         tickets: true,
         applications: true,
@@ -2158,6 +2176,7 @@ async function postAdvancedPanels() {
     const r2 = new ActionRowBuilder().addComponents(
       new ButtonBuilder().setCustomId('sys:videos').setLabel('Ø§ÙÙÙØ¯ÙÙÙØ§Øª').setStyle(ButtonStyle.Primary),
       new ButtonBuilder().setCustomId('sys:voice').setLabel('ÙÙÙØ³ Ø§ÙØ¯Ø¹Ù').setStyle(ButtonStyle.Primary),
+      new ButtonBuilder().setCustomId('ticket_schedule_manage').setLabel('ÙÙØ§Ø¹ÙØ¯ Ø§ÙØªØ°Ø§ÙØ±').setEmoji('ð').setStyle(ButtonStyle.Secondary),
       new ButtonBuilder().setCustomId('sys_status').setLabel('Ø§ÙØ­Ø§ÙØ©').setEmoji('ð').setStyle(ButtonStyle.Secondary)
     );
     await control.send({embeds:[embed('âï¸ ÙÙØ­Ø© Ø§ÙØªØ­ÙÙ','ØªØ´ØºÙÙ ÙØ¥ÙÙØ§Ù Ø£ÙØ¸ÙØ© Ø§ÙØ¨ÙØª.')],components:[r1,r2]});
@@ -2275,11 +2294,78 @@ async function postAdvancedPanels() {
 
 client.once(Events.ClientReady, async ()=>{
   await postAdvancedPanels();
+  await publishTicketSchedule();
   setInterval(checkTicketWarnings, 60*1000);
 });
 
+
+function ticketScheduleState() {
+  const s=db.ticketSchedule||{};
+  if(!s.enabled) return {open:true,reason:'schedule_disabled'};
+  const now=Date.now();
+  if(s.openAt && now < s.openAt) return {open:false,next:s.openAt};
+  if(s.closeAt && now >= s.closeAt) return {open:false,next:s.openAt && s.openAt>now?s.openAt:0};
+  return {open:true,closeAt:s.closeAt||0};
+}
+
+function ticketScheduleText(){
+  const s=db.ticketSchedule||{};
+  if(!s.enabled) return 'ð¢ Ø§ÙØªØ°Ø§ÙØ± ÙÙØªÙØ­Ø© Ø¨Ø¯ÙÙ Ø¬Ø¯ÙÙ Ø²ÙÙÙ.';
+  return [
+    `**Ø§ÙØ­Ø§ÙØ© Ø§ÙØ¢Ù:** ${ticketScheduleState().open?'ð¢ ÙÙØªÙØ­Ø©':'ð´ ÙØºÙÙØ©'}`,
+    `**ÙÙØ¹Ø¯ Ø§ÙÙØªØ­:** ${s.openAt?formatTicketTime(s.openAt):'ØºÙØ± ÙØ­Ø¯Ø¯'}`,
+    `**ÙÙØ¹Ø¯ Ø§ÙØ¥ØºÙØ§Ù:** ${s.closeAt?formatTicketTime(s.closeAt):'ØºÙØ± ÙØ­Ø¯Ø¯'}`,
+    `**Ø¢Ø®Ø± ØªØ¹Ø¯ÙÙ:** ${s.updatedAt?formatTicketTime(s.updatedAt):'ØºÙØ± ÙØ­Ø¯Ø¯'}`
+  ].join('\n');
+}
+
+async function publishTicketSchedule(){
+  const ch=await safeFetchChannel(CONFIG.TICKET_SCHEDULE_CHANNEL_ID);
+  if(!ch?.isTextBased()) return;
+  const msgs=await ch.messages.fetch({limit:30}).catch(()=>null);
+  const old=msgs?.find(m=>m.author.id===client.user.id && m.embeds?.[0]?.title==='ð ÙÙØ§Ø¹ÙØ¯ Ø§ÙØªØ°Ø§ÙØ±');
+  const payload={embeds:[new EmbedBuilder().setColor(CONFIG.COLOR).setTitle('ð ÙÙØ§Ø¹ÙØ¯ Ø§ÙØªØ°Ø§ÙØ±').setDescription(ticketScheduleText()).setFooter({text:CONFIG.SERVER_NAME}).setTimestamp()]};
+  if(old) await old.edit(payload).catch(()=>{});
+  else await ch.send(payload).catch(()=>{});
+}
+
+async function ticketScheduleModal(interaction){
+  if(!isControl(interaction.member)) return interaction.reply({content:'â Ø§ÙØ¥Ø¯Ø§Ø±Ø© Ø§ÙØ¹ÙÙØ§ ÙÙØ·.',ephemeral:true});
+  const modal=new ModalBuilder().setCustomId('ticket_schedule_submit').setTitle('ØªØ­Ø¯ÙØ¯ ÙÙØ§Ø¹ÙØ¯ Ø§ÙØªØ°Ø§ÙØ±');
+  modal.addComponents(
+    new ActionRowBuilder().addComponents(new TextInputBuilder().setCustomId('open').setLabel('ÙÙØ¹Ø¯ Ø§ÙÙØªØ­ YYYY-MM-DD HH:MM').setPlaceholder('2026-08-13 10:00').setStyle(TextInputStyle.Short).setRequired(true)),
+    new ActionRowBuilder().addComponents(new TextInputBuilder().setCustomId('close').setLabel('ÙÙØ¹Ø¯ Ø§ÙØ¥ØºÙØ§Ù YYYY-MM-DD HH:MM').setPlaceholder('2026-08-13 23:00').setStyle(TextInputStyle.Short).setRequired(true))
+  );
+  await interaction.showModal(modal);
+}
+
+function parseCairoDate(value){
+  const m=value.trim().match(/^(\d{4})-(\d{2})-(\d{2})[ T](\d{2}):(\d{2})$/);
+  if(!m) return NaN;
+  // Egypt in August is UTC+3. This panel is explicitly for Cairo server time.
+  return Date.UTC(+m[1],+m[2]-1,+m[3],+m[4]-3,+m[5]);
+}
+
+async function saveTicketSchedule(interaction){
+  if(!isControl(interaction.member)) return interaction.reply({content:'â Ø§ÙØ¥Ø¯Ø§Ø±Ø© Ø§ÙØ¹ÙÙØ§ ÙÙØ·.',ephemeral:true});
+  const openAt=parseCairoDate(interaction.fields.getTextInputValue('open'));
+  const closeAt=parseCairoDate(interaction.fields.getTextInputValue('close'));
+  if(!Number.isFinite(openAt)||!Number.isFinite(closeAt)||closeAt<=openAt){
+    return interaction.reply({content:'â Ø§ÙØªØ¨ Ø§ÙÙÙØ¹Ø¯ÙÙ Ø¨Ø§ÙØ´ÙÙ `YYYY-MM-DD HH:MM` ÙÙØ§Ø²Ù Ø§ÙØ¥ØºÙØ§Ù ÙÙÙÙ Ø¨Ø¹Ø¯ Ø§ÙÙØªØ­. Ø§ÙØªÙÙÙØª: Ø§ÙÙØ§ÙØ±Ø©.',ephemeral:true});
+  }
+  db.ticketSchedule={enabled:true,openAt,closeAt,timezone:'Africa/Cairo',updatedBy:interaction.user.id,updatedAt:Date.now()};
+  saveDB(); await publishTicketSchedule();
+  await interaction.reply({content:`â ØªÙ Ø­ÙØ¸ ÙÙØ§Ø¹ÙØ¯ Ø§ÙØªØ°Ø§ÙØ±.\nÙØªØ­: ${formatTicketTime(openAt)}\nØ¥ØºÙØ§Ù: ${formatTicketTime(closeAt)}`,ephemeral:true});
+}
+
 async function choosePriority(interaction, typeKey) {
   if (db.systems?.tickets === false) return interaction.reply({content:'â Ø§ÙØªØ°Ø§ÙØ± ÙØªÙÙÙØ©.',ephemeral:true});
+  const schedule=ticketScheduleState();
+  if(!schedule.open){
+    const scheduleLink=hasRealId(CONFIG.TICKET_SCHEDULE_CHANNEL_ID)?`<#${CONFIG.TICKET_SCHEDULE_CHANNEL_ID}>`:'Ø±ÙÙ ÙÙØ§Ø¹ÙØ¯ Ø§ÙØªØ°Ø§ÙØ±';
+    return interaction.reply({content:`ð´ **Ø§ÙØªØ°Ø§ÙØ± ÙØºÙÙØ© Ø­Ø§ÙÙØ§Ù.**
+ÙØ±Ø¬Ù ÙØ±Ø§Ø¡Ø© ÙÙØ§Ø¹ÙØ¯ Ø§ÙØªØ°Ø§ÙØ± ÙÙ ${scheduleLink}.${schedule.next?`\nÙÙØ¹Ø¯ Ø§ÙÙØªØ­: ${formatTicketTime(schedule.next)}`:''}`,ephemeral:true});
+  }
   const cfg = CONFIG.TICKET_TYPES[typeKey];
   if (!cfg) return;
   const row = new ActionRowBuilder().addComponents(
@@ -2330,6 +2416,11 @@ function formatTicketTime(ms){
 }
 
 async function createTicket(interaction,typeKey,priority) {
+  const schedule=ticketScheduleState();
+  if(db.systems?.tickets===false || !schedule.open){
+    const scheduleLink=hasRealId(CONFIG.TICKET_SCHEDULE_CHANNEL_ID)?`<#${CONFIG.TICKET_SCHEDULE_CHANNEL_ID}>`:'Ø±ÙÙ ÙÙØ§Ø¹ÙØ¯ Ø§ÙØªØ°Ø§ÙØ±';
+    return interaction.reply({content:`ð´ Ø§ÙØªØ°Ø§ÙØ± ÙØºÙÙØ© Ø­Ø§ÙÙØ§Ù. ÙØ±Ø¬Ù ÙØ±Ø§Ø¡Ø© Ø§ÙÙÙØ§Ø¹ÙØ¯ ÙÙ ${scheduleLink}.`,ephemeral:true});
+  }
   const cfg = CONFIG.TICKET_TYPES[typeKey];
   const p = priorityData(priority);
   const problem = interaction.fields.getTextInputValue('problem').trim();
@@ -2999,13 +3090,13 @@ async function postSecondStageApplication(guild, kind, data) {
         `ð¤ Ø§ÙÙØªÙØ¯Ù: <@${data.userId}>`,
         `ð ID: \`${data.userId}\``,
         '',
-        'ØªÙ ÙØ¨ÙÙÙ ÙØ¨Ø¯Ø¦ÙØ§Ù. Ø­Ø¯Ø¯ ÙØªÙØ¬Ø© Ø§ÙØ®Ø·ÙØ© Ø§ÙØ«Ø§ÙÙØ©.',
+        'ØªÙ ÙØ¨ÙÙÙ ÙØ¨Ø¯Ø¦ÙØ§Ù. Ø§ÙÙØ±Ø­ÙØ© Ø§ÙØ«Ø§ÙÙØ© ÙÙ **ÙÙØ§Ø¨ÙØ© ØµÙØªÙØ©**. Ø¨Ø¹Ø¯ Ø§ÙÙÙØ§Ø¨ÙØ© Ø­Ø¯Ø¯ Ø§ÙÙØ¨ÙÙ Ø£Ù Ø§ÙØ±ÙØ¶.',
         '','ââââââââââââââââââââââââââââââââ'
       ].join('\n'))
       .setFooter({text:CONFIG.SERVER_NAME})
       .setTimestamp()],
     components:[new ActionRowBuilder().addComponents(
-      new ButtonBuilder().setCustomId(`second_accept:${kind}:${data.id}`).setLabel('ÙØ¨ÙÙ ÙÙØ§Ø¦Ù').setStyle(ButtonStyle.Success),
+      new ButtonBuilder().setCustomId(`second_accept:${kind}:${data.id}`).setLabel('ÙØ¨ÙÙ Ø¨Ø¹Ø¯ Ø§ÙÙÙØ§Ø¨ÙØ©').setStyle(ButtonStyle.Success),
       new ButtonBuilder().setCustomId(`second_reject:${kind}:${data.id}`).setLabel('Ø±ÙØ¶').setStyle(ButtonStyle.Danger)
     )]
   });
@@ -3040,11 +3131,11 @@ async function acceptSpecialApplication(interaction, kind) {
     await postSecondStageApplication(interaction.guild,kind,data);
     await safeDM(data.userId,{embeds:[embed(
       'â ØªÙ Ø§ÙÙØ¨ÙÙ Ø§ÙÙØ¨Ø¯Ø¦Ù',
-      `ØªÙ ÙØ¨ÙÙÙ ÙÙ Ø§ÙØ®Ø·ÙØ© Ø§ÙØ£ÙÙÙ ÙÙ ØªÙØ¯ÙÙ ${kind==='staff'?'Ø§ÙØ¥Ø¯Ø§Ø±Ø©':'Ø§ÙØ±ÙØ§Ø¨Ø©'}.\nØ§ÙØªØ¸Ø± ÙØªÙØ¬Ø© Ø§ÙØ®Ø·ÙØ© Ø§ÙØ«Ø§ÙÙØ©.`,
+      `ØªÙ ÙØ¨ÙÙÙ ÙÙ **ØªÙØ¯ÙÙ ${kind==='staff'?'Ø§ÙØ¥Ø¯Ø§Ø±Ø©':'Ø§ÙØ±ÙØ§Ø¨Ø©'} - Ø§ÙÙØ±Ø­ÙØ© Ø§ÙØ£ÙÙÙ**.\nØ§ÙÙØ±Ø­ÙØ© Ø§ÙØ«Ø§ÙÙØ© ÙÙ **ÙÙØ§Ø¨ÙØ© ØµÙØªÙØ©**.${hasRealId(CONFIG.APPLICATION_SCHEDULE_CHANNEL_ID)?`\nð ÙÙØ§Ø¹ÙØ¯ Ø§ÙØªÙØ¯ÙÙØ§Øª ÙØ§ÙÙÙØ§Ø¨ÙØ§Øª: <#${CONFIG.APPLICATION_SCHEDULE_CHANNEL_ID}>`:''}`,
       0x2ECC71
     )]});
   }else{
-    await safeDM(data.userId,{embeds:[embed('â ØªÙ ÙØ¨ÙÙ Ø§ÙØªÙØ¯ÙÙ','ØªÙ ÙØ¨ÙÙÙ ÙØµØ§ÙØ¹ ÙØ­ØªÙÙ ÙØªÙØª Ø¥Ø¶Ø§ÙØ© Ø§ÙØ±ØªØ¨Ø©.',0x2ECC71)]});
+    await safeDM(data.userId,{embeds:[embed('â ØªÙ ÙØ¨ÙÙ ØªÙØ¯ÙÙ ØµØ§ÙØ¹ Ø§ÙÙØ­ØªÙÙ','ØªÙ ÙØ¨ÙÙÙ ÙØµØ§ÙØ¹ ÙØ­ØªÙÙ ÙØªÙØª Ø¥Ø¶Ø§ÙØ© Ø§ÙØ±ØªØ¨Ø©.',0x2ECC71)]});
   }
 
   const e=EmbedBuilder.from(interaction.message.embeds[0])
@@ -3075,7 +3166,7 @@ async function rejectSpecialApplication(interaction,kind){
   if(!data || data.status!=='pending') return interaction.reply({content:'â ï¸ ØªÙ Ø§ØªØ®Ø§Ø° ÙØ±Ø§Ø± Ø¨Ø§ÙÙØ¹Ù.',ephemeral:true});
 
   data.status='rejected'; data.reviewedBy=interaction.user.id; data.reviewedAt=Date.now(); data.rejectionReason=reason; saveDB();
-  await safeDM(data.userId,{embeds:[embed('â ØªÙ Ø±ÙØ¶ Ø§ÙØªÙØ¯ÙÙ',`ð Ø§ÙØ³Ø¨Ø¨: ${reason}`,0xE74C3C)]});
+  await safeDM(data.userId,{embeds:[embed(`â ØªÙ Ø±ÙØ¶ ØªÙØ¯ÙÙ ${kind==='staff'?'Ø§ÙØ¥Ø¯Ø§Ø±Ø©':kind==='monitoring'?'Ø§ÙØ±ÙØ§Ø¨Ø©':'ØµØ§ÙØ¹ Ø§ÙÙØ­ØªÙÙ'}`,`ð Ø§ÙØ³Ø¨Ø¨: ${reason}`,0xE74C3C)]});
 
   const e=EmbedBuilder.from(interaction.message.embeds[0]).setColor(0xE74C3C).addFields(
     {name:'Ø§ÙÙØ±Ø§Ø±',value:`â ØªÙ Ø§ÙØ±ÙØ¶ Ø¨ÙØ§Ø³Ø·Ø© <@${interaction.user.id}>`},
@@ -3098,13 +3189,13 @@ async function secondStageDecision(interaction,kind,accept){
     return interaction.showModal(modal);
   }
 
-  data.status='accepted'; data.finalReviewedBy=interaction.user.id; data.finalReviewedAt=Date.now(); saveDB();
+  data.status='accepted_after_voice'; data.finalReviewedBy=interaction.user.id; data.finalReviewedAt=Date.now(); saveDB();
   const member=await interaction.guild.members.fetch(data.userId).catch(()=>null);
   if(member){
     await safeAddRole(member,kind==='staff'?CONFIG.STAFF_FINAL_ACCEPTED_ROLE_ID:CONFIG.MONITORING_FINAL_ACCEPTED_ROLE_ID);
   }
-  await safeDM(data.userId,{embeds:[embed('â ØªÙ Ø§ÙÙØ¨ÙÙ Ø§ÙÙÙØ§Ø¦Ù',`ØªÙ ÙØ¨ÙÙÙ ÙÙØ§Ø¦ÙØ§Ù ÙÙ ${kind==='staff'?'Ø§ÙØ¥Ø¯Ø§Ø±Ø©':'Ø§ÙØ±ÙØ§Ø¨Ø©'} ÙÙ **${CONFIG.SERVER_NAME}**.`,0x2ECC71)]});
-  const e=EmbedBuilder.from(interaction.message.embeds[0]).setColor(0x2ECC71).addFields({name:'ÙØªÙØ¬Ø© Ø§ÙØ®Ø·ÙØ© Ø§ÙØ«Ø§ÙÙØ©',value:`â ÙØ¨ÙÙ ÙÙØ§Ø¦Ù Ø¨ÙØ§Ø³Ø·Ø© <@${interaction.user.id}>`});
+  await safeDM(data.userId,{embeds:[embed('â ØªÙ ÙØ¨ÙÙÙ Ø¨Ø¹Ø¯ Ø§ÙÙÙØ§Ø¨ÙØ© Ø§ÙØµÙØªÙØ©',`ØªÙ ÙØ¨ÙÙÙ ÙÙ **${kind==='staff'?'Ø§ÙØ¥Ø¯Ø§Ø±Ø©':'Ø§ÙØ±ÙØ§Ø¨Ø©'}** Ø¨Ø¹Ø¯ Ø§Ø¬ØªÙØ§Ø² Ø§ÙÙÙØ§Ø¨ÙØ© Ø§ÙØµÙØªÙØ© ÙÙ **${CONFIG.SERVER_NAME}**.`,0x2ECC71)]});
+  const e=EmbedBuilder.from(interaction.message.embeds[0]).setColor(0x2ECC71).addFields({name:'ÙØªÙØ¬Ø© Ø§ÙØ®Ø·ÙØ© Ø§ÙØ«Ø§ÙÙØ©',value:`â ÙØ¨ÙÙ Ø¨Ø¹Ø¯ Ø§ÙÙÙØ§Ø¨ÙØ© Ø§ÙØµÙØªÙØ© Ø¨ÙØ§Ø³Ø·Ø© <@${interaction.user.id}>`});
   await interaction.update({embeds:[e],components:[]});
 }
 
@@ -3116,7 +3207,7 @@ async function secondStageRejectSubmit(interaction,kind){
   if(!data || data.status!=='second_stage') return interaction.reply({content:'â ï¸ ØªÙ Ø§ØªØ®Ø§Ø° ÙØ±Ø§Ø± Ø¨Ø§ÙÙØ¹Ù.',ephemeral:true});
 
   data.status='rejected_second_stage'; data.finalReviewedBy=interaction.user.id; data.finalReviewedAt=Date.now(); data.rejectionReason=reason; saveDB();
-  await safeDM(data.userId,{embeds:[embed('â ÙÙ ÙØªÙ Ø§ÙÙØ¨ÙÙ ÙÙ Ø§ÙØ®Ø·ÙØ© Ø§ÙØ«Ø§ÙÙØ©',`ð Ø§ÙØ³Ø¨Ø¨: ${reason}`,0xE74C3C)]});
+  await safeDM(data.userId,{embeds:[embed(`â ØªÙ Ø±ÙØ¶ ØªÙØ¯ÙÙ ${kind==='staff'?'Ø§ÙØ¥Ø¯Ø§Ø±Ø©':'Ø§ÙØ±ÙØ§Ø¨Ø©'} Ø¨Ø¹Ø¯ Ø§ÙÙÙØ§Ø¨ÙØ© Ø§ÙØµÙØªÙØ©`,`ð Ø§ÙØ³Ø¨Ø¨: ${reason}`,0xE74C3C)]});
   const e=EmbedBuilder.from(interaction.message.embeds[0]).setColor(0xE74C3C).addFields(
     {name:'ÙØªÙØ¬Ø© Ø§ÙØ®Ø·ÙØ© Ø§ÙØ«Ø§ÙÙØ©',value:`â Ø±ÙØ¶ Ø¨ÙØ§Ø³Ø·Ø© <@${interaction.user.id}>`},
     {name:'Ø§ÙØ³Ø¨Ø¨',value:reason.slice(0,1024)}
@@ -3165,6 +3256,7 @@ client.on(Events.InteractionCreate,async interaction=>{
       if(id.startsWith('ticket_delete:')){const t=db.tickets[id.split(':')[1]];if(!closedTicketActionStaff(interaction.member))return interaction.reply({content:'â Ø§ÙØ±ÙÙØ§Øª Ø§ÙØ«ÙØ§Ø«Ø© Ø§ÙÙØ­Ø¯Ø¯Ø© ÙÙØ·.',ephemeral:true});if(!t||t.status!=='closed')return interaction.reply({content:'â ï¸ ÙØ§Ø²Ù Ø§ÙØªØ°ÙØ±Ø© ØªÙÙÙ ÙØºÙÙØ© Ø§ÙØ£ÙÙ.',ephemeral:true});await interaction.reply({content:'ðï¸ Ø³ÙØªÙ ÙØ³Ø­ Ø§ÙØªØ°ÙØ±Ø© Ø®ÙØ§Ù 5 Ø«ÙØ§ÙÙ.'});t.status='deleted';t.deletedBy=interaction.user.id;t.deletedAt=Date.now();saveDB();await ticketLog('ðï¸ ÙØ³Ø­ ØªØ°ÙØ±Ø©',`#${t.number}\nØ§ÙØ´Ø®Øµ: <@${t.ownerId}>\nØ¨ÙØ§Ø³Ø·Ø©: <@${interaction.user.id}>\nØ§ÙØªÙÙÙØª: ${formatTicketTime(t.deletedAt)}`,0xE74C3C);return setTimeout(()=>interaction.channel.delete().catch(()=>{}),5000);}
       if(id.startsWith('ticket_rate:')){const [,num,stars]=id.split(':');const modal=new ModalBuilder().setCustomId(`ticket_rating_submit:${num}:${stars}`).setTitle(`ØªÙÙÙÙ ${stars}/5`);modal.addComponents(new ActionRowBuilder().addComponents(new TextInputBuilder().setCustomId('reason').setLabel('Ø³Ø¨Ø¨ Ø§ÙØªÙÙÙÙ').setStyle(TextInputStyle.Paragraph).setRequired(true)));return interaction.showModal(modal);}
       if(id.startsWith('sys:')) return toggleSystem(interaction,id.split(':')[1]);
+      if(id==='ticket_schedule_manage') return ticketScheduleModal(interaction);
       if(id==='sys_status'){if(!isControl(interaction.member))return interaction.reply({content:'â Ø§ÙØ¥Ø¯Ø§Ø±Ø© Ø§ÙØ¹ÙÙØ§ ÙÙØ·.',ephemeral:true});return interaction.reply({embeds:[embed('ð Ø­Ø§ÙØ© Ø§ÙØ£ÙØ¸ÙØ©',Object.entries(db.systems).map(([k,v])=>`${v?'â':'â'} ${k}`).join('\n'))],ephemeral:true});}
       if(id==='bot_send') return botSendModal(interaction);
       if(id==='decision_accept') return decisionModal(interaction,true);
@@ -3184,6 +3276,7 @@ client.on(Events.InteractionCreate,async interaction=>{
     }
     if(interaction.isModalSubmit()){
       const id=interaction.customId;
+      if(id==='ticket_schedule_submit') return saveTicketSchedule(interaction);
       if(id.startsWith('ticket_create:')){const [,t,p]=id.split(':');return createTicket(interaction,t,p);}
       if(id.startsWith('ticket_user_submit:')) return addTicketMember(interaction,db.tickets[id.split(':')[1]],false);
       if(id.startsWith('ticket_staff_submit:')) return addTicketMember(interaction,db.tickets[id.split(':')[1]],true);
@@ -3213,4 +3306,8 @@ process.on('uncaughtException', err => {
 });
 
 if (!CONFIG.TOKEN) {
-  console.error('DISCORD_TO
+  console.error('DISCORD_TOKEN is missing. Add it in Railway Variables.');
+  process.exit(1);
+}
+
+client.login(CONFIG.TOKEN);
