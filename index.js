@@ -44,7 +44,7 @@ const CONFIG = {
 
   // ---------- الرومات ----------
   APPLICATION_PANEL_CHANNEL_ID: '1535782011841683576',
-  APPLICATION_RESULTS_CHANNEL_ID: '1535792428068372500',
+  APPLICATION_RESULTS_CHANNEL_ID: '1537487259736219779',
   VIDEO_CHANNEL_ID: '1535784708657651763',
   WELCOME_CHANNEL_ID: '1535772685337100431',
   RULES_CHANNEL_ID: '1535773187676315688',
@@ -92,7 +92,7 @@ const CONFIG = {
   TICKET_RATING_CHANNEL_ID: '1536345751947313202',
 
   // روم عرض مواعيد فتح وإغلاق التذاكر
-  TICKET_SCHEDULE_CHANNEL_ID: 'PUT_TICKET_SCHEDULE_CHANNEL_ID',
+  TICKET_SCHEDULE_CHANNEL_ID: '1537492318880407612',
 
   // روم مواعيد التقديمات والمقابلات الصوتية
   APPLICATION_SCHEDULE_CHANNEL_ID: 'PUT_APPLICATION_SCHEDULE_CHANNEL_ID',
@@ -110,27 +110,27 @@ const CONFIG = {
   // فقط الـ 3 رولات دول يظهر لهم/يستخدموا لوحة ما بعد إغلاق التذكرة:
   // مسح - حفظ - إعادة فتح
   TICKET_CLOSED_ACTION_ROLE_IDS: [
-    'PUT_CLOSED_TICKET_ROLE_1_ID',
-    'PUT_CLOSED_TICKET_ROLE_2_ID',
-    'PUT_CLOSED_TICKET_ROLE_3_ID'
+    '1535754877882474557',
+    '1535755333572763798',
+    '1535754908261941350'
   ],
 
   TICKET_TYPES: {
     support: {
       label: 'الدعم الفني', emoji: '🎧',
-      categoryId: '1536126952618983535',
+      categoryId: '1537494161773822002',
       teamRoleIds: ['PUT_SUPPORT_TEAM_ROLE_ID'],
-      normalChannelId: '1536824749471301662',
-      importantChannelId: '1536824777979985940',
-      urgentChannelId: '1536824248553705472'
+      normalChannelId: '1537494189791510548',
+      importantChannelId: '1537494206459813978',
+      urgentChannelId: '1537494225136918638'
     },
     monitoring: {
       label: 'الرقابة', emoji: '👁️',
-      categoryId: '1536348218659438663',
+      categoryId: '1537492947732267048',
       teamRoleIds: ['PUT_MONITORING_TEAM_ROLE_ID'],
-      normalChannelId: '1536845236225974363',
-      importantChannelId: '1536845265971978390',
-      urgentChannelId: '1536845288738652191'
+      normalChannelId: '1537493680829501571',
+      importantChannelId: '1537493731018674296',
+      urgentChannelId: '1537493756205465622'
     },
     player_complaint: {
       label: 'شكوى ضد لاعب', emoji: '⚠️',
