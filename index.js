@@ -76,8 +76,8 @@ const CONFIG = {
   // ---------- Auto Roles ----------
   // البوت يعطي الرولين دول تلقائياً لأي شخص يدخل السيرفر.
   AUTO_JOIN_ROLE_IDS: [
-    '1535763946596728902',
-    '1535767262580047923'
+    'PUT_FIRST_AUTO_ROLE_ID',
+    'PUT_SECOND_AUTO_ROLE_ID'
   ],
   COLOR: 0x1687FF,
   WELCOME_BANNER_URL: 'https://cdn.discordapp.com/attachments/1535772685337100431/1536106506506862743/ChatGPT_Image_Aug_9_2026_06_54_02_PM.png',
@@ -177,11 +177,10 @@ const CONFIG = {
   ],
 
   // ---------- Manual Accept / Reject Panel ----------
-  DECISION_PANEL_CHANNEL_ID: '1537229641872310373',
-  DECISION_RESULTS_CHANNEL_ID: '1537230324705136690',
+  DECISION_PANEL_CHANNEL_ID: 'PUT_DECISION_PANEL_CHANNEL_ID',
+  DECISION_RESULTS_CHANNEL_ID: 'PUT_DECISION_RESULTS_CHANNEL_ID',
   DECISION_REVIEWER_ROLE_IDS: [
-    '1535756001352093696',
-    '1535755748297146398'
+    'PUT_DECISION_REVIEWER_ROLE_ID'
   ],
 
   // ---------- Staff / Creator applications ----------
@@ -865,8 +864,37 @@ async function sendApplicationForReview(applicationId) {
 client.on(Events.MessageCreate, async message => {
   if (message.author.bot) return;
 
-  // DMs for application answers.
+  // DMs for Staff / Creator applications.
+  // مهم: نفحص تقديم الإدارة/صانع المحتوى قبل تقديم السيرفر العادي.
   if (message.channel.type === ChannelType.DM) {
+    const specialState = specialDmApplications.get(message.author.id);
+
+    if (specialState) {
+      const answer = (message.content || '').trim();
+
+      if (answer.toLowerCase() === 'cancel') {
+        specialDmApplications.delete(message.author.id);
+        await message.reply('❌ تم إلغاء التقديم.');
+        return;
+      }
+
+      // صانع المحتوى لازم يختار Kick / YouTube / TikTok من الزراير الأول.
+      if (specialState.kind === 'creator' && !specialState.platform) {
+        await message.reply('⚠️ اختار نوع البرنامج من الزراير الأول: Kick / YouTube / TikTok.');
+        return;
+      }
+
+      if (!answer) return;
+
+      specialState.answers.push(answer);
+      specialState.index += 1;
+      specialDmApplications.set(message.author.id, specialState);
+
+      await sendSpecialDmQuestion(message.author.id);
+      return;
+    }
+
+    // لو مفيش تقديم إدارة/صانع محتوى، نفحص تقديم السيرفر العادي.
     await handleApplicationDM(message);
     return;
   }
