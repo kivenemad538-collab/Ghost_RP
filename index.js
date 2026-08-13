@@ -2590,45 +2590,121 @@ async function finishSpecialDmApplication(userId) {
 
   specialDmApplications.delete(userId);
 
-  const reviewId = state.kind === 'staff'
+  const isStaff = state.kind === 'staff';
+  const reviewId = isStaff
     ? CONFIG.STAFF_APPLICATION_REVIEW_CHANNEL_ID
     : CONFIG.CREATOR_APPLICATION_REVIEW_CHANNEL_ID;
 
   const review = await safeFetchChannel(reviewId);
-  const questions = state.kind === 'staff'
+  const questions = isStaff
     ? CONFIG.STAFF_APPLICATION_QUESTIONS
     : CONFIG.CREATOR_APPLICATION_QUESTIONS;
 
-  const fields = [];
-  if (state.kind === 'creator') {
-    fields.push({name:'🎬 البرنامج',value:state.platform || 'غير محدد'});
+  if (!review?.isTextBased()) {
+    await safeDM(userId, {
+      embeds: [embed('❌ تعذر إرسال التقديم', 'روم مراجعة التقديم غير مضبوط. تواصل مع الإدارة.', 0xE74C3C)]
+    });
+    return;
   }
 
-  for (let i=0;i<questions.length;i++) {
+  const applicationId = `${state.kind}-${userId}-${Date.now()}`;
+
+  const data = {
+    id: applicationId,
+    userId,
+    kind: state.kind,
+    platform: state.platform || null,
+    answers: [...state.answers],
+    status: 'pending',
+    createdAt: Date.now(),
+    reviewedBy: null,
+    reviewedAt: null,
+    rejectionReason: null,
+    reviewMessageId: null
+  };
+
+  if (isStaff) db.staffApplications[applicationId] = data;
+  else db.creatorApplications[applicationId] = data;
+  saveDB();
+
+  const fields = [];
+
+  if (!isStaff) {
     fields.push({
-      name:`${i+1}. ${questions[i]}`.slice(0,256),
-      value:(state.answers[i] || 'بدون إجابة').slice(0,1024)
+      name: '🎬 البرنامج',
+      value: state.platform || 'غير محدد'
     });
   }
 
-  if (review?.isTextBased()) {
-    const chunks = [];
-    for(let i=0;i<fields.length;i+=20) chunks.push(fields.slice(i,i+20));
-
-    for(let i=0;i<chunks.length;i++) {
-      const e = new EmbedBuilder()
-        .setColor(CONFIG.COLOR)
-        .setTitle(state.kind === 'staff' ? '🛡️ تقديم إدارة جديد' : '🎥 تقديم صانع محتوى جديد')
-        .setDescription(i===0 ? `المتقدم: <@${userId}> | \`${userId}\`` : 'تكملة الإجابات')
-        .addFields(chunks[i])
-        .setFooter({text:CONFIG.SERVER_NAME})
-        .setTimestamp();
-      await review.send({embeds:[e]});
-    }
+  for (let i = 0; i < questions.length; i++) {
+    fields.push({
+      name: `${i + 1}. ${questions[i]}`.slice(0, 256),
+      value: (state.answers[i] || 'بدون إجابة').slice(0, 1024)
+    });
   }
 
-  await safeDM(userId,{
-    embeds:[embed('✅ تم إرسال التقديم',`تم إرسال تقديمك للمراجعة في **${CONFIG.SERVER_NAME}**.`,0x2ECC71)]
+  // Discord يسمح بحد أقصى 25 field في الـEmbed.
+  const chunks = [];
+  for (let i = 0; i < fields.length; i += 20) {
+    chunks.push(fields.slice(i, i + 20));
+  }
+
+  let firstMessage = null;
+
+  for (let i = 0; i < chunks.length; i++) {
+    const e = new EmbedBuilder()
+      .setColor(CONFIG.COLOR)
+      .setTitle(isStaff ? '🛡️ تقديم إدارة جديد' : '🎥 تقديم صانع محتوى جديد')
+      .setDescription(
+        i === 0
+          ? [
+              '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━',
+              '',
+              `👤 المتقدم: <@${userId}>`,
+              `🆔 Discord ID: \`${userId}\``,
+              '',
+              '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
+            ].join('\n')
+          : `📄 تكملة إجابات <@${userId}>`
+      )
+      .addFields(chunks[i])
+      .setFooter({ text: `Application ID: ${applicationId}` })
+      .setTimestamp();
+
+    const payload = { embeds: [e] };
+
+    // الأزرار تظهر على آخر جزء من التقديم.
+    if (i === chunks.length - 1) {
+      payload.components = [
+        new ActionRowBuilder().addComponents(
+          new ButtonBuilder()
+            .setCustomId(`${state.kind}_accept:${applicationId}`)
+            .setLabel('قبول')
+            .setStyle(ButtonStyle.Success),
+
+          new ButtonBuilder()
+            .setCustomId(`${state.kind}_reject:${applicationId}`)
+            .setLabel('رفض')
+            .setStyle(ButtonStyle.Danger)
+        )
+      ];
+    }
+
+    const sent = await review.send(payload);
+    if (!firstMessage) firstMessage = sent;
+    data.reviewMessageId = sent.id;
+  }
+
+  saveDB();
+
+  await safeDM(userId, {
+    embeds: [
+      embed(
+        '✅ تم إرسال التقديم',
+        `تم إرسال تقديمك للمراجعة في **${CONFIG.SERVER_NAME}**.`,
+        0x2ECC71
+      )
+    ]
   });
 }
 
@@ -2658,21 +2734,167 @@ async function simpleApplySubmit(interaction,kind) {
   await interaction.reply({content:'✅ تم إرسال التقديم.',ephemeral:true});
 }
 
-async function decideSimple(interaction,kind,accept) {
-  if(!isReviewer(interaction.member)&&!isControl(interaction.member)) return interaction.reply({content:'❌ ليس لديك صلاحية.',ephemeral:true});
-  const id=interaction.customId.split(':').slice(1).join(':');
-  const store=kind==='staff'?db.staffApplications:db.creatorApplications;
-  const data=store[id];
-  if(!data||data.status!=='pending') return interaction.reply({content:'⚠️ تم اتخاذ قرار بالفعل.',ephemeral:true});
-  data.status=accept?'accepted':'rejected'; data.reviewedBy=interaction.user.id; saveDB();
-  if(accept){
-    const m=await interaction.guild.members.fetch(data.userId).catch(()=>null);
-    if(m) await safeAddRole(m,kind==='staff'?CONFIG.STAFF_PREACCEPTED_ROLE_ID:CONFIG.CREATOR_ACCEPTED_ROLE_ID);
+function canReviewSpecialApplication(member) {
+  return isReviewer(member) || isControl(member);
+}
+
+async function acceptSpecialApplication(interaction, kind) {
+  if (!canReviewSpecialApplication(interaction.member)) {
+    return interaction.reply({ content: '❌ ليس لديك صلاحية.', ephemeral: true });
   }
-  const msg=kind==='staff'&&accept?`تم قبولك مبدئياً. مواعيد المقابلة: ${channelUrl(CONFIG.STAFF_INTERVIEW_SCHEDULE_CHANNEL_ID)}`:(accept?'تم قبولك وتمت إضافة الرتبة.':'تم رفض التقديم.');
-  await safeDM(data.userId,{embeds:[embed(accept?'✅ تم القبول':'❌ تم الرفض',msg,accept?0x2ECC71:0xE74C3C)]});
-  const e=EmbedBuilder.from(interaction.message.embeds[0]).setColor(accept?0x2ECC71:0xE74C3C).addFields({name:'القرار',value:`${accept?'✅ قبول':'❌ رفض'} بواسطة <@${interaction.user.id}>`});
-  await interaction.update({embeds:[e],components:[]});
+
+  const applicationId = interaction.customId.split(':').slice(1).join(':');
+  const store = kind === 'staff' ? db.staffApplications : db.creatorApplications;
+  const data = store[applicationId];
+
+  if (!data || data.status !== 'pending') {
+    return interaction.reply({
+      content: '⚠️ تم اتخاذ قرار في هذا التقديم بالفعل.',
+      ephemeral: true
+    });
+  }
+
+  data.status = 'accepted';
+  data.reviewedBy = interaction.user.id;
+  data.reviewedAt = Date.now();
+  data.rejectionReason = null;
+  saveDB();
+
+  const member = await interaction.guild.members.fetch(data.userId).catch(() => null);
+
+  if (member) {
+    await safeAddRole(
+      member,
+      kind === 'staff'
+        ? CONFIG.STAFF_PREACCEPTED_ROLE_ID
+        : CONFIG.CREATOR_ACCEPTED_ROLE_ID
+    );
+  }
+
+  const dmText =
+    kind === 'staff'
+      ? [
+          '✅ تم قبولك مبدئياً في الإدارة.',
+          hasRealId(CONFIG.STAFF_INTERVIEW_SCHEDULE_CHANNEL_ID)
+            ? `📅 مواعيد المقابلة: ${channelUrl(CONFIG.STAFF_INTERVIEW_SCHEDULE_CHANNEL_ID)}`
+            : ''
+        ].filter(Boolean).join('\n')
+      : '✅ تم قبولك كصانع محتوى وتمت إضافة الرتبة.';
+
+  await safeDM(data.userId, {
+    embeds: [embed('✅ تم قبول التقديم', dmText, 0x2ECC71)]
+  });
+
+  const e = EmbedBuilder.from(interaction.message.embeds[0])
+    .setColor(0x2ECC71)
+    .addFields({
+      name: 'القرار',
+      value: `✅ تم القبول بواسطة <@${interaction.user.id}>`
+    });
+
+  await interaction.update({
+    embeds: [e],
+    components: []
+  });
+
+  await sendLog(
+    kind === 'staff' ? 'قبول تقديم إدارة' : 'قبول تقديم صانع محتوى',
+    `**المتقدم:** <@${data.userId}>\n**بواسطة:** <@${interaction.user.id}>`,
+    0x2ECC71
+  );
+}
+
+async function openSpecialRejectModal(interaction, kind) {
+  if (!canReviewSpecialApplication(interaction.member)) {
+    return interaction.reply({ content: '❌ ليس لديك صلاحية.', ephemeral: true });
+  }
+
+  const applicationId = interaction.customId.split(':').slice(1).join(':');
+  const store = kind === 'staff' ? db.staffApplications : db.creatorApplications;
+  const data = store[applicationId];
+
+  if (!data || data.status !== 'pending') {
+    return interaction.reply({
+      content: '⚠️ تم اتخاذ قرار في هذا التقديم بالفعل.',
+      ephemeral: true
+    });
+  }
+
+  const modal = new ModalBuilder()
+    .setCustomId(`${kind}_reject_submit:${applicationId}`)
+    .setTitle(kind === 'staff' ? 'رفض تقديم الإدارة' : 'رفض صانع المحتوى');
+
+  const reason = new TextInputBuilder()
+    .setCustomId('reason')
+    .setLabel('سبب الرفض')
+    .setStyle(TextInputStyle.Paragraph)
+    .setRequired(true)
+    .setMinLength(2)
+    .setMaxLength(800);
+
+  modal.addComponents(
+    new ActionRowBuilder().addComponents(reason)
+  );
+
+  await interaction.showModal(modal);
+}
+
+async function rejectSpecialApplication(interaction, kind) {
+  if (!canReviewSpecialApplication(interaction.member)) {
+    return interaction.reply({ content: '❌ ليس لديك صلاحية.', ephemeral: true });
+  }
+
+  const applicationId = interaction.customId.split(':').slice(1).join(':');
+  const store = kind === 'staff' ? db.staffApplications : db.creatorApplications;
+  const data = store[applicationId];
+  const reason = interaction.fields.getTextInputValue('reason').trim();
+
+  if (!data || data.status !== 'pending') {
+    return interaction.reply({
+      content: '⚠️ تم اتخاذ قرار في هذا التقديم بالفعل.',
+      ephemeral: true
+    });
+  }
+
+  data.status = 'rejected';
+  data.reviewedBy = interaction.user.id;
+  data.reviewedAt = Date.now();
+  data.rejectionReason = reason;
+  saveDB();
+
+  await safeDM(data.userId, {
+    embeds: [
+      embed(
+        '❌ تم رفض التقديم',
+        `📌 السبب: ${reason}`,
+        0xE74C3C
+      )
+    ]
+  });
+
+  const e = EmbedBuilder.from(interaction.message.embeds[0])
+    .setColor(0xE74C3C)
+    .addFields(
+      {
+        name: 'القرار',
+        value: `❌ تم الرفض بواسطة <@${interaction.user.id}>`
+      },
+      {
+        name: 'سبب الرفض',
+        value: reason.slice(0, 1024)
+      }
+    );
+
+  await interaction.update({
+    embeds: [e],
+    components: []
+  });
+
+  await sendLog(
+    kind === 'staff' ? 'رفض تقديم إدارة' : 'رفض تقديم صانع محتوى',
+    `**المتقدم:** <@${data.userId}>\n**بواسطة:** <@${interaction.user.id}>\n**السبب:** ${reason}`,
+    0xE74C3C
+  );
 }
 
 async function botSendModal(interaction) {
@@ -2722,10 +2944,10 @@ client.on(Events.InteractionCreate,async interaction=>{
       if(id.startsWith('creator_platform:')) return selectCreatorPlatform(interaction,id.split(':')[1]);
       if(id==='staff_apply') return startSpecialDmApplication(interaction,'staff');
       if(id==='creator_apply') return startSpecialDmApplication(interaction,'creator');
-      if(id.startsWith('staff_accept:')) return decideSimple(interaction,'staff',true);
-      if(id.startsWith('staff_reject:')) return decideSimple(interaction,'staff',false);
-      if(id.startsWith('creator_accept:')) return decideSimple(interaction,'creator',true);
-      if(id.startsWith('creator_reject:')) return decideSimple(interaction,'creator',false);
+      if(id.startsWith('staff_accept:')) return acceptSpecialApplication(interaction,'staff');
+      if(id.startsWith('staff_reject:')) return openSpecialRejectModal(interaction,'staff');
+      if(id.startsWith('creator_accept:')) return acceptSpecialApplication(interaction,'creator');
+      if(id.startsWith('creator_reject:')) return openSpecialRejectModal(interaction,'creator');
     }
     if(interaction.isModalSubmit()){
       const id=interaction.customId;
@@ -2735,8 +2957,8 @@ client.on(Events.InteractionCreate,async interaction=>{
       if(id.startsWith('ticket_rating_submit:')){const [,num,stars]=id.split(':');const t=db.tickets[num];if(!t||t.ownerId!==interaction.user.id)return interaction.reply({content:'❌ غير مسموح.',ephemeral:true});const reason=interaction.fields.getTextInputValue('reason');db.ticketRatings.push({num,userId:interaction.user.id,type:t.type,stars:Number(stars),reason,at:Date.now()});saveDB();const ch=await safeFetchChannel(CONFIG.TICKET_RATING_CHANNEL_ID);if(ch?.isTextBased())await ch.send({embeds:[embed('⭐ تقييم تذكرة',`#${num} | ${CONFIG.TICKET_TYPES[t.type].label}\n<@${interaction.user.id}>\n${'⭐'.repeat(Number(stars))}\nالسبب: ${reason}`)]});return interaction.reply({content:'✅ شكراً على التقييم.',ephemeral:true});}
       if(id==='decision_accept_submit') return decisionSubmit(interaction,true);
       if(id==='decision_reject_submit') return decisionSubmit(interaction,false);
-      if(id==='staff_apply_submit') return simpleApplySubmit(interaction,'staff');
-      if(id==='creator_apply_submit') return simpleApplySubmit(interaction,'creator');
+      if(id.startsWith('staff_reject_submit:')) return rejectSpecialApplication(interaction,'staff');
+      if(id.startsWith('creator_reject_submit:')) return rejectSpecialApplication(interaction,'creator');
       if(id==='bot_send_submit') return botSendSubmit(interaction);
     }
   }catch(err){console.error('Advanced system error:',err);if(interaction.isRepliable()&&!interaction.replied&&!interaction.deferred)await interaction.reply({content:'❌ حصل خطأ.',ephemeral:true}).catch(()=>{});}
