@@ -20,7 +20,8 @@ const {
   TextInputStyle,
   Events,
   PermissionFlagsBits,
-  ChannelType
+  ChannelType,
+  SlashCommandBuilder
 } = require('discord.js');
 
 const {
@@ -44,7 +45,7 @@ const CONFIG = {
 
   // ---------- الرومات ----------
   APPLICATION_PANEL_CHANNEL_ID: '1535782011841683576',
-  APPLICATION_RESULTS_CHANNEL_ID: '1537487259736219779',
+  APPLICATION_RESULTS_CHANNEL_ID: '1535792428068372500',
   VIDEO_CHANNEL_ID: '1535784708657651763',
   WELCOME_CHANNEL_ID: '1535772685337100431',
   RULES_CHANNEL_ID: '1535773187676315688',
@@ -95,7 +96,7 @@ const CONFIG = {
   TICKET_SCHEDULE_CHANNEL_ID: '1537492318880407612',
 
   // روم مواعيد التقديمات والمقابلات الصوتية
-  APPLICATION_SCHEDULE_CHANNEL_ID: 'PUT_APPLICATION_SCHEDULE_CHANNEL_ID',
+  APPLICATION_SCHEDULE_CHANNEL_ID: '1535782394601148547',
 
   // فقط الرولين دول يقدروا يستخدموا أوامر إدارة التذكرة الحساسة
   TICKET_TEAM_ROLE_ID: '1535755153838313542',
@@ -118,19 +119,19 @@ const CONFIG = {
   TICKET_TYPES: {
     support: {
       label: 'الدعم الفني', emoji: '🎧',
-      categoryId: '1537494161773822002',
+      categoryId: '1536126952618983535',
       teamRoleIds: ['PUT_SUPPORT_TEAM_ROLE_ID'],
-      normalChannelId: '1537494189791510548',
-      importantChannelId: '1537494206459813978',
-      urgentChannelId: '1537494225136918638'
+      normalChannelId: '1536824749471301662',
+      importantChannelId: '1536824777979985940',
+      urgentChannelId: '1536824248553705472'
     },
     monitoring: {
       label: 'الرقابة', emoji: '👁️',
-      categoryId: '1537492947732267048',
+      categoryId: '1536348218659438663',
       teamRoleIds: ['PUT_MONITORING_TEAM_ROLE_ID'],
-      normalChannelId: '1537493680829501571',
-      importantChannelId: '1537493731018674296',
-      urgentChannelId: '1537493756205465622'
+      normalChannelId: '1536845236225974363',
+      importantChannelId: '1536845265971978390',
+      urgentChannelId: '1536845288738652191'
     },
     player_complaint: {
       label: 'شكوى ضد لاعب', emoji: '⚠️',
@@ -440,6 +441,7 @@ const client = new Client({
 const spamTracker = new Map();
 const greetedUsers = new Map();
 const specialDmApplications = new Map();
+const activeVotes = new Map();
 // MULTI_APPLICATION_NOTE: كل مستخدم له حالة تقديم مستقلة، لذلك عدة أشخاص يقدروا يقدموا في نفس الوقت.
 
 
@@ -517,6 +519,25 @@ async function safeRemoveRole(member, roleId) {
 // STARTUP
 // ==========================================================
 client.once(Events.ClientReady, async () => {
+  try {
+    const voteCommand = new SlashCommandBuilder()
+      .setName('vot')
+      .setDescription('إنشاء تصويت')
+      .addStringOption(o => o.setName('question').setDescription('سؤال التصويت').setRequired(true))
+      .addStringOption(o => o.setName('option1').setDescription('الاختيار الأول').setRequired(true))
+      .addStringOption(o => o.setName('option2').setDescription('الاختيار الثاني').setRequired(true))
+      .addStringOption(o => o.setName('option3').setDescription('الاختيار الثالث - اختياري').setRequired(false));
+
+    const guild = client.guilds.cache.get(CONFIG.GUILD_ID);
+    if (guild) {
+      await guild.commands.create(voteCommand.toJSON());
+      console.log('Registered /vot command.');
+    }
+  } catch (err) {
+    console.error('Failed to register /vot:', err.message);
+  }
+
+
   console.log(`Ghost RP bot logged in as ${client.user.tag}`);
   client.user.setActivity(CONFIG.SERVER_NAME);
 
@@ -921,6 +942,31 @@ async function sendApplicationForReview(applicationId) {
 // MESSAGE HANDLER
 // ==========================================================
 client.on(Events.MessageCreate, async message => {
+  if (!message.author.bot && message.guild) {
+    const content = (message.content || '').trim();
+    if (/^ip$/i.test(content)) {
+      await message.reply({
+        embeds: [
+          new EmbedBuilder()
+            .setColor(CONFIG.COLOR)
+            .setTitle('🌐 Ghost RP | IP')
+            .setDescription([
+              '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━',
+              '',
+              '🔢 **رقم / كود IP:** قريباً',
+              '🛠️ **الحالة:** صيانة',
+              '',
+              '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
+            ].join('\n'))
+            .setFooter({ text: CONFIG.SERVER_NAME })
+            .setTimestamp()
+        ]
+      }).catch(() => {});
+      return;
+    }
+  }
+
+
   if (message.author.bot) return;
 
   // DMs for Staff / Creator applications.
@@ -975,6 +1021,11 @@ client.on(Events.MessageCreate, async message => {
 // ==========================================================
 client.on(Events.InteractionCreate, async interaction => {
   try {
+    if (interaction.isChatInputCommand() && interaction.commandName === 'vot') {
+      return handleVoteCommand(interaction);
+    }
+
+
     if (interaction.isButton()) {
       if (interaction.customId === 'application_start') {
         return startApplication(interaction);
@@ -3249,6 +3300,7 @@ client.on(Events.InteractionCreate,async interaction=>{
   try{
     if(interaction.isButton()){
       const id=interaction.customId;
+      if(id.startsWith('vote:')) return handleVoteButton(interaction);
       if(id.startsWith('ticket_type:')) return choosePriority(interaction,id.split(':')[1]);
       if(id.startsWith('ticket_priority:')){const [,t,p]=id.split(':');return ticketProblemModal(interaction,t,p);}
       if(id.startsWith('ticket_claim:')){const t=db.tickets[id.split(':')[1]];if(!ticketManagementStaff(interaction.member,t))return interaction.reply({content:'❌ للإدارة فقط.',ephemeral:true});if(!t.claimedBy.includes(interaction.user.id))t.claimedBy.push(interaction.user.id);saveDB();return interaction.reply({content:`✅ استلم التذكرة <@${interaction.user.id}>.`});}
@@ -3298,6 +3350,121 @@ client.on(Events.InteractionCreate,async interaction=>{
     }
   }catch(err){console.error('Advanced system error:',err);if(interaction.isRepliable()&&!interaction.replied&&!interaction.deferred)await interaction.reply({content:'❌ حصل خطأ.',ephemeral:true}).catch(()=>{});}
 });
+
+
+
+// ==========================================================
+// IP AUTO REPLY + VOTE SYSTEM
+// ==========================================================
+
+function voteButtons(voteId, vote) {
+  const row = new ActionRowBuilder();
+
+  vote.options.forEach((label, index) => {
+    row.addComponents(
+      new ButtonBuilder()
+        .setCustomId(`vote:${voteId}:${index}`)
+        .setLabel(`${label} (${vote.counts[index] || 0})`)
+        .setStyle(
+          index === 0 ? ButtonStyle.Success :
+          index === 1 ? ButtonStyle.Danger :
+          ButtonStyle.Primary
+        )
+    );
+  });
+
+  return row;
+}
+
+function voteEmbed(vote) {
+  const lines = vote.options.map((label, index) =>
+    `**${index + 1}. ${label}** — ${vote.counts[index] || 0} صوت`
+  );
+
+  const total = vote.counts.reduce((a, b) => a + b, 0);
+
+  return new EmbedBuilder()
+    .setColor(CONFIG.COLOR)
+    .setTitle(`📊 ${vote.question}`)
+    .setDescription([
+      '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━',
+      '',
+      ...lines,
+      '',
+      `👥 إجمالي المصوتين: **${total}**`,
+      '',
+      'اضغط على الاختيار الذي تريده.',
+      '',
+      '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
+    ].join('\n'))
+    .setFooter({ text: CONFIG.SERVER_NAME })
+    .setTimestamp();
+}
+
+async function handleVoteCommand(interaction) {
+  const question = interaction.options.getString('question', true).trim();
+  const option1 = interaction.options.getString('option1', true).trim();
+  const option2 = interaction.options.getString('option2', true).trim();
+  const option3 = interaction.options.getString('option3', false)?.trim();
+
+  const options = [option1, option2];
+  if (option3) options.push(option3);
+
+  const voteId = `${interaction.user.id}-${Date.now()}`;
+  const vote = {
+    id: voteId,
+    question,
+    options,
+    counts: new Array(options.length).fill(0),
+    voters: {},
+    createdBy: interaction.user.id,
+    createdAt: Date.now()
+  };
+
+  activeVotes.set(voteId, vote);
+
+  await interaction.reply({
+    embeds: [voteEmbed(vote)],
+    components: [voteButtons(voteId, vote)]
+  });
+}
+
+async function handleVoteButton(interaction) {
+  const [, voteId, indexRaw] = interaction.customId.split(':');
+  const index = Number(indexRaw);
+  const vote = activeVotes.get(voteId);
+
+  if (!vote) {
+    return interaction.reply({
+      content: '⚠️ التصويت ده انتهى أو البوت اتعمله Restart.',
+      ephemeral: true
+    });
+  }
+
+  if (!Number.isInteger(index) || index < 0 || index >= vote.options.length) {
+    return interaction.reply({ content: '❌ اختيار غير صحيح.', ephemeral: true });
+  }
+
+  const previous = vote.voters[interaction.user.id];
+
+  if (previous !== undefined) {
+    if (previous === index) {
+      return interaction.reply({
+        content: `✅ إنت بالفعل مصوت لـ **${vote.options[index]}**.`,
+        ephemeral: true
+      });
+    }
+    vote.counts[previous] = Math.max(0, vote.counts[previous] - 1);
+  }
+
+  vote.voters[interaction.user.id] = index;
+  vote.counts[index] += 1;
+
+  await interaction.update({
+    embeds: [voteEmbed(vote)],
+    components: [voteButtons(voteId, vote)]
+  });
+}
 
 
 // ==========================================================
