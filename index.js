@@ -535,9 +535,9 @@ client.once(Events.ClientReady, async () => {
 
       const permBanCommand = new SlashCommandBuilder()
         .setName('permban')
-        .setDescription('حظر عضو بشكل دائم من السيرفر')
-        .addUserOption(o =>
-          o.setName('user').setDescription('الشخص المراد حظره').setRequired(true)
+        .setDescription('حظر أكثر من شخص بشكل دائم')
+        .addStringOption(o =>
+          o.setName('user_ids').setDescription('IDs الأشخاص مفصولة بفاصلة ,').setRequired(true)
         )
         .addStringOption(o =>
           o.setName('reason').setDescription('سبب الحظر').setRequired(true)
@@ -545,14 +545,12 @@ client.once(Events.ClientReady, async () => {
 
       const resetServerCommand = new SlashCommandBuilder()
         .setName('resetserver')
-        .setDescription('حذف روم أو كاتجوري محددة لإعادة بناء السيرفر')
-        .addChannelOption(o =>
-          o.setName('target').setDescription('الروم أو الكاتجوري المراد حذفها').setRequired(true)
+        .setDescription('حذف أكثر من كاتجوري محددة وكل الرومات الموجودة بداخلها')
+        .addStringOption(o =>
+          o.setName('category_ids').setDescription('IDs الكاتجوريز مفصولة بفاصلة ,').setRequired(true)
         )
         .addStringOption(o =>
-          o.setName('confirm')
-            .setDescription('اكتب RESET للتأكيد')
-            .setRequired(true)
+          o.setName('confirm').setDescription('اكتب RESET للتأكيد').setRequired(true)
         );
 
       await guild.commands.create(permBanCommand.toJSON());
@@ -3402,116 +3400,84 @@ function canUseDangerousAdminCommands(member) {
 
 async function handlePermBanCommand(interaction) {
   if (!canUseDangerousAdminCommands(interaction.member)) {
-    return interaction.reply({
-      content: '❌ الأمر ده للإدارة العليا أو مالك السيرفر فقط.',
-      ephemeral: true
-    });
+    return interaction.reply({content:'❌ الأمر ده للإدارة العليا أو مالك السيرفر فقط.',ephemeral:true});
   }
 
-  const user = interaction.options.getUser('user', true);
+  const raw = interaction.options.getString('user_ids', true);
   const reason = interaction.options.getString('reason', true).trim();
+  const ids = [...new Set(raw.split(/[,\s]+/).map(x=>x.trim()).filter(x=>/^\d{15,22}$/.test(x)))];
 
-  if (user.id === interaction.guild.ownerId) {
-    return interaction.reply({ content: '❌ لا يمكن حظر مالك السيرفر.', ephemeral: true });
-  }
+  if (!ids.length) return interaction.reply({content:'❌ اكتب IDs صحيحة مفصولة بفاصلة.',ephemeral:true});
+  if (ids.length > 25) return interaction.reply({content:'❌ الحد الأقصى 25 شخص في العملية الواحدة.',ephemeral:true});
 
-  if (user.id === interaction.user.id) {
-    return interaction.reply({ content: '❌ لا يمكنك حظر نفسك.', ephemeral: true });
-  }
+  await interaction.deferReply({ephemeral:true});
+  const done=[], failed=[];
 
-  await interaction.deferReply({ ephemeral: true });
-
-  try {
-    await interaction.guild.members.ban(user.id, {
-      reason: `${reason} | بواسطة ${interaction.user.tag}`
-    });
-
-    await interaction.editReply({
-      content: `🔨 تم حظر **${user.tag}** بشكل دائم.\n📝 السبب: ${reason}`
-    });
-
-    const log = await safeFetchChannel(CONFIG.LOG_CHANNEL_ID);
-    if (log?.isTextBased()) {
-      await log.send({
-        embeds: [
-          new EmbedBuilder()
-            .setColor(0xE74C3C)
-            .setTitle('🔨 حظر دائم')
-            .addFields(
-              { name: 'الشخص', value: `${user.tag}\n\`${user.id}\`` },
-              { name: 'بواسطة', value: `<@${interaction.user.id}>` },
-              { name: 'السبب', value: reason.slice(0, 1024) }
-            )
-            .setTimestamp()
-        ]
-      }).catch(() => {});
+  for (const id of ids) {
+    if (id === interaction.guild.ownerId || id === interaction.user.id) {
+      failed.push(`${id} (محمي)`);
+      continue;
     }
-  } catch (err) {
-    await interaction.editReply({
-      content: `❌ فشل الحظر: ${err.message}`
-    });
+    try {
+      await interaction.guild.members.ban(id,{reason:`${reason} | بواسطة ${interaction.user.tag}`});
+      done.push(id);
+    } catch {
+      failed.push(id);
+    }
   }
+
+  await interaction.editReply({content:[
+    `🔨 تم الحظر الدائم لـ **${done.length}** شخص.`,
+    failed.length ? `❌ فشل/محمي: **${failed.length}**` : '',
+    `📝 السبب: ${reason}`
+  ].filter(Boolean).join('\n')});
+
+  const log=await safeFetchChannel(CONFIG.LOG_CHANNEL_ID);
+  if(log?.isTextBased()) await log.send({embeds:[new EmbedBuilder()
+    .setColor(0xE74C3C).setTitle('🔨 حظر دائم متعدد')
+    .setDescription(`**تم:** ${done.length}\n**فشل:** ${failed.length}\n**بواسطة:** <@${interaction.user.id}>\n**السبب:** ${reason}`)
+    .setTimestamp()]}).catch(()=>{});
 }
 
 async function handleResetServerCommand(interaction) {
   if (!canUseDangerousAdminCommands(interaction.member)) {
-    return interaction.reply({
-      content: '❌ الأمر ده للإدارة العليا أو مالك السيرفر فقط.',
-      ephemeral: true
-    });
+    return interaction.reply({content:'❌ الأمر ده للإدارة العليا أو مالك السيرفر فقط.',ephemeral:true});
   }
 
-  const target = interaction.options.getChannel('target', true);
-  const confirm = interaction.options.getString('confirm', true).trim();
+  const raw=interaction.options.getString('category_ids',true);
+  const confirm=interaction.options.getString('confirm',true).trim();
+  if(confirm!=='RESET') return interaction.reply({content:'⚠️ لم يتم حذف أي شيء. اكتب `RESET` للتأكيد.',ephemeral:true});
 
-  if (confirm !== 'RESET') {
-    return interaction.reply({
-      content: '⚠️ لم يتم حذف أي شيء. للتأكيد اكتب `RESET` بالحروف الكبيرة.',
-      ephemeral: true
-    });
-  }
+  const ids=[...new Set(raw.split(/[,\s]+/).map(x=>x.trim()).filter(x=>/^\d{15,22}$/.test(x)))];
+  if(!ids.length) return interaction.reply({content:'❌ اكتب IDs كاتجوريز صحيحة مفصولة بفاصلة.',ephemeral:true});
+  if(ids.length>15) return interaction.reply({content:'❌ الحد الأقصى 15 كاتجوري في العملية الواحدة.',ephemeral:true});
 
-  if (!target.deletable) {
-    return interaction.reply({
-      content: '❌ البوت لا يملك صلاحية حذف الروم/الكاتجوري دي.',
-      ephemeral: true
-    });
-  }
+  const categories=ids.map(id=>interaction.guild.channels.cache.get(id))
+    .filter(ch=>ch && ch.type===ChannelType.GuildCategory);
 
-  const targetName = target.name;
-  const targetId = target.id;
-  const isCategory = target.type === ChannelType.GuildCategory;
+  if(!categories.length) return interaction.reply({content:'❌ لم يتم العثور على كاتجوريز صحيحة.',ephemeral:true});
 
-  await interaction.reply({
-    content: `🗑️ جاري حذف ${isCategory ? 'الكاتجوري' : 'الروم'} **${targetName}**...`,
-    ephemeral: true
-  });
+  await interaction.deferReply({ephemeral:true});
+  const done=[],failed=[];
 
-  try {
-    // عند حذف كاتجوري: نحذف الرومات الموجودة بداخلها أولاً ثم الكاتجوري.
-    if (isCategory) {
-      const children = interaction.guild.channels.cache
-        .filter(ch => ch.parentId === targetId);
-
-      for (const ch of children.values()) {
-        if (ch.deletable) {
-          await ch.delete(`Server reset by ${interaction.user.tag}`).catch(() => {});
-        }
+  for(const category of categories){
+    try{
+      const children=interaction.guild.channels.cache.filter(ch=>ch.parentId===category.id);
+      for(const ch of children.values()){
+        if(ch.deletable) await ch.delete(`Selected category reset by ${interaction.user.tag}`).catch(()=>{});
       }
-    }
-
-    await target.delete(`Server reset by ${interaction.user.tag}`);
-
-    await interaction.editReply({
-      content: `✅ تم حذف ${isCategory ? 'الكاتجوري وكل الرومات الموجودة بداخلها' : 'الروم'} **${targetName}**.`
-    });
-  } catch (err) {
-    await interaction.editReply({
-      content: `❌ حصل خطأ أثناء الحذف: ${err.message}`
-    });
+      if(category.deletable){
+        await category.delete(`Selected category reset by ${interaction.user.tag}`);
+        done.push(category.name);
+      }else failed.push(category.name);
+    }catch{ failed.push(category.name); }
   }
-}
 
+  await interaction.editReply({content:[
+    `✅ تم حذف **${done.length}** كاتجوري وكل الرومات الموجودة بداخلها.`,
+    failed.length?`❌ تعذر حذف **${failed.length}** كاتجوري.`:''
+  ].filter(Boolean).join('\n')});
+}
 
 // ==========================================================
 // IP AUTO REPLY + VOTE SYSTEM
