@@ -21,7 +21,8 @@ const {
   Events,
   PermissionFlagsBits,
   ChannelType,
-  SlashCommandBuilder
+  SlashCommandBuilder,
+  PermissionsBitField
 } = require('discord.js');
 
 const {
@@ -93,10 +94,10 @@ const CONFIG = {
   TICKET_RATING_CHANNEL_ID: '1536345751947313202',
 
   // روم عرض مواعيد فتح وإغلاق التذاكر
-  TICKET_SCHEDULE_CHANNEL_ID: '1537492318880407612',
+  TICKET_SCHEDULE_CHANNEL_ID: 'PUT_TICKET_SCHEDULE_CHANNEL_ID',
 
   // روم مواعيد التقديمات والمقابلات الصوتية
-  APPLICATION_SCHEDULE_CHANNEL_ID: '1535782394601148547',
+  APPLICATION_SCHEDULE_CHANNEL_ID: 'PUT_APPLICATION_SCHEDULE_CHANNEL_ID',
 
   // فقط الرولين دول يقدروا يستخدموا أوامر إدارة التذكرة الحساسة
   TICKET_TEAM_ROLE_ID: '1535755153838313542',
@@ -111,9 +112,9 @@ const CONFIG = {
   // فقط الـ 3 رولات دول يظهر لهم/يستخدموا لوحة ما بعد إغلاق التذكرة:
   // مسح - حفظ - إعادة فتح
   TICKET_CLOSED_ACTION_ROLE_IDS: [
-    '1535754877882474557',
-    '1535755333572763798',
-    '1535754908261941350'
+    'PUT_CLOSED_TICKET_ROLE_1_ID',
+    'PUT_CLOSED_TICKET_ROLE_2_ID',
+    'PUT_CLOSED_TICKET_ROLE_3_ID'
   ],
 
   TICKET_TYPES: {
@@ -531,6 +532,31 @@ client.once(Events.ClientReady, async () => {
     const guild = client.guilds.cache.get(CONFIG.GUILD_ID);
     if (guild) {
       await guild.commands.create(voteCommand.toJSON());
+
+      const permBanCommand = new SlashCommandBuilder()
+        .setName('permban')
+        .setDescription('حظر عضو بشكل دائم من السيرفر')
+        .addUserOption(o =>
+          o.setName('user').setDescription('الشخص المراد حظره').setRequired(true)
+        )
+        .addStringOption(o =>
+          o.setName('reason').setDescription('سبب الحظر').setRequired(true)
+        );
+
+      const resetServerCommand = new SlashCommandBuilder()
+        .setName('resetserver')
+        .setDescription('حذف روم أو كاتجوري محددة لإعادة بناء السيرفر')
+        .addChannelOption(o =>
+          o.setName('target').setDescription('الروم أو الكاتجوري المراد حذفها').setRequired(true)
+        )
+        .addStringOption(o =>
+          o.setName('confirm')
+            .setDescription('اكتب RESET للتأكيد')
+            .setRequired(true)
+        );
+
+      await guild.commands.create(permBanCommand.toJSON());
+      await guild.commands.create(resetServerCommand.toJSON());
       console.log('Registered /vot command.');
     }
   } catch (err) {
@@ -1023,6 +1049,14 @@ client.on(Events.InteractionCreate, async interaction => {
   try {
     if (interaction.isChatInputCommand() && interaction.commandName === 'vot') {
       return handleVoteCommand(interaction);
+    }
+
+    if (interaction.isChatInputCommand() && interaction.commandName === 'permban') {
+      return handlePermBanCommand(interaction);
+    }
+
+    if (interaction.isChatInputCommand() && interaction.commandName === 'resetserver') {
+      return handleResetServerCommand(interaction);
     }
 
 
@@ -3351,6 +3385,132 @@ client.on(Events.InteractionCreate,async interaction=>{
   }catch(err){console.error('Advanced system error:',err);if(interaction.isRepliable()&&!interaction.replied&&!interaction.deferred)await interaction.reply({content:'❌ حصل خطأ.',ephemeral:true}).catch(()=>{});}
 });
 
+
+
+
+// ==========================================================
+// SERVER RESET / PERMANENT BAN
+// ==========================================================
+
+function canUseDangerousAdminCommands(member) {
+  if (!member) return false;
+  if (member.id === member.guild.ownerId) return true;
+
+  return member.permissions.has(PermissionsBitField.Flags.Administrator) ||
+    (CONFIG.CONTROL_ROLE_IDS || []).some(roleId => member.roles.cache.has(roleId));
+}
+
+async function handlePermBanCommand(interaction) {
+  if (!canUseDangerousAdminCommands(interaction.member)) {
+    return interaction.reply({
+      content: '❌ الأمر ده للإدارة العليا أو مالك السيرفر فقط.',
+      ephemeral: true
+    });
+  }
+
+  const user = interaction.options.getUser('user', true);
+  const reason = interaction.options.getString('reason', true).trim();
+
+  if (user.id === interaction.guild.ownerId) {
+    return interaction.reply({ content: '❌ لا يمكن حظر مالك السيرفر.', ephemeral: true });
+  }
+
+  if (user.id === interaction.user.id) {
+    return interaction.reply({ content: '❌ لا يمكنك حظر نفسك.', ephemeral: true });
+  }
+
+  await interaction.deferReply({ ephemeral: true });
+
+  try {
+    await interaction.guild.members.ban(user.id, {
+      reason: `${reason} | بواسطة ${interaction.user.tag}`
+    });
+
+    await interaction.editReply({
+      content: `🔨 تم حظر **${user.tag}** بشكل دائم.\n📝 السبب: ${reason}`
+    });
+
+    const log = await safeFetchChannel(CONFIG.LOG_CHANNEL_ID);
+    if (log?.isTextBased()) {
+      await log.send({
+        embeds: [
+          new EmbedBuilder()
+            .setColor(0xE74C3C)
+            .setTitle('🔨 حظر دائم')
+            .addFields(
+              { name: 'الشخص', value: `${user.tag}\n\`${user.id}\`` },
+              { name: 'بواسطة', value: `<@${interaction.user.id}>` },
+              { name: 'السبب', value: reason.slice(0, 1024) }
+            )
+            .setTimestamp()
+        ]
+      }).catch(() => {});
+    }
+  } catch (err) {
+    await interaction.editReply({
+      content: `❌ فشل الحظر: ${err.message}`
+    });
+  }
+}
+
+async function handleResetServerCommand(interaction) {
+  if (!canUseDangerousAdminCommands(interaction.member)) {
+    return interaction.reply({
+      content: '❌ الأمر ده للإدارة العليا أو مالك السيرفر فقط.',
+      ephemeral: true
+    });
+  }
+
+  const target = interaction.options.getChannel('target', true);
+  const confirm = interaction.options.getString('confirm', true).trim();
+
+  if (confirm !== 'RESET') {
+    return interaction.reply({
+      content: '⚠️ لم يتم حذف أي شيء. للتأكيد اكتب `RESET` بالحروف الكبيرة.',
+      ephemeral: true
+    });
+  }
+
+  if (!target.deletable) {
+    return interaction.reply({
+      content: '❌ البوت لا يملك صلاحية حذف الروم/الكاتجوري دي.',
+      ephemeral: true
+    });
+  }
+
+  const targetName = target.name;
+  const targetId = target.id;
+  const isCategory = target.type === ChannelType.GuildCategory;
+
+  await interaction.reply({
+    content: `🗑️ جاري حذف ${isCategory ? 'الكاتجوري' : 'الروم'} **${targetName}**...`,
+    ephemeral: true
+  });
+
+  try {
+    // عند حذف كاتجوري: نحذف الرومات الموجودة بداخلها أولاً ثم الكاتجوري.
+    if (isCategory) {
+      const children = interaction.guild.channels.cache
+        .filter(ch => ch.parentId === targetId);
+
+      for (const ch of children.values()) {
+        if (ch.deletable) {
+          await ch.delete(`Server reset by ${interaction.user.tag}`).catch(() => {});
+        }
+      }
+    }
+
+    await target.delete(`Server reset by ${interaction.user.tag}`);
+
+    await interaction.editReply({
+      content: `✅ تم حذف ${isCategory ? 'الكاتجوري وكل الرومات الموجودة بداخلها' : 'الروم'} **${targetName}**.`
+    });
+  } catch (err) {
+    await interaction.editReply({
+      content: `❌ حصل خطأ أثناء الحذف: ${err.message}`
+    });
+  }
+}
 
 
 // ==========================================================
