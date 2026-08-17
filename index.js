@@ -21,8 +21,7 @@ const {
   Events,
   PermissionFlagsBits,
   ChannelType,
-  SlashCommandBuilder,
-  PermissionsBitField
+  SlashCommandBuilder
 } = require('discord.js');
 
 const {
@@ -45,12 +44,12 @@ const CONFIG = {
   GUILD_ID: '1535754836061065318',
 
   // ---------- الرومات ----------
-  APPLICATION_PANEL_CHANNEL_ID: '1535782011841683576',
-  APPLICATION_RESULTS_CHANNEL_ID: '1535792428068372500',
+  APPLICATION_PANEL_CHANNEL_ID: '1538611662007836753',
+  APPLICATION_RESULTS_CHANNEL_ID: '1538944020494159982',
   VIDEO_CHANNEL_ID: '1535784708657651763',
-  WELCOME_CHANNEL_ID: '1535772685337100431',
+  WELCOME_CHANNEL_ID: '1538611932624453783',
   RULES_CHANNEL_ID: '1535773187676315688',
-  RATINGS_CHANNEL_ID: '1536098931728064664',
+  RATINGS_CHANNEL_ID: '1536345751947313202',
   SUPPORT_VOICE_CHANNEL_ID: '1536099298721140756',
   LOG_CHANNEL_ID: '1536099473124757564',
 
@@ -68,7 +67,9 @@ const CONFIG = {
 
   // الرتب دي مستثناة من نظام الحماية التلقائي
   PROTECTION_BYPASS_ROLE_IDS: [
-    '1535765156494319726',
+    '1535754877882474557',
+    '1535755333572763798',
+    '1535754908261941350'
   ],
 
   SERVER_NAME: 'Ghost RP',
@@ -92,7 +93,7 @@ const CONFIG = {
   TICKET_RATING_CHANNEL_ID: '1536345751947313202',
 
   // روم عرض مواعيد فتح وإغلاق التذاكر
-  TICKET_SCHEDULE_CHANNEL_ID: 'PUT_TICKET_SCHEDULE_CHANNEL_ID',
+  TICKET_SCHEDULE_CHANNEL_ID: '1537339335022477402',
 
   // روم مواعيد التقديمات والمقابلات الصوتية
   APPLICATION_SCHEDULE_CHANNEL_ID: 'PUT_APPLICATION_SCHEDULE_CHANNEL_ID',
@@ -110,10 +111,11 @@ const CONFIG = {
   // فقط الـ 3 رولات دول يظهر لهم/يستخدموا لوحة ما بعد إغلاق التذكرة:
   // مسح - حفظ - إعادة فتح
   TICKET_CLOSED_ACTION_ROLE_IDS: [
-    'PUT_CLOSED_TICKET_ROLE_1_ID',
-    'PUT_CLOSED_TICKET_ROLE_2_ID',
-    'PUT_CLOSED_TICKET_ROLE_3_ID'
+    '1535754877882474557',
+    '1535755333572763798',
+    '1535754908261941350'
   ],
+
 
   TICKET_TYPES: {
     support: {
@@ -186,33 +188,35 @@ const CONFIG = {
   CONTROL_PANEL_CHANNEL_ID: '1536347609164161034',
   BOT_SEND_PANEL_CHANNEL_ID: '1536347609164161034',
   CONTROL_ROLE_IDS: [
-    '1535765156494319726',
+    '1535754877882474557',
+    '1535755333572763798'
   ],
 
   // ---------- بانل القبول والرفض اليدوي ----------
-  DECISION_PANEL_CHANNEL_ID: 'PUT_DECISION_PANEL_CHANNEL_ID',
-  DECISION_RESULTS_CHANNEL_ID: 'PUT_DECISION_RESULTS_CHANNEL_ID',
+  DECISION_PANEL_CHANNEL_ID: '1537229641872310373',
+  DECISION_RESULTS_CHANNEL_ID: '1537230324705136690',
   DECISION_REVIEWER_ROLE_IDS: [
-    'PUT_DECISION_REVIEWER_ROLE_ID'
+    '1535755748297146398',
+    '1535755748297146398'
   ],
 
   // ---------- تقديم الإدارة وصانع المحتوى ----------
-  STAFF_APPLICATION_PANEL_CHANNEL_ID: '1537184130096300062',
+  STAFF_APPLICATION_PANEL_CHANNEL_ID: '1538932282373705798',
   STAFF_APPLICATION_REVIEW_CHANNEL_ID: '1537185220497776710',
   STAFF_PREACCEPTED_ROLE_ID: '1535798962462658651',
-  STAFF_INTERVIEW_SCHEDULE_CHANNEL_ID: '1535794320668491807',
+  STAFF_INTERVIEW_SCHEDULE_CHANNEL_ID: '1538974434352955463',
   // الخطوة الثانية بعد القبول المبدئي للإدارة
   STAFF_SECOND_STAGE_CHANNEL_ID: '1537331847929790474',
   STAFF_FINAL_ACCEPTED_ROLE_ID: '1535755112969015367',
 
   // ---------- تقديم الرقابة ----------
-  MONITORING_APPLICATION_PANEL_CHANNEL_ID: '1537326728676900895',
-  MONITORING_APPLICATION_REVIEW_CHANNEL_ID: '1537329895909097512',
+  MONITORING_APPLICATION_PANEL_CHANNEL_ID: '1538932444617515018',
+  MONITORING_APPLICATION_REVIEW_CHANNEL_ID: '1538935994752041031',
   MONITORING_PREACCEPTED_ROLE_ID: '1537330891678945280',
-  MONITORING_SECOND_STAGE_CHANNEL_ID: '1537331405967724574',
+  MONITORING_SECOND_STAGE_CHANNEL_ID: '1538972898382053438',
   MONITORING_FINAL_ACCEPTED_ROLE_ID: '1535759833427480576',
 
-  CREATOR_APPLICATION_PANEL_CHANNEL_ID: '1537184038039588895',
+  CREATOR_APPLICATION_PANEL_CHANNEL_ID: '1538932372479811636',
   CREATOR_APPLICATION_REVIEW_CHANNEL_ID: '1537186507977261076',
   CREATOR_ACCEPTED_ROLE_ID: '1535770270688874587',
 
@@ -529,29 +533,6 @@ client.once(Events.ClientReady, async () => {
     const guild = client.guilds.cache.get(CONFIG.GUILD_ID);
     if (guild) {
       await guild.commands.create(voteCommand.toJSON());
-
-      const permBanCommand = new SlashCommandBuilder()
-        .setName('permban')
-        .setDescription('حظر أكثر من شخص بشكل دائم')
-        .addStringOption(o =>
-          o.setName('user_ids').setDescription('IDs الأشخاص مفصولة بفاصلة ,').setRequired(true)
-        )
-        .addStringOption(o =>
-          o.setName('reason').setDescription('سبب الحظر').setRequired(true)
-        );
-
-      const resetServerCommand = new SlashCommandBuilder()
-        .setName('resetserver')
-        .setDescription('حذف أكثر من كاتجوري محددة وكل الرومات الموجودة بداخلها')
-        .addStringOption(o =>
-          o.setName('category_ids').setDescription('IDs الكاتجوريز مفصولة بفاصلة ,').setRequired(true)
-        )
-        .addStringOption(o =>
-          o.setName('confirm').setDescription('اكتب RESET للتأكيد').setRequired(true)
-        );
-
-      await guild.commands.create(permBanCommand.toJSON());
-      await guild.commands.create(resetServerCommand.toJSON());
       console.log('Registered /vot command.');
     }
   } catch (err) {
@@ -1044,14 +1025,6 @@ client.on(Events.InteractionCreate, async interaction => {
   try {
     if (interaction.isChatInputCommand() && interaction.commandName === 'vot') {
       return handleVoteCommand(interaction);
-    }
-
-    if (interaction.isChatInputCommand() && interaction.commandName === 'permban') {
-      return handlePermBanCommand(interaction);
-    }
-
-    if (interaction.isChatInputCommand() && interaction.commandName === 'resetserver') {
-      return handleResetServerCommand(interaction);
     }
 
 
@@ -3381,100 +3354,6 @@ client.on(Events.InteractionCreate,async interaction=>{
 });
 
 
-
-
-// ==========================================================
-// SERVER RESET / PERMANENT BAN
-// ==========================================================
-
-function canUseDangerousAdminCommands(member) {
-  if (!member) return false;
-  if (member.id === member.guild.ownerId) return true;
-
-  return member.permissions.has(PermissionsBitField.Flags.Administrator) ||
-    (CONFIG.CONTROL_ROLE_IDS || []).some(roleId => member.roles.cache.has(roleId));
-}
-
-async function handlePermBanCommand(interaction) {
-  if (!canUseDangerousAdminCommands(interaction.member)) {
-    return interaction.reply({content:'❌ الأمر ده للإدارة العليا أو مالك السيرفر فقط.',ephemeral:true});
-  }
-
-  const raw = interaction.options.getString('user_ids', true);
-  const reason = interaction.options.getString('reason', true).trim();
-  const ids = [...new Set(raw.split(/[,\s]+/).map(x=>x.trim()).filter(x=>/^\d{15,22}$/.test(x)))];
-
-  if (!ids.length) return interaction.reply({content:'❌ اكتب IDs صحيحة مفصولة بفاصلة.',ephemeral:true});
-  if (ids.length > 25) return interaction.reply({content:'❌ الحد الأقصى 25 شخص في العملية الواحدة.',ephemeral:true});
-
-  await interaction.deferReply({ephemeral:true});
-  const done=[], failed=[];
-
-  for (const id of ids) {
-    if (id === interaction.guild.ownerId || id === interaction.user.id) {
-      failed.push(`${id} (محمي)`);
-      continue;
-    }
-    try {
-      await interaction.guild.members.ban(id,{reason:`${reason} | بواسطة ${interaction.user.tag}`});
-      done.push(id);
-    } catch {
-      failed.push(id);
-    }
-  }
-
-  await interaction.editReply({content:[
-    `🔨 تم الحظر الدائم لـ **${done.length}** شخص.`,
-    failed.length ? `❌ فشل/محمي: **${failed.length}**` : '',
-    `📝 السبب: ${reason}`
-  ].filter(Boolean).join('\n')});
-
-  const log=await safeFetchChannel(CONFIG.LOG_CHANNEL_ID);
-  if(log?.isTextBased()) await log.send({embeds:[new EmbedBuilder()
-    .setColor(0xE74C3C).setTitle('🔨 حظر دائم متعدد')
-    .setDescription(`**تم:** ${done.length}\n**فشل:** ${failed.length}\n**بواسطة:** <@${interaction.user.id}>\n**السبب:** ${reason}`)
-    .setTimestamp()]}).catch(()=>{});
-}
-
-async function handleResetServerCommand(interaction) {
-  if (!canUseDangerousAdminCommands(interaction.member)) {
-    return interaction.reply({content:'❌ الأمر ده للإدارة العليا أو مالك السيرفر فقط.',ephemeral:true});
-  }
-
-  const raw=interaction.options.getString('category_ids',true);
-  const confirm=interaction.options.getString('confirm',true).trim();
-  if(confirm!=='RESET') return interaction.reply({content:'⚠️ لم يتم حذف أي شيء. اكتب `RESET` للتأكيد.',ephemeral:true});
-
-  const ids=[...new Set(raw.split(/[,\s]+/).map(x=>x.trim()).filter(x=>/^\d{15,22}$/.test(x)))];
-  if(!ids.length) return interaction.reply({content:'❌ اكتب IDs كاتجوريز صحيحة مفصولة بفاصلة.',ephemeral:true});
-  if(ids.length>15) return interaction.reply({content:'❌ الحد الأقصى 15 كاتجوري في العملية الواحدة.',ephemeral:true});
-
-  const categories=ids.map(id=>interaction.guild.channels.cache.get(id))
-    .filter(ch=>ch && ch.type===ChannelType.GuildCategory);
-
-  if(!categories.length) return interaction.reply({content:'❌ لم يتم العثور على كاتجوريز صحيحة.',ephemeral:true});
-
-  await interaction.deferReply({ephemeral:true});
-  const done=[],failed=[];
-
-  for(const category of categories){
-    try{
-      const children=interaction.guild.channels.cache.filter(ch=>ch.parentId===category.id);
-      for(const ch of children.values()){
-        if(ch.deletable) await ch.delete(`Selected category reset by ${interaction.user.tag}`).catch(()=>{});
-      }
-      if(category.deletable){
-        await category.delete(`Selected category reset by ${interaction.user.tag}`);
-        done.push(category.name);
-      }else failed.push(category.name);
-    }catch{ failed.push(category.name); }
-  }
-
-  await interaction.editReply({content:[
-    `✅ تم حذف **${done.length}** كاتجوري وكل الرومات الموجودة بداخلها.`,
-    failed.length?`❌ تعذر حذف **${failed.length}** كاتجوري.`:''
-  ].filter(Boolean).join('\n')});
-}
 
 // ==========================================================
 // IP AUTO REPLY + VOTE SYSTEM
