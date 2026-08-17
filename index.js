@@ -81,7 +81,7 @@ const CONFIG = {
     '1535767262580047923'
   ],
   COLOR: 0x1687FF,
-  WELCOME_BANNER_URL: 'https://cdn.discordapp.com/attachments/1535772685337100431/1536106506506862743/ChatGPT_Image_Aug_9_2026_06_54_02_PM.png',
+  WELCOME_BANNER_URL: 'https://cdn.discordapp.com/attachments/1538614295259119667/1539033867359363122/ChatGPT_Image_Aug_9_2026_06_54_02_PM.png?ex=6a84d87b&is=6a8386fb&hm=e14d98e92ad4cc186abc33fac155cfb9c47135d7900b9b6b4653d886348b182b&',
 
 
   // ---------- رتب الرفض ----------
